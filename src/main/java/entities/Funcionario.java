@@ -2,7 +2,8 @@ package entities;
 
 public abstract class Funcionario {
 
-	protected String nome;
+	int id;
+	String nome;
 	String sobrenome;
 	long cpf;
 	double salario;
@@ -92,5 +93,21 @@ public abstract class Funcionario {
 
 	public void setEstadoCivil(String estadoCivil) {
 		this.estadoCivil = estadoCivil;
+	}
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public double getPorcentagemDaBonificacao() {
+		return porcentagemDaBonificacao;
+	}
+
+	public void setPorcentagemDaBonificacao(double porcentagemDaBonificacao) {
+		this.porcentagemDaBonificacao = porcentagemDaBonificacao;
 	}
 }

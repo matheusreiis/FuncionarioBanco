@@ -2,56 +2,62 @@ package bancoDeDados;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
+import arquivos.ArquivoDeAuxiliar;
+import arquivos.ArquivoDeEstagiario;
+import arquivos.ArquivoDeGerente;
 import entities.Auxiliar;
 import entities.Estagiario;
 import entities.Funcionario;
 import entities.Gerente;
 
 public class BancoDeDadosFuncionario {
+	
+	private Logger logger = Logger.getLogger(BancoDeDadosFuncionario.class);
+	ArquivoDeGerente arquivoDeGerente = new ArquivoDeGerente();
+	ArquivoDeAuxiliar arquivoDeAuxiliar = new ArquivoDeAuxiliar();
+	ArquivoDeEstagiario arquivoDeEstagiario = new ArquivoDeEstagiario();
+	
 
-	public void listaDeRegistroGerente(List<Funcionario> listaGerente) {
+	public void listaDeRegistroGerente(List<Funcionario> listaGerente) throws Exception {
 
 		if (listaGerente.size() == 0) {
-			System.out.println("Nao ha Gerentes cadastrados!");
+			logger.info("Nao ha Gerentes cadastrados!");
 		} else {
 			
 			for (int i = 0; i < listaGerente.size(); i++) {
-				Gerente gerente1 = (Gerente) listaGerente.get(i);
+				Gerente gerente = (Gerente) listaGerente.get(i);
 
-				System.out.println();
-				System.out.println("--------- DADOS DO GERENTE ---------");
-				System.out.println();
-				System.out.println("Nome do Gerente: " + gerente1.getNome() + " " + gerente1.getSobrenome());
-				System.out.println("cpf do Gerente: " + gerente1.getCpf());
-				System.out.printf("Salario do Gerente: R$ %.2f\n", gerente1.getSalario());
-				System.out.println("Idade do Gerente: " + gerente1.getIdade());
-				System.out.println("Estado Civil do Gerente: " + gerente1.getEstadoCivil());
-				System.out.println("Login do Gerente: " + gerente1.getLoginDoCadastroDoSistema());
-				System.out.println("Senha do Gerente: **************");
-				System.out.println();
+				logger.info(System.lineSeparator() + "--------- DADOS DO GERENTE ---------" + System.lineSeparator());
+				logger.info("Nome do Gerente: " + gerente.getId() + " - " + gerente.getNome() + " " + gerente.getSobrenome());
+				logger.info("cpf do Gerente: " + gerente.getCpf());
+				logger.info("Salario do Gerente: R$ %.2f\n" + gerente.getSalario());
+				logger.info("Idade do Gerente: " + gerente.getIdade());
+				logger.info("Estado Civil do Gerente: " + gerente.getEstadoCivil());
+				logger.info("Login do Gerente: " + gerente.getLoginDoCadastroDoSistema());
+				logger.info("Senha do Gerente: **************" + System.lineSeparator());
 			}
+			arquivoDeGerente.listaDeGerentesAtivos(listaGerente);
 		}
 	}
 
 	public void listaDeRegistroAuxiliar(List<Funcionario> listaAuxiliar) {
 
 		if (listaAuxiliar.size() == 0) {
-			System.out.println("Nao ha funcionarios cadastrados!");
+			logger.info("Nao ha funcionarios cadastrados!");
 		} else {
 			for (int i = 0; i < listaAuxiliar.size(); i++) {
-				Auxiliar auxiliar1 = (Auxiliar) listaAuxiliar.get(i);
+				Auxiliar auxiliar = (Auxiliar) listaAuxiliar.get(i);
 
-				System.out.println();
-				System.out.println("--------- DADOS DO GERENTE ---------");
-				System.out.println();
-				System.out.println("Nome do Gerente: " + auxiliar1.getNome() + " " + auxiliar1.getSobrenome());
-				System.out.println("cpf do Gerente: " + auxiliar1.getCpf());
-				System.out.printf("Salario do Gerente: R$ %.2f\n", auxiliar1.getSalario());
-				System.out.println("Idade do Gerente: " + auxiliar1.getIdade());
-				System.out.println("Estado Civil do Gerente: " + auxiliar1.getEstadoCivil());
-				System.out.println("Login do Gerente: " + auxiliar1.getLoginDoCadastroDoSistema());
-				System.out.println("Senha do Gerente: **************");
-				System.out.println();
+				logger.info(System.lineSeparator() + "--------- DADOS DO AUXILIAR ---------" + System.lineSeparator());
+				logger.info("Nome do Auxiliar: " + auxiliar.getNome() + " " + auxiliar.getSobrenome());
+				logger.info("cpf do Auxiliar: " + auxiliar.getCpf());
+				logger.info("Salario do Auxiliar: R$ %.2f\n" + auxiliar.getSalario());
+				logger.info("Idade do Auxiliar: " + auxiliar.getIdade());
+				logger.info("Estado Civil do Auxiliar: " + auxiliar.getEstadoCivil());
+				logger.info("Login do Auxiliar: " + auxiliar.getLoginDoCadastroDoSistema());
+				logger.info("Senha do Auxiliar: **************" + System.lineSeparator());
 			}
 		}
 	}
@@ -59,28 +65,20 @@ public class BancoDeDadosFuncionario {
 	public void listaDeRegistroEstagiario(List<Funcionario> listaEstagiario) {
 
 		if (listaEstagiario.size() == 0) {
-			System.out.println("Nao ha funcionarios cadastrados!");
+			logger.info("Nao ha funcionarios cadastrados!");
 		} else {
 			for (int i = 0; i < listaEstagiario.size(); i++) {
-				Estagiario estagiario1 = (Estagiario) listaEstagiario.get(i);
+				Estagiario estagiario = (Estagiario) listaEstagiario.get(i);
 
-				System.out.println();
-				System.out.println("--------- DADOS DO GERENTE ---------");
-				System.out.println();
-				System.out.println("Nome do Gerente: " + estagiario1.getNome() + " " + estagiario1.getSobrenome());
-				System.out.println("cpf do Gerente: " + estagiario1.getCpf());
-				System.out.printf("Salario do Gerente: R$ %.2f\n", estagiario1.getSalario());
-				System.out.println("Idade do Gerente: " + estagiario1.getIdade());
-				System.out.println("Estado Civil do Gerente: " + estagiario1.getEstadoCivil());
-				System.out.println("Login do Gerente: " + estagiario1.getLoginDoCadastroDoSistema());
-				System.out.println("Senha do Gerente: **************");
-				System.out.println();
+				logger.info(System.lineSeparator() + "--------- DADOS DO ESTAGIARIO ---------" + System.lineSeparator());
+				logger.info("Nome do Estagiario: " + estagiario.getNome() + " " + estagiario.getSobrenome());
+				logger.info("cpf do Estagiario: " + estagiario.getCpf());
+				logger.info("Salario do Estagiario: R$ %.2f\n" + estagiario.getSalario());
+				logger.info("Idade do Estagiario: " + estagiario.getIdade());
+				logger.info("Estado Civil do Estagiario: " + estagiario.getEstadoCivil());
+				logger.info("Login do Estagiario: " + estagiario.getLoginDoCadastroDoSistema());
+				logger.info("Senha do Estagiario: **************" + System.lineSeparator());
 			}
 		}
-	}
-
-	public List<Funcionario> listaDeRegistroGerente(String string) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 }

@@ -2,10 +2,13 @@ package validadores;
 
 import java.util.Scanner;
 
+import org.apache.log4j.Logger;
+
 import interfaces.ICadastroDoSistema;
 
 public class ValidadorDeCadastroDoSistema implements ICadastroDoSistema {
-
+	
+	private static final Logger logger = Logger.getLogger(ValidadorDeCadastroDoSistema.class);
 	Scanner sc = new Scanner(System.in);
 
 	public int validacaoDoLoginDoCadastroDoSistema(int loginCadastro, String mensagemDeLoginCadastro) {
@@ -15,18 +18,18 @@ public class ValidadorDeCadastroDoSistema implements ICadastroDoSistema {
 				String valueOf = "";
 				valueOf = extracted(loginCadastro, loginCadastro);
 				while (valueOf.length() != 6) {
-					System.out.println("\n##### Por favor insira 6 digitos para seu login. #####");
+					logger.debug("##### Por favor insira 6 digitos para seu login. #####");
 					System.out.println();
-					System.out.print(mensagemDeLoginCadastro);
+					logger.info(mensagemDeLoginCadastro);
 					loginCadastro = sc.nextInt();
 					valueOf = extracted(loginCadastro, loginCadastro);
 				}
 				validaErroCatch = false;
 			} catch (Exception e) {
-				System.out.println("##### LOGIN INVALIDO ##### Por favor insira um login valido! ");
+				logger.error("##### LOGIN INVALIDO ##### Por favor insira um login valido! ");
 				System.out.println();
 				sc.nextLine();
-				System.out.print(mensagemDeLoginCadastro);
+				logger.info(mensagemDeLoginCadastro);
 				validaErroCatch = true;
 			} 
 		}
@@ -40,18 +43,18 @@ public class ValidadorDeCadastroDoSistema implements ICadastroDoSistema {
 				String valueOf = "";
 				valueOf = extracted(senhaCadastro, senhaCadastro);
 				while (valueOf.length() != 6) {
-					System.out.println("\n##### Por favor insira 6 digitos para sua nova senha. #####");
+					logger.debug("\n##### Por favor insira 6 digitos para sua nova senha. #####");
 					System.out.println();
-					System.out.print(mensagemDeSenhaCadastro);
+					logger.info(mensagemDeSenhaCadastro);
 					senhaCadastro = sc.nextInt();
 					valueOf = extracted(senhaCadastro, senhaCadastro);
 				}
 				validaErroCatch = false;
 			} catch (Exception e) {
-				System.out.println("##### SENHA INVALIDA ##### Por favor insira uma senha valida! ");
+				logger.debug("##### SENHA INVALIDA ##### Por favor insira uma senha valida! ");
 				System.out.println();
 				sc.nextLine();
-				System.out.print(mensagemDeSenhaCadastro);
+				logger.info(mensagemDeSenhaCadastro);
 				validaErroCatch = true;
 			} 
 		}

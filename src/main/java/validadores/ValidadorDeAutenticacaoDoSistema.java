@@ -2,10 +2,13 @@ package validadores;
 
 import java.util.Scanner;
 
+import org.apache.log4j.Logger;
+
 import interfaces.IAutenticacaoDoSistema;
 
 public class ValidadorDeAutenticacaoDoSistema implements IAutenticacaoDoSistema {
-
+	
+	private static final Logger logger = Logger.getLogger(ValidadorDeAutenticacaoDoSistema.class);
 	Scanner sc = new Scanner(System.in);
 
 	public int validacaoDoLoginDoSistema(int loginAutenticacao, String mensagemDeLogin) {
@@ -15,18 +18,18 @@ public class ValidadorDeAutenticacaoDoSistema implements IAutenticacaoDoSistema 
 				String valueOf = "";
 				valueOf = extracted(loginAutenticacao, loginAutenticacao);
 				while (valueOf.length() != 6) {
-					System.out.println("\n##### Por favor insira 6 digitos para validar seu login. #####");
+					logger.debug("##### Por favor insira 6 digitos para validar seu login. #####");
 					System.out.println();
-					System.out.print(mensagemDeLogin);
+					logger.info(mensagemDeLogin);
 					loginAutenticacao = sc.nextInt();
 					valueOf = extracted(loginAutenticacao, loginAutenticacao);
 				}
 				validaErroCatch = false;
 			} catch (Exception e) {
-				System.out.println("##### LOGIN INVALIDO ##### Por favor insira um login valido! ");
+				logger.error("##### LOGIN INVALIDO ##### Por favor insira um login valido! ");
 				System.out.println();
 				sc.nextLine();
-				System.out.print(mensagemDeLogin);
+				logger.info(mensagemDeLogin);
 				validaErroCatch = true;
 			}
 		}
@@ -40,18 +43,18 @@ public class ValidadorDeAutenticacaoDoSistema implements IAutenticacaoDoSistema 
 				String valueOf = "";
 				valueOf = extracted(senhaAutenticacao, senhaAutenticacao);
 				while (valueOf.length() != 6) {
-					System.out.println("\n##### Por favor insira 6 digitos para validar sua nova senha. #####");
+					logger.debug("\n##### Por favor insira 6 digitos para validar sua nova senha. #####");
 					System.out.println();
-					System.out.print(mensagemDeSenha);
+					logger.info(mensagemDeSenha);
 					senhaAutenticacao = sc.nextInt();
 					valueOf = extracted(senhaAutenticacao, senhaAutenticacao);
 				}
 				validaErroCatch = false;
 			} catch (Exception e) {
-				System.out.println("##### SENHA INVALIDA ##### Por favor insira uma senha valida! ");
+				logger.error("##### SENHA INVALIDA ##### Por favor insira uma senha valida! ");
 				System.out.println();
 				sc.nextLine();
-				System.out.print(mensagemDeSenha);
+				logger.info(mensagemDeSenha);
 				validaErroCatch = true;
 			}
 		}

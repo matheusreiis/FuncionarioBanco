@@ -3,60 +3,91 @@ package bancoDeDados;
 import java.util.List;
 import java.util.Scanner;
 
+import org.apache.log4j.Logger;
+
 import entities.Estagiario;
 import entities.Funcionario;
+import validadores.ValidadorDeCadastroDoSistema;
 import validadores.ValidadorDeCpf;
 import validadores.ValidadorDeEstadoCivil;
+import validadores.ValidadorDeId;
 import validadores.ValidadorDeIdade;
 import validadores.ValidadorDeSalario;
 
 public class CadastroEstagiarioBancoDeDados {
+	
+	private static final Logger logger = Logger.getLogger(CadastroEstagiarioBancoDeDados.class);
 
 	Scanner sc = new Scanner(System.in);
-	Funcionario estagiario1 = new Estagiario();
+	Estagiario estagiario = new Estagiario();
 	BancoDeDadosFuncionario bancoDeDadosFuncionario = new BancoDeDadosFuncionario();
 	ValidadorDeCpf validaCpf = new ValidadorDeCpf();
 	ValidadorDeEstadoCivil validaEstadoCivil = new ValidadorDeEstadoCivil();
 	ValidadorDeIdade validaIdade = new ValidadorDeIdade();
 	ValidadorDeSalario validaSalario = new ValidadorDeSalario();
+	ValidadorDeCadastroDoSistema validaCadastro = new ValidadorDeCadastroDoSistema();
+	ValidadorDeId validaId = new ValidadorDeId();
+	
+	int id;
+	String nome;
+	String sobrenome;
+	long cpf;
+	String mensagem;
+	double salario;
+	int idade;
+	int loginCadastro;
+	int senhaCadastro;
+	String estadoCivil;
+	String mensagemId = "Cadastre o Id do Estagiario: ";
+	String mensagemNome = "Cadastre o nome e sobrenome do Estagiario: ";
+	String mensagemCpf = "Cadastre o cpf do Estagiario: ";
+	String mensagemSalario = "Cadastre um salario do Estagiario: ";
+	String mensagemIdade = "Cadastre uma idade do Estagiario: ";
+	String mensagemEstadoCivil = "Cadastre o Estado Civil do Estagiario: ";
+	String mensagemDeLoginCadastro = "Digite seu login (6 digitos): ";
+	String mensagemDeSenhaCadastro = "Digite sua senha (6 digitos): ";
 
-	String nome = "";
-	String sobrenome = "";
-	long cpf = 0;
-	String mensagem = "";
-	double salario = 0;
-	int idade = 0;
-	String estadoCivil = "";
+	public void cadastroEstagiario(List<Funcionario> listaEstagiario) {
+		
+		logger.info("\n---------- CADASTRO ESTAGIARIO ---------" + System.lineSeparator());
+		
+		logger.debug(mensagemId);
+		id = sc.nextInt();
+		estagiario.setId(id);
+		estagiario.setId(validaId.validacaoDeId(id, mensagemId));
 
-	public void cadastroEstagiario(String mensagemNome, String mensagemCpf, String mensagemSalario,
-			String mensagemIdade, String mensagemEstadoCivil, List<Funcionario> listaEstagiario) {
-
-		System.out.print(mensagemNome);
+		logger.debug(mensagemNome);
 		nome = sc.next();
 		sobrenome = sc.next();
-		estagiario1.setNome(nome);
-		estagiario1.setSobrenome(sobrenome);
+		estagiario.setNome(nome);
+		estagiario.setSobrenome(sobrenome);
 
-		System.out.print(mensagemCpf);
-		estagiario1.setCpf(validaCpf.validaCpf(cpf, mensagemCpf));
+		logger.debug(mensagemCpf);
+		estagiario.setCpf(validaCpf.validaCpf(cpf, mensagemCpf));
 
-		System.out.print(mensagemSalario);
+		logger.debug(mensagemSalario);
+		estagiario.setSalario(validaSalario.validaSalario(salario, mensagemSalario));
 
-		estagiario1.setSalario(validaSalario.validaSalario(salario, mensagemSalario));
+		logger.debug(mensagemIdade);
+		estagiario.setIdade(validaIdade.validaIdade(idade, mensagemIdade));
 
-		System.out.print(mensagemIdade);
-		estagiario1.setIdade(validaIdade.validaIdade(idade, mensagemIdade));
+		logger.debug(mensagemEstadoCivil);
+		estagiario.setEstadoCivil(validaEstadoCivil.validaEstadoCivil(estadoCivil, mensagemEstadoCivil));
 
-		System.out.print(mensagemEstadoCivil);
-		estagiario1.setEstadoCivil(validaEstadoCivil.validaEstadoCivil(estadoCivil, mensagemEstadoCivil));
+		logger.debug("Cadastre um login com ate 6 digitos: ");
+		loginCadastro = sc.nextInt();
+		estagiario.setLoginDoCadastroDoSistema(
+				validaCadastro.validacaoDoLoginDoCadastroDoSistema(loginCadastro, mensagemDeLoginCadastro));
 
-		System.out.print("Cadastre um login com ate 6 digitos: ");
-		//estagiario1.setCadastroDoSistema(sc.nextInt());
+		logger.debug("Cadastre uma senha com ate 6 digitos: ");
+		senhaCadastro = sc.nextInt();
+		estagiario.setSenhaDoCadastroDoSistema(
+				validaCadastro.validacaoDaSenhaDoCadastroDoSistema(senhaCadastro, mensagemDeSenhaCadastro));
 
-		System.out.print("Cadastre uma senha com ate 6 digitos: ");
-		//estagiario1.setCadastroDoSistema(sc.nextInt());
-
-		listaEstagiario.add(estagiario1);
+		listaEstagiario.add(estagiario);
+		
 		bancoDeDadosFuncionario.listaDeRegistroEstagiario(listaEstagiario);
+		
+		logger.info("\n********** ESTAGIARIO CADASTRADO COM SUCESSO! **********\n");
 	}
 }

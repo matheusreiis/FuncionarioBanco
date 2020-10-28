@@ -3,69 +3,94 @@ package bancoDeDados;
 import java.util.List;
 import java.util.Scanner;
 
+import org.apache.log4j.Logger;
+
 import entities.Funcionario;
 import entities.Gerente;
 import validadores.ValidadorDeCadastroDoSistema;
 import validadores.ValidadorDeCpf;
 import validadores.ValidadorDeEstadoCivil;
+import validadores.ValidadorDeId;
 import validadores.ValidadorDeIdade;
 import validadores.ValidadorDeSalario;
 
 public class CadastroGerenteBancoDeDados {
 
+	private static final Logger logger = Logger.getLogger(CadastroGerenteBancoDeDados.class);
+
 	Scanner sc = new Scanner(System.in);
-	Funcionario gerente1 = new Gerente();
 	BancoDeDadosFuncionario bancoDeDadosFuncionario = new BancoDeDadosFuncionario();
 	ValidadorDeCpf validaCpf = new ValidadorDeCpf();
 	ValidadorDeEstadoCivil validaEstadoCivil = new ValidadorDeEstadoCivil();
 	ValidadorDeIdade validaIdade = new ValidadorDeIdade();
 	ValidadorDeSalario validaSalario = new ValidadorDeSalario();
 	ValidadorDeCadastroDoSistema validaCadastro = new ValidadorDeCadastroDoSistema();
+	ValidadorDeId validaId = new ValidadorDeId();
 
-	String nome = "";
-	String sobrenome = "";
-	long cpf = 0;
-	double salario = 0;
-	int idade = 0;
-	String estadoCivil = "";
+	int id;
+	String nome;
+	String sobrenome;
+	long cpf;
+	double salario;
+	int idade;
+	String estadoCivil;
 	int loginCadastro;
 	int senhaCadastro;
+	String mensagemId = "Cadastre o Id do Gerente: ";
+	String mensagemNome = "Cadastre o nome e sobrenome do Gerente: ";
+	String mensagemCpf = "Cadastre o cpf do Gerente: ";
+	String mensagemSalario = "Cadastre um salario do Gerente: ";
+	String mensagemIdade = "Cadastre uma idade do Gerente: ";
+	String mensagemEstadoCivil = "Cadastre o Estado Civil do Gerente: ";
+	String mensagemDeLoginCadastro = "Digite seu login (6 digitos): ";
+	String mensagemDeSenhaCadastro = "Digite sua senha (6 digitos): ";
 
-	public void cadastroGerente(String mensagemNome, String mensagemCpf, String mensagemSalario, String mensagemIdade,
-			String mensagemEstadoCivil, String mensagemDeLoginCadastro, String mensagemDeSenhaCadastro,
-			List<Funcionario> listaGerente) {
+	public void cadastroGerente(List<Funcionario> listaGerente) throws Exception {
+		
+		Gerente gerente = new Gerente();
+		
+		logger.info("---------- CADASTRO GERENTE ---------" + System.lineSeparator());
+		
+		logger.debug(mensagemId);
+		id = sc.nextInt();
+		gerente.setId(id);
+		gerente.setId(validaId.validacaoDeId(id, mensagemId));
 
-		System.out.print(mensagemNome);
+		logger.debug(mensagemNome);
 		nome = sc.next();
 		sobrenome = sc.next();
-		gerente1.setNome(nome);
-		gerente1.setSobrenome(sobrenome);
+		gerente.setNome(nome);
+		gerente.setSobrenome(sobrenome);
 
-		System.out.print(mensagemCpf);
+		logger.debug(mensagemCpf);
 		cpf = sc.nextLong();
-		gerente1.setCpf(validaCpf.validaCpf(cpf, mensagemCpf));
+		gerente.setCpf(validaCpf.validaCpf(cpf, mensagemCpf));
 
-		System.out.print(mensagemSalario);
+		logger.debug(mensagemSalario);
 		salario = sc.nextDouble();
-		gerente1.setSalario(validaSalario.validaSalario(salario, mensagemSalario));
+		gerente.setSalario(validaSalario.validaSalario(salario, mensagemSalario));
 
-		System.out.print(mensagemIdade);
+		logger.debug(mensagemIdade);
 		idade = sc.nextInt();
-		gerente1.setIdade(validaIdade.validaIdade(idade, mensagemIdade));
+		gerente.setIdade(validaIdade.validaIdade(idade, mensagemIdade));
 
-		System.out.print(mensagemEstadoCivil);
-		gerente1.setEstadoCivil(validaEstadoCivil.validaEstadoCivil(estadoCivil, mensagemEstadoCivil));
+		logger.debug(mensagemEstadoCivil);
+		gerente.setEstadoCivil(validaEstadoCivil.validaEstadoCivil(estadoCivil, mensagemEstadoCivil));
 
-		System.out.print(mensagemDeLoginCadastro);
+		logger.debug(mensagemDeLoginCadastro);
 		loginCadastro = sc.nextInt();
-		gerente1.setLoginDoCadastroDoSistema(validaCadastro.validacaoDoLoginDoCadastroDoSistema(loginCadastro, mensagemDeLoginCadastro));
-		
-		System.out.print(mensagemDeSenhaCadastro);
-		senhaCadastro = sc.nextInt();
-		gerente1.setSenhaDoCadastroDoSistema(validaCadastro.validacaoDaSenhaDoCadastroDoSistema(senhaCadastro, mensagemDeSenhaCadastro));
+		gerente.setLoginDoCadastroDoSistema(
+				validaCadastro.validacaoDoLoginDoCadastroDoSistema(loginCadastro, mensagemDeLoginCadastro));
 
-		listaGerente.add(gerente1);
+		logger.debug(mensagemDeSenhaCadastro);
+		senhaCadastro = sc.nextInt();
+		gerente.setSenhaDoCadastroDoSistema(
+				validaCadastro.validacaoDaSenhaDoCadastroDoSistema(senhaCadastro, mensagemDeSenhaCadastro));
+
+		listaGerente.add(gerente);
+		
 		bancoDeDadosFuncionario.listaDeRegistroGerente(listaGerente);
 		
+		logger.info("********** GERENTE CADASTRADO COM SUCESSO! **********\n");
 	}
 }
