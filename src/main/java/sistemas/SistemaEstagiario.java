@@ -8,9 +8,9 @@ public class SistemaEstagiario {
 
 	private static final Logger logger = Logger.getLogger(SistemaAuxiliar.class);
 	Scanner sc = new Scanner(System.in);
-	
+
 	public void sistemaEstagiario() {
-		
+
 		logger.info("\n---------- LOGIN REALIZADO COM SUCESSO ----------\n");
 		logger.debug(
 				"Qual acao deseja realizar?\n 1 - Visualizar Projetos\n 2 - Cronograma\n 3 - Anotacoes\n 4 - Calendario\n 5 - Encerrar Sessao\n");
@@ -30,8 +30,7 @@ public class SistemaEstagiario {
 				logger.info("Sessao Encerrada!");
 				break;
 			} else if (acaoEstagiario > 5) {
-				logger.info(
-						"## ACAO NAO ENCONTRADA EM NOSSO SISTEMA, POR FAVOR DIGITE UM VALOR VALIDO ##\n");
+				logger.info("## ACAO NAO ENCONTRADA EM NOSSO SISTEMA, POR FAVOR DIGITE UM VALOR VALIDO ##\n");
 			}
 		}
 	}

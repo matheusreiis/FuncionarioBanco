@@ -32,7 +32,7 @@ public class BancoDeDadosFuncionario {
 				logger.info(System.lineSeparator() + "--------- DADOS DO GERENTE ---------" + System.lineSeparator());
 				logger.info("Nome do Gerente: " + gerente.getId() + " - " + gerente.getNome() + " " + gerente.getSobrenome());
 				logger.info("cpf do Gerente: " + gerente.getCpf());
-				logger.info("Salario do Gerente: R$ %.2f\n" + gerente.getSalario());
+				logger.info("Salario do Gerente: R$ " + gerente.getSalario());
 				logger.info("Idade do Gerente: " + gerente.getIdade());
 				logger.info("Estado Civil do Gerente: " + gerente.getEstadoCivil());
 				logger.info("Login do Gerente: " + gerente.getLoginDoCadastroDoSistema());

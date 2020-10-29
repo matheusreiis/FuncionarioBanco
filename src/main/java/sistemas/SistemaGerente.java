@@ -4,15 +4,13 @@ import java.util.Scanner;
 
 import org.apache.log4j.Logger;
 
-
 public class SistemaGerente {
 
-	
 	private static final Logger logger = Logger.getLogger(SistemaGerente.class);
 	Scanner sc = new Scanner(System.in);
 
-	public void sistemaGerente () {
-		
+	public void sistemaGerente() {
+
 		logger.info("\n---------- LOGIN REALIZADO COM SUCESSO ----------\n");
 		logger.debug(
 				"Qual acao deseja realizar?\n \n1 - Visualizar Projetos\n 2 - Visualizar Ponto\n 3 - Banco de horas\n 4 - Calendario\n 5 - Chat Online\n 6 - Encerrar Sessao\n");
@@ -33,8 +31,7 @@ public class SistemaGerente {
 				logger.info("Sessao Finalizada!");
 				break;
 			} else if (acaoGerente > 6) {
-				logger.info(
-						"## ACAO NAO ENCONTRADA EM NOSSO SISTEMA, POR FAVOR DIGITE UM VALOR VALIDO ##\n");
+				logger.info("## ACAO NAO ENCONTRADA EM NOSSO SISTEMA, POR FAVOR DIGITE UM VALOR VALIDO ##\n");
 			}
 
 			logger.info(

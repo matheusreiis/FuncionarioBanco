@@ -1,32 +1,34 @@
 package validadores;
 
+import java.util.List;
 import java.util.Scanner;
 
 import org.apache.log4j.Logger;
 
 import entities.Funcionario;
-import entities.Gerente;
 import interfaces.IValidadorDoBancoDeDados;
+import sistemas.AutenticacaoSistema;
 
-public class ValidadorDeBancoDeDados implements IValidadorDoBancoDeDados{
-	
+public class ValidadorDeBancoDeDados implements IValidadorDoBancoDeDados {
+
 	private static final Logger logger = Logger.getLogger(ValidadorDeBancoDeDados.class);
 	Scanner sc = new Scanner(System.in);
-	Funcionario gerente1 = new Gerente();
 	ValidadorDeAutenticacaoDoSistema validaSistema = new ValidadorDeAutenticacaoDoSistema();
-	
-	int loginAutenticacao;
-	int senhaAutenticacao;
-	
-	public void validaBancoGerente(String mensagemDeLogin, String mensagemDeSenha) {
-		
+	AutenticacaoSistema autenticaSistema = new AutenticacaoSistema();
+
+	String mensagemDeLogin = "Digite seu login: ";
+	String mensagemDeSenha = "Digite sua senha: ";
+
+	public void validaBancoGerente(int loginAutenticacao, int senhaAutenticacao, List<Funcionario> listaGerente) {
+
 		logger.info(mensagemDeLogin);
 		loginAutenticacao = sc.nextInt();
-		gerente1.setloginAutenticacao(validaSistema.validacaoDoLoginDoSistema(loginAutenticacao, mensagemDeLogin));
-		
+		validaSistema.validacaoDoLoginDoSistema(loginAutenticacao, mensagemDeLogin);
+
 		logger.info(mensagemDeSenha);
 		senhaAutenticacao = sc.nextInt();
-		gerente1.setsenhaAutenticacao(validaSistema.validacaoDaSenhaDoSistema(senhaAutenticacao, mensagemDeSenha));
-	
-	}	
+		validaSistema.validacaoDaSenhaDoSistema(senhaAutenticacao, mensagemDeSenha);
+
+		autenticaSistema.autenticaSistemaGerente(loginAutenticacao, senhaAutenticacao, listaGerente);
+	}
 }

@@ -6,9 +6,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
 import java.util.List;
 import java.util.Properties;
+
 
 import org.apache.log4j.Logger;
 
@@ -30,19 +30,21 @@ public class ArquivoDeGerente {
 
 		Properties props = getProp();
 		File file = new File(props.getProperty("path.arquivo.arquivoGerente"));
+		Path path = Paths.get(props.getProperty("path.arquivo.arquivoGerente"));
 
 		try {
-			for (Funcionario arquivos : listaGerente) {
+			for (Funcionario gerentes : listaGerente) {
 				if (!file.exists()) {
 					file.createNewFile();
-				} else {
-					Files.move(listaGerente, file);
 				}
+
+				String str = gerentes.toString();
+				byte[] bs = str.getBytes();
+				Path writtenFilePath = Files.write(path, bs);
+				logger.info("Written content in file:\n" + new String(Files.readAllBytes(writtenFilePath)));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 	}
-
 }

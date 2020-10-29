@@ -1,10 +1,11 @@
 package principal;
 
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
 import org.apache.log4j.Logger;
+
 import bancoDeDados.BancoDeDadosFuncionario;
 import bancoDeDados.CadastroAuxiliarBancoDeDados;
 import bancoDeDados.CadastroEstagiarioBancoDeDados;
@@ -15,7 +16,6 @@ import entities.Funcionario;
 import entities.Gerente;
 import sistemas.SistemaAuxiliar;
 import sistemas.SistemaEstagiario;
-import sistemas.SistemaGerente;
 import util.CalculadoraDaBonificacaoServico;
 import validadores.ValidadorDeBancoDeDados;
 
@@ -34,12 +34,14 @@ public class PrincipalMain {
 		CadastroGerenteBancoDeDados cadastrarGerente = new CadastroGerenteBancoDeDados();
 		CadastroAuxiliarBancoDeDados cadastrarAuxiliar = new CadastroAuxiliarBancoDeDados();
 		CadastroEstagiarioBancoDeDados cadastrarEstagiario = new CadastroEstagiarioBancoDeDados();
-		SistemaGerente sistemaGerente = new SistemaGerente();
 		SistemaAuxiliar sistemaAuxiliar = new SistemaAuxiliar();
 		SistemaEstagiario sistemaEstagiario = new SistemaEstagiario();
 		List<Funcionario> listaGerente = new ArrayList<>();
 		List<Funcionario> listaAuxiliar = new ArrayList<>();
 		List<Funcionario> listaEstagiario = new ArrayList<>();
+
+		int loginAutenticacao = 0;
+		int senhaAutenticacao = 0;
 
 		logger.info("BEM VINDO AO SISTEMA DA EMPRESA DATACORE SOLUTIONS!" + System.lineSeparator());
 
@@ -57,50 +59,36 @@ public class PrincipalMain {
 				if (listaGerente.size() == 0) {
 					bancoDeDadosFuncionario.listaDeRegistroGerente(listaGerente);
 				} else {
-						for (i = 0; i < listaGerente.size(); i++) {
-							Gerente gerente = (Gerente) listaGerente.get(i);
-							logger.debug(gerente.getId() + " - " + gerente.getNome() + " " + gerente.getSobrenome());
-						}
+					for (i = 0; i < listaGerente.size(); i++) {
+						Gerente gerente = (Gerente) listaGerente.get(i);
+						logger.info(gerente.getId() + " - " + gerente.getNome() + " " + gerente.getSobrenome());
+					}
 				}
-				logger.info(System.lineSeparator());
 				logger.info("Solicite um sistema Gerente para entrar: ");
 
 				int acaoLobby2 = sc.nextInt();
 
 				if (acaoLobby2 > 0) {
-
-					int loginAutenticacao = 0;
-					int senhaAutenticacao = 0;
-					String mensagemDeLogin = "Digite seu login: ";
-					String mensagemDeSenha = "Digite sua senha: ";
-					validaBanco.validaBancoGerente(mensagemDeLogin, mensagemDeSenha);
-
-					int loginCadastro = 0;
-					int senhaCadastro = 0;
-
-					if (loginAutenticacao == loginCadastro && senhaAutenticacao == senhaCadastro) {
-						sistemaGerente.sistemaGerente();
-					}
+					validaBanco.validaBancoGerente(loginAutenticacao, senhaAutenticacao, listaGerente);
 				}
 
 			} else if (acaoLobby == 2) {
 				logger.info("---------- CONTA AUXILIAR ----------" + System.lineSeparator());
 				logger.info(" Contas Auxiliar ativas:\n ");
-				
+
 				if (listaAuxiliar.size() == 0) {
 					bancoDeDadosFuncionario.listaDeRegistroAuxiliar(listaAuxiliar);
 				} else {
-						for (i = 0; i < listaAuxiliar.size(); i++) {
-							Auxiliar auxiliar = (Auxiliar) listaAuxiliar.get(i);
-							logger.debug(auxiliar.getNome() + " " + auxiliar.getSobrenome());
-						}
+					for (i = 0; i < listaAuxiliar.size(); i++) {
+						Auxiliar auxiliar = (Auxiliar) listaAuxiliar.get(i);
+						logger.info(auxiliar.getNome() + " " + auxiliar.getSobrenome());
+					}
 				}
-
 				int acaoLobby2 = sc.nextInt();
 
 				if (acaoLobby2 == 1) {
 
-					logger.debug("\n Bem vindo novamente Sr. " + auxiliar1.getNome() + " " + auxiliar1.getSobrenome());
+					logger.info("\n Bem vindo novamente Sr. " + auxiliar1.getNome() + " " + auxiliar1.getSobrenome());
 					System.out.println();
 					logger.debug("Digite seu login: ");
 					String validacaoDoSistema = sc.next();
@@ -110,25 +98,24 @@ public class PrincipalMain {
 					// auxiliar1.setValidacaoDoSistema(validacaoDoSistema);
 					System.out.println();
 
-
 					int a = 0;
 					int b = 0;
 					if (a > b) {
-						
+
 						sistemaAuxiliar.sistemaAuxiliar();
 					}
 				}
 			} else if (acaoLobby == 3) {
 				logger.info("---------- CONTA ESTAGIARIO ----------" + System.lineSeparator());
 				logger.info(" Contas Estagiario ativas:\n ");
-				
+
 				if (listaEstagiario.size() == 0) {
 					bancoDeDadosFuncionario.listaDeRegistroEstagiario(listaEstagiario);
 				} else {
-						for (i = 0; i < listaEstagiario.size(); i++) {
-							Estagiario estagiario = (Estagiario) listaEstagiario.get(i);
-							logger.debug(estagiario.getNome() + " " + estagiario.getSobrenome());
-						}
+					for (i = 0; i < listaEstagiario.size(); i++) {
+						Estagiario estagiario = (Estagiario) listaEstagiario.get(i);
+						logger.debug(estagiario.getNome() + " " + estagiario.getSobrenome());
+					}
 				}
 
 				int acaoLobby2 = sc.nextInt();
@@ -148,7 +135,7 @@ public class PrincipalMain {
 					int a = 0;
 					int b = 0;
 					if (a > b) {
-						
+
 						sistemaEstagiario.sistemaEstagiario();
 					}
 				}

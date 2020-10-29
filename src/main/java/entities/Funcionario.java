@@ -1,5 +1,6 @@
 package entities;
 
+
 public abstract class Funcionario {
 
 	int id;
@@ -12,8 +13,7 @@ public abstract class Funcionario {
 	double porcentagemDaBonificacao;
 	int loginDoCadastroDoSistema;
 	int senhaDoCadastroDoSistema;
-	int loginAutenticacao;
-	int senhaAutenticacao;
+
 
 	public double getSalario() {
 		return salario;
@@ -57,22 +57,6 @@ public abstract class Funcionario {
 
 	public void setSenhaDoCadastroDoSistema(int senhaDoCadastroDoSistema) {
 		this.senhaDoCadastroDoSistema = senhaDoCadastroDoSistema;
-	}
-
-	public int getloginAutenticacao() {
-		return loginAutenticacao;
-	}
-
-	public void setloginAutenticacao(int loginAutenticacao) {
-		this.loginAutenticacao = loginAutenticacao;
-	}
-
-	public int getsenhaAutenticacao() {
-		return senhaAutenticacao;
-	}
-
-	public void setsenhaAutenticacao(int senhaAutenticacao) {
-		this.senhaAutenticacao = senhaAutenticacao;
 	}
 
 	public void setSobrenome(String sobrenome) {
