@@ -19,8 +19,7 @@ public class ValidadorDeCpf implements IValidadorDeCpf {
 				String valueOf = "";
 				valueOf = extracted(cpf);
 				while (valueOf.length() != 11) {
-					logger.debug("##### Por favor insira 11 digitos para validar seu cpf #####");
-					System.out.println();
+					logger.debug("##### Por favor insira 11 digitos para validar seu cpf #####" + System.lineSeparator());
 					logger.info(mensagemCpf);
 					cpf = sc.nextLong();
 					valueOf = extracted(cpf);
@@ -28,8 +27,7 @@ public class ValidadorDeCpf implements IValidadorDeCpf {
 				}
 				validaErroCatch = false;
 			} catch (InputMismatchException e) {
-				logger.error("##### CPF INVALIDO ##### ");
-				System.out.println();
+				logger.error("##### CPF INVALIDO ##### " + System.lineSeparator());
 				sc.nextLine();
 				logger.info(mensagemCpf);
 				validaErroCatch = true;

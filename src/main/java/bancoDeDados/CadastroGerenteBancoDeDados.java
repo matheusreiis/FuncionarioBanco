@@ -12,6 +12,7 @@ import validadores.ValidadorDeCpf;
 import validadores.ValidadorDeEstadoCivil;
 import validadores.ValidadorDeId;
 import validadores.ValidadorDeIdade;
+import validadores.ValidadorDeNomeESobrenome;
 import validadores.ValidadorDeSalario;
 
 public class CadastroGerenteBancoDeDados {
@@ -26,6 +27,7 @@ public class CadastroGerenteBancoDeDados {
 	ValidadorDeSalario validaSalario = new ValidadorDeSalario();
 	ValidadorDeCadastroDoSistema validaCadastro = new ValidadorDeCadastroDoSistema();
 	ValidadorDeId validaId = new ValidadorDeId();
+	ValidadorDeNomeESobrenome validaNomeESobrenome = new ValidadorDeNomeESobrenome();
 
 	int id;
 	String nome;
@@ -37,7 +39,8 @@ public class CadastroGerenteBancoDeDados {
 	int loginCadastro;
 	int senhaCadastro;
 	String mensagemId = "Cadastre o Id do Gerente: ";
-	String mensagemNome = "Cadastre o nome e sobrenome do Gerente: ";
+	String mensagemNome = "Cadastre o nome do Gerente: ";
+	String mensagemSobrenome = "Cadastre o sobrenome do Gerente: ";
 	String mensagemCpf = "Cadastre o cpf do Gerente: ";
 	String mensagemSalario = "Cadastre um salario do Gerente: ";
 	String mensagemIdade = "Cadastre uma idade do Gerente: ";
@@ -53,14 +56,15 @@ public class CadastroGerenteBancoDeDados {
 		
 		logger.debug(mensagemId);
 		id = sc.nextInt();
-		gerente.setId(id);
 		gerente.setId(validaId.validacaoDeId(id, mensagemId));
 
 		logger.debug(mensagemNome);
 		nome = sc.next();
+		gerente.setNome(validaNomeESobrenome.validaNome(nome, mensagemNome));
+		
+		logger.debug(mensagemSobrenome);
 		sobrenome = sc.next();
-		gerente.setNome(nome);
-		gerente.setSobrenome(sobrenome);
+		gerente.setSobrenome(validaNomeESobrenome.validaSobrenome(sobrenome, mensagemSobrenome));
 
 		logger.debug(mensagemCpf);
 		cpf = sc.nextLong();
@@ -75,6 +79,7 @@ public class CadastroGerenteBancoDeDados {
 		gerente.setIdade(validaIdade.validaIdade(idade, mensagemIdade));
 
 		logger.debug(mensagemEstadoCivil);
+		estadoCivil = sc.next();
 		gerente.setEstadoCivil(validaEstadoCivil.validaEstadoCivil(estadoCivil, mensagemEstadoCivil));
 
 		logger.debug(mensagemDeLoginCadastro);

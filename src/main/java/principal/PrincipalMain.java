@@ -1,6 +1,7 @@
 package principal;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
@@ -14,8 +15,7 @@ import entities.Auxiliar;
 import entities.Estagiario;
 import entities.Funcionario;
 import entities.Gerente;
-import sistemas.SistemaAuxiliar;
-import sistemas.SistemaEstagiario;
+
 import util.CalculadoraDaBonificacaoServico;
 import validadores.ValidadorDeBancoDeDados;
 
@@ -26,16 +26,12 @@ public class PrincipalMain {
 	public static void main(String[] args) throws Exception {
 
 		Scanner sc = new Scanner(System.in);
-		Auxiliar auxiliar1 = new Auxiliar();
-		Estagiario estagiario1 = new Estagiario();
 		CalculadoraDaBonificacaoServico calculadoraDaBonificacao = new CalculadoraDaBonificacaoServico();
 		BancoDeDadosFuncionario bancoDeDadosFuncionario = new BancoDeDadosFuncionario();
 		ValidadorDeBancoDeDados validaBanco = new ValidadorDeBancoDeDados();
 		CadastroGerenteBancoDeDados cadastrarGerente = new CadastroGerenteBancoDeDados();
 		CadastroAuxiliarBancoDeDados cadastrarAuxiliar = new CadastroAuxiliarBancoDeDados();
 		CadastroEstagiarioBancoDeDados cadastrarEstagiario = new CadastroEstagiarioBancoDeDados();
-		SistemaAuxiliar sistemaAuxiliar = new SistemaAuxiliar();
-		SistemaEstagiario sistemaEstagiario = new SistemaEstagiario();
 		List<Funcionario> listaGerente = new ArrayList<>();
 		List<Funcionario> listaAuxiliar = new ArrayList<>();
 		List<Funcionario> listaEstagiario = new ArrayList<>();
@@ -63,7 +59,7 @@ public class PrincipalMain {
 						Gerente gerente = (Gerente) listaGerente.get(i);
 						logger.info(gerente.getId() + " - " + gerente.getNome() + " " + gerente.getSobrenome());
 					}
-				}
+				} 		
 				logger.info("Solicite um sistema Gerente para entrar: ");
 
 				int acaoLobby2 = sc.nextInt();
@@ -84,26 +80,12 @@ public class PrincipalMain {
 						logger.info(auxiliar.getNome() + " " + auxiliar.getSobrenome());
 					}
 				}
+				logger.info("Solicite um sistema Auxiliar para entrar: ");
+				
 				int acaoLobby2 = sc.nextInt();
 
-				if (acaoLobby2 == 1) {
-
-					logger.info("\n Bem vindo novamente Sr. " + auxiliar1.getNome() + " " + auxiliar1.getSobrenome());
-					System.out.println();
-					logger.debug("Digite seu login: ");
-					String validacaoDoSistema = sc.next();
-					// auxiliar1.setValidacaoDoSistema(validacaoDoSistema);
-					logger.debug("Digite sua senha: ");
-					validacaoDoSistema = sc.next();
-					// auxiliar1.setValidacaoDoSistema(validacaoDoSistema);
-					System.out.println();
-
-					int a = 0;
-					int b = 0;
-					if (a > b) {
-
-						sistemaAuxiliar.sistemaAuxiliar();
-					}
+				if (acaoLobby2 > 0) {
+						validaBanco.validaBancoAuxiliar(loginAutenticacao, senhaAutenticacao, listaAuxiliar);
 				}
 			} else if (acaoLobby == 3) {
 				logger.info("---------- CONTA ESTAGIARIO ----------" + System.lineSeparator());
@@ -117,28 +99,13 @@ public class PrincipalMain {
 						logger.debug(estagiario.getNome() + " " + estagiario.getSobrenome());
 					}
 				}
-
+				logger.info("Solicite um sistema Auxiliar para entrar: ");
+				
 				int acaoLobby2 = sc.nextInt();
 
-				if (acaoLobby2 == 1) {
-					logger.debug(
-							"\n Bem vindo novamente Sr. " + estagiario1.getNome() + " " + estagiario1.getSobrenome());
-					System.out.println();
-					logger.debug("Digite seu login: ");
-					String validacaoDoSistema = sc.next();
-					// estagiario1.setValidacaoDoSistema(validacaoDoSistema);
-					logger.debug("Digite sua senha: ");
-					validacaoDoSistema = sc.next();
-					// estagiario1.setValidacaoDoSistema(validacaoDoSistema);
-					System.out.println();
-
-					int a = 0;
-					int b = 0;
-					if (a > b) {
-
-						sistemaEstagiario.sistemaEstagiario();
+				if (acaoLobby2 > 0) {
+						validaBanco.validaBancoEstagiario(loginAutenticacao, senhaAutenticacao, listaEstagiario);
 					}
-				}
 			} else if (acaoLobby == 4) {
 
 				logger.info("---------- CADASTRO DE FUNCIONARIO ----------");
@@ -157,6 +124,7 @@ public class PrincipalMain {
 				}
 
 			} else if (acaoLobby == 5) {
+				logger.info("Encerrando Sessao!" + "\n." + "\n." + "\n.");
 				logger.info("Sessao Encerrada!");
 				break;
 			} else if (acaoLobby > 5) {
@@ -167,7 +135,6 @@ public class PrincipalMain {
 				System.out.println();
 				logger.info("Tente novamente mais tarde.\n ");
 			}
-
 			logger.debug(
 					"---------- Digite o Seu Cargo ----------\n \n 1 - Gerente\n 2 - Auxiliar\n 3 - Estagiario\n 4 - Cadastrar Funcionario\n 5 - Encerrar Sessao!");
 			acaoLobby = sc.nextInt();

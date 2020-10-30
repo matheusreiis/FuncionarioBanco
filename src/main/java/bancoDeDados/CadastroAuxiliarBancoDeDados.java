@@ -12,6 +12,7 @@ import validadores.ValidadorDeCpf;
 import validadores.ValidadorDeEstadoCivil;
 import validadores.ValidadorDeId;
 import validadores.ValidadorDeIdade;
+import validadores.ValidadorDeNomeESobrenome;
 import validadores.ValidadorDeSalario;
 
 public class CadastroAuxiliarBancoDeDados {
@@ -19,7 +20,6 @@ public class CadastroAuxiliarBancoDeDados {
 	private static final Logger logger = Logger.getLogger(CadastroAuxiliarBancoDeDados.class);
 
 	Scanner sc = new Scanner(System.in);
-
 	BancoDeDadosFuncionario bancoDeDadosFuncionario = new BancoDeDadosFuncionario();
 	ValidadorDeCpf validaCpf = new ValidadorDeCpf();
 	ValidadorDeEstadoCivil validaEstadoCivil = new ValidadorDeEstadoCivil();
@@ -27,6 +27,7 @@ public class CadastroAuxiliarBancoDeDados {
 	ValidadorDeSalario validaSalario = new ValidadorDeSalario();
 	ValidadorDeCadastroDoSistema validaCadastro = new ValidadorDeCadastroDoSistema();
 	ValidadorDeId validaId = new ValidadorDeId();
+	ValidadorDeNomeESobrenome validaNomeESobrenome = new ValidadorDeNomeESobrenome();
 	
 	int id;
 	String nome;
@@ -39,7 +40,8 @@ public class CadastroAuxiliarBancoDeDados {
 	int senhaCadastro;
 	String estadoCivil;
 	String mensagemId = "Cadastre o Id do Auxiliar: ";
-	String mensagemNome = "Cadastre o nome e sobrenome do Auxiliar: ";
+	String mensagemNome = "Cadastre o nome do Auxiliar: ";
+	String mensagemSobrenome = "Cadastre o sobrenome do Gerente: ";
 	String mensagemCpf = "Cadastre o cpf do Auxiliar: ";
 	String mensagemSalario = "Cadastre um salario do Auxiliar: ";
 	String mensagemIdade = "Cadastre uma idade do Auxiliar: ";
@@ -49,7 +51,7 @@ public class CadastroAuxiliarBancoDeDados {
 	
 
 	public void cadastroAuxiliar(List<Funcionario> listaAuxiliar) {
-
+		
 		Auxiliar auxiliar = new Auxiliar();
 
 		logger.info("\n---------- CADASTRO AUXILIAR ---------" + System.lineSeparator());
@@ -60,20 +62,26 @@ public class CadastroAuxiliarBancoDeDados {
 		
 		logger.debug(mensagemNome);
 		nome = sc.next();
+		auxiliar.setNome(validaNomeESobrenome.validaNome(nome, mensagemNome));
+		
+		logger.debug(mensagemSobrenome);
 		sobrenome = sc.next();
-		auxiliar.setNome(nome);
-		auxiliar.setSobrenome(sobrenome);
+		auxiliar.setSobrenome(validaNomeESobrenome.validaSobrenome(sobrenome, mensagemSobrenome));
 
 		logger.debug(mensagemCpf);
+		cpf = sc.nextLong();
 		auxiliar.setCpf(validaCpf.validaCpf(cpf, mensagemCpf));
 
 		logger.debug(mensagemSalario);
+		salario = sc.nextDouble();
 		auxiliar.setSalario(validaSalario.validaSalario(salario, mensagemSalario));
 
 		logger.debug(mensagemIdade);
+		idade = sc.nextInt();
 		auxiliar.setIdade(validaIdade.validaIdade(idade, mensagemIdade));
 
 		logger.debug(mensagemEstadoCivil);
+		estadoCivil = sc.next();
 		auxiliar.setEstadoCivil(validaEstadoCivil.validaEstadoCivil(estadoCivil, mensagemEstadoCivil));
 
 		logger.debug("Cadastre um login com ate 6 digitos: ");
