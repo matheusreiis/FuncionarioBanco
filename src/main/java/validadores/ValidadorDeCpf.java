@@ -8,7 +8,7 @@ import org.apache.log4j.Logger;
 import interfaces.IValidadorDeCpf;
 
 public class ValidadorDeCpf implements IValidadorDeCpf {
-	
+
 	private static final Logger logger = Logger.getLogger(ValidadorDeCpf.class);
 	Scanner sc = new Scanner(System.in);
 
@@ -31,7 +31,7 @@ public class ValidadorDeCpf implements IValidadorDeCpf {
 				sc.nextLine();
 				logger.info(mensagemCpf);
 				validaErroCatch = true;
-			}
+			} 
 		}
 		return cpf;
 	}

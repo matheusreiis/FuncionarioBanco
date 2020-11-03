@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 
 import entities.Funcionario;
 import entities.Gerente;
+import util.GeradorDeId;
 import validadores.ValidadorDeCadastroDoSistema;
 import validadores.ValidadorDeCpf;
 import validadores.ValidadorDeEstadoCivil;
@@ -28,6 +29,7 @@ public class CadastroGerenteBancoDeDados {
 	ValidadorDeCadastroDoSistema validaCadastro = new ValidadorDeCadastroDoSistema();
 	ValidadorDeId validaId = new ValidadorDeId();
 	ValidadorDeNomeESobrenome validaNomeESobrenome = new ValidadorDeNomeESobrenome();
+	GeradorDeId geraId = new GeradorDeId();
 
 	int id;
 	String nome;
@@ -38,7 +40,6 @@ public class CadastroGerenteBancoDeDados {
 	String estadoCivil;
 	int loginCadastro;
 	int senhaCadastro;
-	String mensagemId = "Cadastre o Id do Gerente: ";
 	String mensagemNome = "Cadastre o nome do Gerente: ";
 	String mensagemSobrenome = "Cadastre o sobrenome do Gerente: ";
 	String mensagemCpf = "Cadastre o cpf do Gerente: ";
@@ -54,9 +55,7 @@ public class CadastroGerenteBancoDeDados {
 		
 		logger.info("---------- CADASTRO GERENTE ---------" + System.lineSeparator());
 		
-		logger.debug(mensagemId);
-		id = sc.nextInt();
-		gerente.setId(validaId.validacaoDeId(id, mensagemId));
+		gerente.setId(geraId.gerarId());
 
 		logger.debug(mensagemNome);
 		nome = sc.next();

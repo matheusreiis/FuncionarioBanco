@@ -1,7 +1,6 @@
 package principal;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
@@ -15,7 +14,6 @@ import entities.Auxiliar;
 import entities.Estagiario;
 import entities.Funcionario;
 import entities.Gerente;
-
 import util.CalculadoraDaBonificacaoServico;
 import validadores.ValidadorDeBancoDeDados;
 
@@ -50,62 +48,106 @@ public class PrincipalMain {
 
 			if (acaoLobby == 1) {
 				logger.info("---------- CONTA GERENTE ----------" + System.lineSeparator());
-				logger.info(" Contas Gerente ativas:\n ");
 
 				if (listaGerente.size() == 0) {
 					bancoDeDadosFuncionario.listaDeRegistroGerente(listaGerente);
 				} else {
+					logger.info(" Contas Gerente ativas:\n ");
 					for (i = 0; i < listaGerente.size(); i++) {
 						Gerente gerente = (Gerente) listaGerente.get(i);
 						logger.info(gerente.getId() + " - " + gerente.getNome() + " " + gerente.getSobrenome());
 					}
-				} 		
-				logger.info("Solicite um sistema Gerente para entrar: ");
 
-				int acaoLobby2 = sc.nextInt();
+					boolean validaErroId = true;
+					while (validaErroId) {
+						logger.info("Solicite um sistema Gerente para entrar: ");
 
-				if (acaoLobby2 > 0) {
-					validaBanco.validaBancoGerente(loginAutenticacao, senhaAutenticacao, listaGerente);
+						int acaoLobby2 = sc.nextInt();
+
+						for (Funcionario gerente : listaGerente) {
+							if (acaoLobby2 == gerente.getId()) {
+								logger.info(
+										"---------- AUTENTICANDO SISTEMA GERENTE ----------" + "\n." + "\n." + "\n.");
+								logger.info("Bem vindo(a) novamente Sr. " + gerente.getNome());
+								validaBanco.validaBancoGerente(loginAutenticacao, senhaAutenticacao, listaGerente);
+							} else {
+								logger.error(
+										"#### Id inexistente, por favor insira um id existente para entrar no sistema! ####"
+												+ System.lineSeparator());
+								validaErroId = true;
+							}
+						}
+					}
 				}
 
 			} else if (acaoLobby == 2) {
 				logger.info("---------- CONTA AUXILIAR ----------" + System.lineSeparator());
-				logger.info(" Contas Auxiliar ativas:\n ");
 
 				if (listaAuxiliar.size() == 0) {
 					bancoDeDadosFuncionario.listaDeRegistroAuxiliar(listaAuxiliar);
 				} else {
+					logger.info(" Contas Auxiliar ativas:\n ");
 					for (i = 0; i < listaAuxiliar.size(); i++) {
 						Auxiliar auxiliar = (Auxiliar) listaAuxiliar.get(i);
 						logger.info(auxiliar.getNome() + " " + auxiliar.getSobrenome());
 					}
-				}
-				logger.info("Solicite um sistema Auxiliar para entrar: ");
-				
-				int acaoLobby2 = sc.nextInt();
 
-				if (acaoLobby2 > 0) {
-						validaBanco.validaBancoAuxiliar(loginAutenticacao, senhaAutenticacao, listaAuxiliar);
+					boolean validaErroId = true;
+					while (validaErroId) {
+						logger.info("Solicite um sistema Auxiliar para entrar: ");
+
+						int acaoLobby2 = sc.nextInt();
+
+						for (Funcionario auxiliar : listaAuxiliar) {
+							if (acaoLobby2 == auxiliar.getId()) {
+								logger.info(
+										"---------- AUTENTICANDO SISTEMA GERENTE ----------" + "\n." + "\n." + "\n.");
+								logger.info("Bem vindo(a) novamente Sr. " + auxiliar.getNome());
+								validaBanco.validaBancoAuxiliar(loginAutenticacao, senhaAutenticacao, listaAuxiliar);
+							} else {
+								logger.error(
+										"#### Id inexistente, por favor insira um id existente para entrar no sistema! ####"
+												+ System.lineSeparator());
+								validaErroId = true;
+							}
+						}
+					}
 				}
 			} else if (acaoLobby == 3) {
 				logger.info("---------- CONTA ESTAGIARIO ----------" + System.lineSeparator());
-				logger.info(" Contas Estagiario ativas:\n ");
+				
 
 				if (listaEstagiario.size() == 0) {
 					bancoDeDadosFuncionario.listaDeRegistroEstagiario(listaEstagiario);
 				} else {
+					logger.info(" Contas Estagiario ativas:\n ");
 					for (i = 0; i < listaEstagiario.size(); i++) {
 						Estagiario estagiario = (Estagiario) listaEstagiario.get(i);
 						logger.debug(estagiario.getNome() + " " + estagiario.getSobrenome());
 					}
-				}
-				logger.info("Solicite um sistema Auxiliar para entrar: ");
-				
-				int acaoLobby2 = sc.nextInt();
 
-				if (acaoLobby2 > 0) {
-						validaBanco.validaBancoEstagiario(loginAutenticacao, senhaAutenticacao, listaEstagiario);
+					boolean validaErroId = true;
+					while (validaErroId) {
+						logger.info("Solicite um sistema Auxiliar para entrar: ");
+
+						int acaoLobby2 = sc.nextInt();
+
+						for (Funcionario estagiario : listaEstagiario) {
+							if (acaoLobby2 == estagiario.getId()) {
+								logger.info(
+										"---------- AUTENTICANDO SISTEMA GERENTE ----------" + "\n." + "\n." + "\n.");
+								logger.info("Bem vindo(a) novamente Sr. " + estagiario.getNome());
+								validaBanco.validaBancoEstagiario(loginAutenticacao, senhaAutenticacao,
+										listaEstagiario);
+							} else {
+								logger.error(
+										"#### Id inexistente, por favor insira um id existente para entrar no sistema! ####"
+												+ System.lineSeparator());
+								validaErroId = true;
+							}
+						}
 					}
+				}
 			} else if (acaoLobby == 4) {
 
 				logger.info("---------- CADASTRO DE FUNCIONARIO ----------");

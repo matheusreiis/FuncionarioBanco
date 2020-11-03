@@ -8,15 +8,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.Properties;
-
-
 import org.apache.log4j.Logger;
-
 import entities.Funcionario;
 
 public class ArquivoDeGerente {
-
-	private static final Logger logger = Logger.getLogger(ArquivoDeGerente.class);
 
 	public static Properties getProp() throws IOException {
 		Properties props = new Properties();
@@ -33,15 +28,15 @@ public class ArquivoDeGerente {
 		Path path = Paths.get(props.getProperty("path.arquivo.arquivoGerente"));
 
 		try {
-			for (Funcionario gerentes : listaGerente) {
+			
+			for (Funcionario gerente : listaGerente) {
 				if (!file.exists()) {
-					file.createNewFile();
+				file.createNewFile();
 				}
-
-				String str = gerentes.toString();
+				
+				String str = gerente.getId() + " - " + gerente.getNome() + " " + gerente.getSobrenome();
 				byte[] bs = str.getBytes();
-				Path writtenFilePath = Files.write(path, bs);
-				logger.info("Written content in file:\n" + new String(Files.readAllBytes(writtenFilePath)));
+				Files.write(path, bs);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
