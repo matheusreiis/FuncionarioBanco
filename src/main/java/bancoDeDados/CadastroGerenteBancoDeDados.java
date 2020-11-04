@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 import org.apache.log4j.Logger;
 
+import arquivos.ArquivoDeGerente;
 import entities.Funcionario;
 import entities.Gerente;
 import util.GeradorDeId;
@@ -29,7 +30,8 @@ public class CadastroGerenteBancoDeDados {
 	ValidadorDeCadastroDoSistema validaCadastro = new ValidadorDeCadastroDoSistema();
 	ValidadorDeId validaId = new ValidadorDeId();
 	ValidadorDeNomeESobrenome validaNomeESobrenome = new ValidadorDeNomeESobrenome();
-	GeradorDeId geraId = new GeradorDeId();
+	GeradorDeId statusId = new GeradorDeId();
+	ArquivoDeGerente arquivoGerente = new ArquivoDeGerente();
 
 	int id;
 	String nome;
@@ -48,53 +50,74 @@ public class CadastroGerenteBancoDeDados {
 	String mensagemEstadoCivil = "Cadastre o Estado Civil do Gerente: ";
 	String mensagemDeLoginCadastro = "Digite seu login (6 digitos): ";
 	String mensagemDeSenhaCadastro = "Digite sua senha (6 digitos): ";
+	boolean validaErroCatch = true;
+	boolean validaErroConfirma = true;
 
 	public void cadastroGerente(List<Funcionario> listaGerente) throws Exception {
-		
-		Gerente gerente = new Gerente();
-		
-		logger.info("---------- CADASTRO GERENTE ---------" + System.lineSeparator());
-		
-		gerente.setId(geraId.gerarId());
 
-		logger.debug(mensagemNome);
-		nome = sc.next();
-		gerente.setNome(validaNomeESobrenome.validaNome(nome, mensagemNome));
-		
-		logger.debug(mensagemSobrenome);
-		sobrenome = sc.next();
-		gerente.setSobrenome(validaNomeESobrenome.validaSobrenome(sobrenome, mensagemSobrenome));
+		while (validaErroCatch) {
+			Gerente gerente = new Gerente();
 
-		logger.debug(mensagemCpf);
-		cpf = sc.nextLong();
-		gerente.setCpf(validaCpf.validaCpf(cpf, mensagemCpf));
+			logger.info("---------- CADASTRO GERENTE ---------" + System.lineSeparator());
 
-		logger.debug(mensagemSalario);
-		salario = sc.nextDouble();
-		gerente.setSalario(validaSalario.validaSalario(salario, mensagemSalario));
+			gerente.setId(statusId.gerarId());
 
-		logger.debug(mensagemIdade);
-		idade = sc.nextInt();
-		gerente.setIdade(validaIdade.validaIdade(idade, mensagemIdade));
+			logger.debug(mensagemNome);
+			nome = sc.next();
+			gerente.setNome(validaNomeESobrenome.validaNome(nome, mensagemNome));
 
-		logger.debug(mensagemEstadoCivil);
-		estadoCivil = sc.next();
-		gerente.setEstadoCivil(validaEstadoCivil.validaEstadoCivil(estadoCivil, mensagemEstadoCivil));
+			logger.debug(mensagemSobrenome);
+			sobrenome = sc.next();
+			gerente.setSobrenome(validaNomeESobrenome.validaSobrenome(sobrenome, mensagemSobrenome));
 
-		logger.debug(mensagemDeLoginCadastro);
-		loginCadastro = sc.nextInt();
-		gerente.setLoginDoCadastroDoSistema(
-				validaCadastro.validacaoDoLoginDoCadastroDoSistema(loginCadastro, mensagemDeLoginCadastro));
+			logger.debug(mensagemCpf);
+			gerente.setCpf(validaCpf.validaCpf(cpf, mensagemCpf));
 
-		logger.debug(mensagemDeSenhaCadastro);
-		senhaCadastro = sc.nextInt();
-		gerente.setSenhaDoCadastroDoSistema(
-				validaCadastro.validacaoDaSenhaDoCadastroDoSistema(senhaCadastro, mensagemDeSenhaCadastro));
+			logger.debug(mensagemSalario);
+			salario = sc.nextDouble();
+			gerente.setSalario(validaSalario.validaSalario(salario, mensagemSalario));
 
-		listaGerente.add(gerente);
-		
-		bancoDeDadosFuncionario.listaDeRegistroGerente(listaGerente);
-		
+			logger.debug(mensagemIdade);
+			idade = sc.nextInt();
+			gerente.setIdade(validaIdade.validaIdade(idade, mensagemIdade));
+
+			logger.debug(mensagemEstadoCivil);
+			estadoCivil = sc.next();
+			gerente.setEstadoCivil(validaEstadoCivil.validaEstadoCivil(estadoCivil, mensagemEstadoCivil));
+
+			logger.debug(mensagemDeLoginCadastro);
+			loginCadastro = sc.nextInt();
+			gerente.setLoginDoCadastroDoSistema(
+					validaCadastro.validacaoDoLoginDoCadastroDoSistema(loginCadastro, mensagemDeLoginCadastro));
+
+			logger.debug(mensagemDeSenhaCadastro);
+			senhaCadastro = sc.nextInt();
+			gerente.setSenhaDoCadastroDoSistema(
+					validaCadastro.validacaoDaSenhaDoCadastroDoSistema(senhaCadastro, mensagemDeSenhaCadastro));
+
+			listaGerente.add(gerente);
+			bancoDeDadosFuncionario.listaDeRegistroGerente(listaGerente);
+
+			while (validaErroConfirma) {
+				logger.debug("Confirmar dados do Funcionario (y/n)?");
+				char confirmaDadosGerente = sc.next().charAt(0);
+
+				if (confirmaDadosGerente == 'n') {
+					logger.info("Cadastrando Gerente novamente!");
+					listaGerente.remove(gerente);
+					gerente.setId(statusId.removeId());
+					validaErroCatch = true;
+				} else if (confirmaDadosGerente == 'y') {
+					arquivoGerente.listaDeGerentesAtivos(listaGerente);
+					validaErroConfirma = false;
+					validaErroCatch = false;
+				} else if (confirmaDadosGerente != 'y' && confirmaDadosGerente != 'n') {
+					logger.debug("Por favor, insira 'y' ou 'n' para confirmar os dados do Gerente: "
+							+ System.lineSeparator());
+					validaErroConfirma = true;
+				}
+			}
+		}
 		logger.info("********** GERENTE CADASTRADO COM SUCESSO! **********\n");
 	}
 }

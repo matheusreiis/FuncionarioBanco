@@ -13,7 +13,8 @@ public class SistemaGerente {
 
 		logger.info("\n---------- LOGIN REALIZADO COM SUCESSO ----------\n");
 		logger.debug(
-				"Qual acao deseja realizar?\n \n1 - Visualizar Projetos\n 2 - Visualizar Ponto\n 3 - Dados da conta\n 4 - Banco de horas\n 5 - Calendario\n 6 - Chat Online\n 7 - Encerrar Sessao\n");
+				"Qual acao deseja realizar?\n \n 1 - Visualizar Projetos\n 2 - Visualizar Ponto\n 3 - Dados da conta\n 4 - Banco de horas\n 5 - Calendario\n 6 - Chat Online\n 7 - Encerrar Sessao\n");
+		
 		int acaoGerente = sc.nextInt();
 
 		for (int i = acaoGerente; i == 1 || i == 2 || i == 3 || i == 4 || i == 5 || i == 6 || i == 7 || i > 8; i++) {
@@ -22,7 +23,7 @@ public class SistemaGerente {
 			} else if (acaoGerente == 2) {
 				logger.info("PONTO DE REFORMA");
 			} else if (acaoGerente == 3) {
-				
+				logger.info("DADOS DA CONTA EM REFORMA");
 			} else if (acaoGerente == 4) {
 				logger.info("BANCO DE DADOS EM REFORMA");
 			} else if (acaoGerente == 5) {
@@ -37,7 +38,7 @@ public class SistemaGerente {
 			}
 
 			logger.info(
-					"Qual acao deseja realizar?\n \n1 - Visualizar Projetos\n 2 - Visualizar Ponto\n 3 - Dados da conta\n 4 - Banco de horas\n 5 - Calendario\n 6 - Chat Online\n 7 - Encerrar Sessao\n");
+					"Qual acao deseja realizar?\n \n 1 - Visualizar Projetos\n 2 - Visualizar Ponto\n 3 - Dados da conta\n 4 - Banco de horas\n 5 - Calendario\n 6 - Chat Online\n 7 - Encerrar Sessao\n");
 			acaoGerente = sc.nextInt();
 		}
 	}

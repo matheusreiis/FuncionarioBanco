@@ -15,7 +15,7 @@ public class ValidadorDeSalario implements IValidadorDeSalario {
 		boolean validaErroCatch = true;
 		while (validaErroCatch) {
 			try {
-				while (salario <= 0) {
+				while (salario <= 0 || salario < 1000) {
 					logger.error(
 							"##### SALARIO INVALIDO ##### Por favor insira um salario de no minimo R$ 1000,00");
 					System.out.println();

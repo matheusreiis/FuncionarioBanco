@@ -13,7 +13,7 @@ public class SistemaEstagiario {
 
 		logger.info("\n---------- LOGIN REALIZADO COM SUCESSO ----------\n");
 		logger.debug(
-				"Qual acao deseja realizar?\n \n1 - Visualizar Projetos\n 2 - Visualizar Ponto\n 3 - Dados da conta\n 4 - Banco de horas\n 5 - Calendario\n 6 - Chat Online\n 7 - Encerrar Sessao\n");
+				"Qual acao deseja realizar?\n \n 1 - Visualizar Projetos\n 2 - Visualizar Ponto\n 3 - Dados da conta\n 4 - Banco de horas\n 5 - Calendario\n 6 - Chat Online\n 7 - Encerrar Sessao\n");
 
 		int acaoEstagiario = sc.nextInt();
 
@@ -23,7 +23,7 @@ public class SistemaEstagiario {
 			} else if (acaoEstagiario == 2) {
 				logger.info("PONTO EM REFORMA");
 			} else if (acaoEstagiario == 3) {
-				
+				logger.info("DADOS DA CONTA EM REFORMA");
 			} else if (acaoEstagiario == 4)  {
 				logger.info("BANCO EM REFORMA");
 			} else if (acaoEstagiario == 5) {
@@ -37,7 +37,7 @@ public class SistemaEstagiario {
 				logger.info("## ACAO NAO ENCONTRADA EM NOSSO SISTEMA, POR FAVOR DIGITE UM VALOR VALIDO ##\n");
 			}
 			logger.info(
-					"Qual acao deseja realizar?\n \n1 - Visualizar Projetos\n 2 - Visualizar Ponto\n 3 - Dados da conta\n 4 - Banco de horas\n 5 - Calendario\n 6 - Chat Online\n 7 - Encerrar Sessao\n");
+					"Qual acao deseja realizar?\n \n 1 - Visualizar Projetos\n 2 - Visualizar Ponto\n 3 - Dados da conta\n 4 - Banco de horas\n 5 - Calendario\n 6 - Chat Online\n 7 - Encerrar Sessao\n");
 			acaoEstagiario = sc.nextInt();
 		}
 	}

@@ -18,7 +18,7 @@ public class ValidadorDeAutenticacaoDoSistema implements IAutenticacaoDoSistema 
 				String valueOf = "";
 				valueOf = extracted(loginAutenticacao, loginAutenticacao);
 				while (valueOf.length() != 6) {
-					logger.debug("##### Por favor insira 6 digitos para validar seu login. #####");
+					logger.debug("##### Por favor insira 6 numeros para validar seu login. #####");
 					System.out.println();
 					logger.info(mensagemDeLogin);
 					loginAutenticacao = sc.nextInt();
@@ -43,7 +43,7 @@ public class ValidadorDeAutenticacaoDoSistema implements IAutenticacaoDoSistema 
 				String valueOf = "";
 				valueOf = extracted(senhaAutenticacao, senhaAutenticacao);
 				while (valueOf.length() != 6) {
-					logger.debug("\n##### Por favor insira 6 digitos para validar sua nova senha. #####");
+					logger.debug("\n##### Por favor insira 6 numeros para validar sua nova senha. #####");
 					System.out.println();
 					logger.info(mensagemDeSenha);
 					senhaAutenticacao = sc.nextInt();

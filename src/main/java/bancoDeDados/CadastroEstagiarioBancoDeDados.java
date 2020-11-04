@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 import org.apache.log4j.Logger;
 
+import arquivos.ArquivoDeEstagiario;
 import entities.Estagiario;
 import entities.Funcionario;
 import util.GeradorDeId;
@@ -17,7 +18,7 @@ import validadores.ValidadorDeNomeESobrenome;
 import validadores.ValidadorDeSalario;
 
 public class CadastroEstagiarioBancoDeDados {
-	
+
 	private static final Logger logger = Logger.getLogger(CadastroEstagiarioBancoDeDados.class);
 
 	Scanner sc = new Scanner(System.in);
@@ -29,8 +30,9 @@ public class CadastroEstagiarioBancoDeDados {
 	ValidadorDeCadastroDoSistema validaCadastro = new ValidadorDeCadastroDoSistema();
 	ValidadorDeId validaId = new ValidadorDeId();
 	ValidadorDeNomeESobrenome validaNomeESobrenome = new ValidadorDeNomeESobrenome();
-	GeradorDeId geraId = new GeradorDeId();
-	
+	GeradorDeId statusId = new GeradorDeId();
+	ArquivoDeEstagiario arquivoEstagiario = new ArquivoDeEstagiario();
+
 	int id;
 	String nome;
 	String sobrenome;
@@ -42,32 +44,33 @@ public class CadastroEstagiarioBancoDeDados {
 	int senhaCadastro;
 	String estadoCivil;
 	String mensagemNome = "Cadastre o nome do Estagiario: ";
-	String mensagemSobrenome = "Cadastre o sobrenome do Gerente: ";
+	String mensagemSobrenome = "Cadastre o sobrenome do Estagiario: ";
 	String mensagemCpf = "Cadastre o cpf do Estagiario: ";
 	String mensagemSalario = "Cadastre um salario do Estagiario: ";
 	String mensagemIdade = "Cadastre uma idade do Estagiario: ";
 	String mensagemEstadoCivil = "Cadastre o Estado Civil do Estagiario: ";
-	String mensagemDeLoginCadastro = "Digite seu login (6 digitos): ";
-	String mensagemDeSenhaCadastro = "Digite sua senha (6 digitos): ";
+	String mensagemDeLoginCadastro = "Digite seu login (6 numeros): ";
+	String mensagemDeSenhaCadastro = "Digite sua senha (6 numeros): ";
+	boolean validaErroCatch = true;
+	boolean validaErroConfirma = true;
 
-	public void cadastroEstagiario(List<Funcionario> listaEstagiario) {
-		
+	public void cadastroEstagiario(List<Funcionario> listaEstagiario) throws Exception {
+
 		Estagiario estagiario = new Estagiario();
-		
-		logger.info("\n---------- CADASTRO ESTAGIARIO ---------" + System.lineSeparator());
-		
-		estagiario.setId(geraId.gerarId());
+
+		logger.info("---------- CADASTRO ESTAGIARIO ---------" + System.lineSeparator());
+
+		estagiario.setId(statusId.gerarId());
 
 		logger.debug(mensagemNome);
 		nome = sc.next();
 		estagiario.setNome(validaNomeESobrenome.validaNome(nome, mensagemNome));
-		
+
 		logger.debug(mensagemSobrenome);
 		sobrenome = sc.next();
 		estagiario.setSobrenome(validaNomeESobrenome.validaSobrenome(sobrenome, mensagemSobrenome));
 
 		logger.debug(mensagemCpf);
-		cpf = sc.nextLong();
 		estagiario.setCpf(validaCpf.validaCpf(cpf, mensagemCpf));
 
 		logger.debug(mensagemSalario);
@@ -82,20 +85,38 @@ public class CadastroEstagiarioBancoDeDados {
 		estadoCivil = sc.next();
 		estagiario.setEstadoCivil(validaEstadoCivil.validaEstadoCivil(estadoCivil, mensagemEstadoCivil));
 
-		logger.debug("Cadastre um login com ate 6 digitos: ");
+		logger.debug(mensagemDeLoginCadastro);
 		loginCadastro = sc.nextInt();
 		estagiario.setLoginDoCadastroDoSistema(
 				validaCadastro.validacaoDoLoginDoCadastroDoSistema(loginCadastro, mensagemDeLoginCadastro));
 
-		logger.debug("Cadastre uma senha com ate 6 digitos: ");
+		logger.debug(mensagemDeSenhaCadastro);
 		senhaCadastro = sc.nextInt();
 		estagiario.setSenhaDoCadastroDoSistema(
 				validaCadastro.validacaoDaSenhaDoCadastroDoSistema(senhaCadastro, mensagemDeSenhaCadastro));
 
 		listaEstagiario.add(estagiario);
-		
 		bancoDeDadosFuncionario.listaDeRegistroEstagiario(listaEstagiario);
-		
-		logger.info("\n********** ESTAGIARIO CADASTRADO COM SUCESSO! **********\n");
+
+		logger.debug("Confirmar dados do Funcionario (y/n)?");
+		char confirmaDadosEstagiario = sc.next().charAt(0);
+
+		while (validaErroConfirma) {
+			if (confirmaDadosEstagiario == 'n') {
+				logger.info("Cadastrando Estagiario novamente!");
+				listaEstagiario.remove(estagiario);
+				estagiario.setId(statusId.removeId());
+				validaErroCatch = true;
+			} else if (confirmaDadosEstagiario == 'y') {
+				arquivoEstagiario.listaDeEstagiariosAtivos(listaEstagiario);
+				validaErroConfirma = false;
+				validaErroCatch = false;
+			} else if (confirmaDadosEstagiario != 'y' && confirmaDadosEstagiario != 'n') {
+				logger.debug("Por favor, insira 'y' ou 'n' para confirmar os dados do Estagiario: "
+						+ System.lineSeparator());
+				validaErroCatch = true;
+			}
+		}
+		logger.info("********** ESTAGIARIO CADASTRADO COM SUCESSO! **********\n");
 	}
 }

@@ -16,6 +16,7 @@ public class ValidadorDeCpf implements IValidadorDeCpf {
 		boolean validaErroCatch = true;
 		while (validaErroCatch) {
 			try {
+				cpf = sc.nextLong();
 				String valueOf = "";
 				valueOf = extracted(cpf);
 				while (valueOf.length() != 11) {
