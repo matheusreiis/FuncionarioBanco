@@ -1,5 +1,6 @@
 package validadores;
 
+
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -11,7 +12,7 @@ public class ValidadorDeCpf implements IValidadorDeCpf {
 
 	private static final Logger logger = Logger.getLogger(ValidadorDeCpf.class);
 	Scanner sc = new Scanner(System.in);
-
+	
 	public long validaCpf(long cpf, String mensagemCpf) {
 		boolean validaErroCatch = true;
 		while (validaErroCatch) {

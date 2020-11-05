@@ -1,6 +1,6 @@
 package bancoDeDados;
 
-import java.util.List;
+import java.util.List; 
 import java.util.Scanner;
 
 import org.apache.log4j.Logger;
@@ -50,10 +50,12 @@ public class CadastroGerenteBancoDeDados {
 	String mensagemEstadoCivil = "Cadastre o Estado Civil do Gerente: ";
 	String mensagemDeLoginCadastro = "Digite seu login (6 digitos): ";
 	String mensagemDeSenhaCadastro = "Digite sua senha (6 digitos): ";
-	boolean validaErroCatch = true;
-	boolean validaErroConfirma = true;
+	
 
 	public void cadastroGerente(List<Funcionario> listaGerente) throws Exception {
+		
+		boolean validaErroCatch = true;
+		boolean validaErroConfirma = true;
 
 		while (validaErroCatch) {
 			Gerente gerente = new Gerente();
@@ -63,35 +65,28 @@ public class CadastroGerenteBancoDeDados {
 			gerente.setId(statusId.gerarId());
 
 			logger.debug(mensagemNome);
-			nome = sc.next();
 			gerente.setNome(validaNomeESobrenome.validaNome(nome, mensagemNome));
 
 			logger.debug(mensagemSobrenome);
-			sobrenome = sc.next();
 			gerente.setSobrenome(validaNomeESobrenome.validaSobrenome(sobrenome, mensagemSobrenome));
 
 			logger.debug(mensagemCpf);
 			gerente.setCpf(validaCpf.validaCpf(cpf, mensagemCpf));
 
 			logger.debug(mensagemSalario);
-			salario = sc.nextDouble();
 			gerente.setSalario(validaSalario.validaSalario(salario, mensagemSalario));
 
 			logger.debug(mensagemIdade);
-			idade = sc.nextInt();
 			gerente.setIdade(validaIdade.validaIdade(idade, mensagemIdade));
 
 			logger.debug(mensagemEstadoCivil);
-			estadoCivil = sc.next();
 			gerente.setEstadoCivil(validaEstadoCivil.validaEstadoCivil(estadoCivil, mensagemEstadoCivil));
 
 			logger.debug(mensagemDeLoginCadastro);
-			loginCadastro = sc.nextInt();
 			gerente.setLoginDoCadastroDoSistema(
 					validaCadastro.validacaoDoLoginDoCadastroDoSistema(loginCadastro, mensagemDeLoginCadastro));
 
 			logger.debug(mensagemDeSenhaCadastro);
-			senhaCadastro = sc.nextInt();
 			gerente.setSenhaDoCadastroDoSistema(
 					validaCadastro.validacaoDaSenhaDoCadastroDoSistema(senhaCadastro, mensagemDeSenhaCadastro));
 

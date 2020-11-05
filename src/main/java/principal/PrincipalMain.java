@@ -72,9 +72,11 @@ public class PrincipalMain {
 									if (acaoLobby2 == gerente.getId()) {
 										logger.info("---------- AUTENTICANDO SISTEMA GERENTE ----------" + "\n." + "\n."
 												+ "\n.");
-										logger.info("Bem vindo(a) novamente Sr. " + gerente.getNome());
+										logger.info("Bem vindo(a) novamente Sr. " + gerente.getNome() + " "
+												+ gerente.getSobrenome());
 										validaBanco.validaBancoGerente(loginAutenticacao, senhaAutenticacao,
 												listaGerente);
+										validaErroIdGerente = false;
 									} else {
 										logger.error(
 												"#### Id inexistente, por favor insira um id existente para entrar no sistema! ####"
@@ -97,7 +99,8 @@ public class PrincipalMain {
 								logger.info(" Contas Auxiliar ativas:\n ");
 								for (i = 0; i < listaAuxiliar.size(); i++) {
 									Auxiliar auxiliar = (Auxiliar) listaAuxiliar.get(i);
-									logger.info(auxiliar.getId() + " - " + auxiliar.getNome() + " " + auxiliar.getSobrenome());
+									logger.info(auxiliar.getId() + " - " + auxiliar.getNome() + " "
+											+ auxiliar.getSobrenome());
 								}
 
 								logger.info("Solicite um sistema Auxiliar para entrar: ");
@@ -106,11 +109,12 @@ public class PrincipalMain {
 
 								for (Funcionario auxiliar : listaAuxiliar) {
 									if (acaoLobby2 == auxiliar.getId()) {
-										logger.info("---------- AUTENTICANDO SISTEMA AUXILIAR ----------" + "\n." + "\n."
-												+ "\n.");
+										logger.info("---------- AUTENTICANDO SISTEMA AUXILIAR ----------" + "\n."
+												+ "\n." + "\n.");
 										logger.info("Bem vindo(a) novamente Sr. " + auxiliar.getNome());
 										validaBanco.validaBancoAuxiliar(loginAutenticacao, senhaAutenticacao,
 												listaAuxiliar);
+										validaErroIdAuxiliar = false;
 									} else {
 										logger.error(
 												"#### Id inexistente, por favor insira um id existente para entrar no sistema! ####"
@@ -133,7 +137,8 @@ public class PrincipalMain {
 								logger.info(" Contas Estagiario ativas:\n ");
 								for (i = 0; i < listaEstagiario.size(); i++) {
 									Estagiario estagiario = (Estagiario) listaEstagiario.get(i);
-									logger.debug(estagiario.getId() + " - " + estagiario.getNome() + " " + estagiario.getSobrenome());
+									logger.debug(estagiario.getId() + " - " + estagiario.getNome() + " "
+											+ estagiario.getSobrenome());
 								}
 
 								logger.info("Solicite um sistema Estagiario para entrar: ");
@@ -142,11 +147,12 @@ public class PrincipalMain {
 
 								for (Funcionario estagiario : listaEstagiario) {
 									if (acaoLobby2 == estagiario.getId()) {
-										logger.info("---------- AUTENTICANDO SISTEMA ESTAGIARIO ----------" + "\n." + "\n."
-												+ "\n.");
+										logger.info("---------- AUTENTICANDO SISTEMA ESTAGIARIO ----------" + "\n."
+												+ "\n." + "\n.");
 										logger.info("Bem vindo(a) novamente Sr. " + estagiario.getNome());
 										validaBanco.validaBancoEstagiario(loginAutenticacao, senhaAutenticacao,
 												listaEstagiario);
+										validaErroIdEstagiario = false;
 									} else {
 										logger.error(
 												"#### Id inexistente, por favor insira um id existente para entrar no sistema! ####"
@@ -159,8 +165,7 @@ public class PrincipalMain {
 						break;
 					} else if (acaoLobby == 4) {
 
-						logger.info("---------- CADASTRO DE FUNCIONARIO ----------");
-						System.out.println();
+						logger.info("---------- CADASTRO DE FUNCIONARIO ----------" + System.lineSeparator());
 						logger.debug("Digite o cargo do funcionario:\n 1.Gerente / 2.Auxiliar / 3.Estagiario ");
 						int cargoCadastro = sc.nextInt();
 

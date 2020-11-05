@@ -27,8 +27,7 @@ public class ValidadorDeId implements IValidadorDeId {
 				}
 				validaErroCatch = false;
 			} catch (Exception e) {
-				logger.error("##### ID INVALIDO ##### ");
-				System.out.println();
+				logger.error("##### ID INVALIDO ##### " + System.lineSeparator());
 				sc.nextLine();
 				logger.info(mensagemId);
 				validaErroCatch = true;

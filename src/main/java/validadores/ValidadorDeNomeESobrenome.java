@@ -15,6 +15,7 @@ public class ValidadorDeNomeESobrenome implements IValidadorDeNomeESobrenome {
 	public String validaNome(String nome, String mensagemNome) {
 
 		while (validaErroCatch) {
+			nome = sc.next();
 			while (nome.matches("[A-z]*") == false) {
 				logger.error("#### Nome invalido, por favor insira apenas letras ####" + System.lineSeparator());
 				logger.info(mensagemNome);
@@ -30,6 +31,7 @@ public class ValidadorDeNomeESobrenome implements IValidadorDeNomeESobrenome {
 	public String validaSobrenome(String sobrenome, String mensagemSobrenome) {
 
 		while (validaErroCatch) {
+			sobrenome = sc.next();
 			while (sobrenome.matches("[A-z]*") == false) {
 				logger.error("#### Sobrenome invalido, por favor insira apenas letras ####" + System.lineSeparator());
 				logger.info(mensagemSobrenome);

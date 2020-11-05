@@ -64,35 +64,28 @@ public class CadastroAuxiliarBancoDeDados {
 			auxiliar.setId(statusId.gerarId());
 
 			logger.debug(mensagemNome);
-			nome = sc.next();
 			auxiliar.setNome(validaNomeESobrenome.validaNome(nome, mensagemNome));
 
 			logger.debug(mensagemSobrenome);
-			sobrenome = sc.next();
 			auxiliar.setSobrenome(validaNomeESobrenome.validaSobrenome(sobrenome, mensagemSobrenome));
 
 			logger.debug(mensagemCpf);
 			auxiliar.setCpf(validaCpf.validaCpf(cpf, mensagemCpf));
 
 			logger.debug(mensagemSalario);
-			salario = sc.nextDouble();
 			auxiliar.setSalario(validaSalario.validaSalario(salario, mensagemSalario));
 
 			logger.debug(mensagemIdade);
-			idade = sc.nextInt();
 			auxiliar.setIdade(validaIdade.validaIdade(idade, mensagemIdade));
 
 			logger.debug(mensagemEstadoCivil);
-			estadoCivil = sc.next();
 			auxiliar.setEstadoCivil(validaEstadoCivil.validaEstadoCivil(estadoCivil, mensagemEstadoCivil));
 
 			logger.debug(mensagemDeLoginCadastro);
-			loginCadastro = sc.nextInt();
 			auxiliar.setLoginDoCadastroDoSistema(
 					validaCadastro.validacaoDoLoginDoCadastroDoSistema(loginCadastro, mensagemDeLoginCadastro));
 
 			logger.debug(mensagemDeSenhaCadastro);
-			senhaCadastro = sc.nextInt();
 			auxiliar.setSenhaDoCadastroDoSistema(
 					validaCadastro.validacaoDaSenhaDoCadastroDoSistema(senhaCadastro, mensagemDeSenhaCadastro));
 

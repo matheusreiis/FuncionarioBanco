@@ -1,6 +1,6 @@
 package arquivos;
 
-import java.io.File;
+import java.io.File; 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -9,13 +9,12 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.Properties;
 
-import org.apache.log4j.Logger;
-
+import bancoDeDados.BancoDeDadosFuncionario;
 import entities.Funcionario;
 
 public class ArquivoDeGerente {
-	
-	private static final Logger logger = Logger.getLogger(ArquivoDeGerente.class);
+
+	BancoDeDadosFuncionario bancoDeDadosFuncionario = new BancoDeDadosFuncionario();
 
 	public static Properties getProp() throws IOException {
 		Properties props = new Properties();
@@ -31,20 +30,15 @@ public class ArquivoDeGerente {
 		File file = new File(props.getProperty("path.arquivo.arquivoGerente"));
 		Path path = Paths.get(props.getProperty("path.arquivo.arquivoGerente"));
 
-		try {
-//			for (Funcionario gerente : listaGerente) {
-				if (!file.exists()) {
-					file.createNewFile();
-				}
+		if (!file.exists()) {
+			file.createNewFile();
+		}
+		
 				for (int i = 0; i < listaGerente.size(); i++) {
 					
-					String str = (String) listaGerente.get(i).toString();
+					String str = "a";
 					byte[] bs = str.getBytes();
 					Files.write(path, bs);
-				}
-//			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+			}
 	}
 }

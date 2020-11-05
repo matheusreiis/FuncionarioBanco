@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 import org.apache.log4j.Logger;
 
+
 public class SistemaGerente {
 
 	private static final Logger logger = Logger.getLogger(SistemaGerente.class);

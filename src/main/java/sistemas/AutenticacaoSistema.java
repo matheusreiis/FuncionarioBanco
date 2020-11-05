@@ -1,6 +1,6 @@
 package sistemas;
 
-import java.util.List;
+import java.util.List; 
 
 import org.apache.log4j.Logger;
 
@@ -13,6 +13,7 @@ public class AutenticacaoSistema {
 	SistemaGerente sistemaGerente = new SistemaGerente();
 	SistemaAuxiliar sistemaAuxiliar = new SistemaAuxiliar();
 	SistemaEstagiario sistemaEstagiario = new SistemaEstagiario();
+	int i;
 
 	public void autenticaSistemaGerente(int loginAutenticacao, int senhaAutenticacao, List<Funcionario> listaGerente) {
 

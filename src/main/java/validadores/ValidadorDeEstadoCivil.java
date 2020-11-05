@@ -17,11 +17,12 @@ public class ValidadorDeEstadoCivil implements IValidadorDeEstadoCivil {
 
 		boolean validaErroCatch = true;
 		while (validaErroCatch) {
+			estadoCivil = sc.next();
 			estadoCivil = estadoCivil.substring(0, 1).toUpperCase().concat(estadoCivil.substring(1));
 			while (!estadoCivil.matches("Solteiro") && !estadoCivil.matches("Casado") && !estadoCivil.matches("Viuvo")
 					&& !estadoCivil.matches("Solteira") && !estadoCivil.matches("Casada")
 					&& !estadoCivil.matches("Viuva")) {
-				logger.error("#### ESTADO CIVIL INVALIDO, POR FAVOR INSIRA UM ESTADO VALIDO ####"
+				logger.error("#### ESTADO CIVIL INVALIDO, POR FAVOR INSIRA UM ESTADO CIVIL VALIDO ####"
 						+ System.lineSeparator() + "Solteiro(a)" + "\n" + "Casado(a)" + "\n" + "Viuvo(a)");
 				logger.info(mensagemEstadoCivil);
 				estadoCivil = sc.next();

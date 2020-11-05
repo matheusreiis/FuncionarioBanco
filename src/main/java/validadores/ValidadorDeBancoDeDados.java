@@ -22,12 +22,10 @@ public class ValidadorDeBancoDeDados implements IValidadorDoBancoDeDados {
 	public void validaBancoGerente(int loginAutenticacao, int senhaAutenticacao, List<Funcionario> listaGerente) {
 
 		logger.info(mensagemDeLogin);
-		loginAutenticacao = sc.nextInt();
-		validaSistema.validacaoDoLoginDoSistema(loginAutenticacao, mensagemDeLogin);
+		loginAutenticacao = validaSistema.validacaoDoLoginDoSistema(loginAutenticacao, mensagemDeLogin);
 
 		logger.info(mensagemDeSenha);
-		senhaAutenticacao = sc.nextInt();
-		validaSistema.validacaoDaSenhaDoSistema(senhaAutenticacao, mensagemDeSenha);
+		senhaAutenticacao = validaSistema.validacaoDaSenhaDoSistema(senhaAutenticacao, mensagemDeSenha);
 
 		autenticaSistema.autenticaSistemaGerente(loginAutenticacao, senhaAutenticacao, listaGerente);
 	}
@@ -35,11 +33,9 @@ public class ValidadorDeBancoDeDados implements IValidadorDoBancoDeDados {
 	public void validaBancoAuxiliar(int loginAutenticacao, int senhaAutenticacao, List<Funcionario> listaAuxiliar) {
 		
 		logger.info(mensagemDeLogin);
-		loginAutenticacao = sc.nextInt();
 		validaSistema.validacaoDoLoginDoSistema(loginAutenticacao, mensagemDeLogin);
 		
 		logger.info(mensagemDeSenha);
-		senhaAutenticacao = sc.nextInt();
 		validaSistema.validacaoDaSenhaDoSistema(senhaAutenticacao, mensagemDeSenha);
 		
 		autenticaSistema.autenticaSistemaAuxiliar(loginAutenticacao, senhaAutenticacao, listaAuxiliar);
@@ -49,11 +45,9 @@ public class ValidadorDeBancoDeDados implements IValidadorDoBancoDeDados {
 	public void validaBancoEstagiario(int loginAutenticacao, int senhaAutenticacao, List<Funcionario> listaEstagiario) {
 		
 		logger.info(mensagemDeLogin);
-		loginAutenticacao = sc.nextInt();
 		validaSistema.validacaoDoLoginDoSistema(loginAutenticacao, mensagemDeLogin);
 		
 		logger.info(mensagemDeSenha);
-		senhaAutenticacao = sc.nextInt();
 		validaSistema.validacaoDaSenhaDoSistema(senhaAutenticacao, mensagemDeSenha);
 		
 		autenticaSistema.autenticaSistemaEstagiario(loginAutenticacao, senhaAutenticacao, listaEstagiario);

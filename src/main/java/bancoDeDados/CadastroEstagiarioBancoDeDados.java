@@ -63,35 +63,28 @@ public class CadastroEstagiarioBancoDeDados {
 		estagiario.setId(statusId.gerarId());
 
 		logger.debug(mensagemNome);
-		nome = sc.next();
 		estagiario.setNome(validaNomeESobrenome.validaNome(nome, mensagemNome));
 
 		logger.debug(mensagemSobrenome);
-		sobrenome = sc.next();
 		estagiario.setSobrenome(validaNomeESobrenome.validaSobrenome(sobrenome, mensagemSobrenome));
 
 		logger.debug(mensagemCpf);
 		estagiario.setCpf(validaCpf.validaCpf(cpf, mensagemCpf));
 
 		logger.debug(mensagemSalario);
-		salario = sc.nextDouble();
 		estagiario.setSalario(validaSalario.validaSalario(salario, mensagemSalario));
 
 		logger.debug(mensagemIdade);
-		idade = sc.nextInt();
 		estagiario.setIdade(validaIdade.validaIdade(idade, mensagemIdade));
 
 		logger.debug(mensagemEstadoCivil);
-		estadoCivil = sc.next();
 		estagiario.setEstadoCivil(validaEstadoCivil.validaEstadoCivil(estadoCivil, mensagemEstadoCivil));
 
 		logger.debug(mensagemDeLoginCadastro);
-		loginCadastro = sc.nextInt();
 		estagiario.setLoginDoCadastroDoSistema(
 				validaCadastro.validacaoDoLoginDoCadastroDoSistema(loginCadastro, mensagemDeLoginCadastro));
 
 		logger.debug(mensagemDeSenhaCadastro);
-		senhaCadastro = sc.nextInt();
 		estagiario.setSenhaDoCadastroDoSistema(
 				validaCadastro.validacaoDaSenhaDoCadastroDoSistema(senhaCadastro, mensagemDeSenhaCadastro));
 
