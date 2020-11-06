@@ -33,10 +33,10 @@ public class ValidadorDeBancoDeDados implements IValidadorDoBancoDeDados {
 	public void validaBancoAuxiliar(int loginAutenticacao, int senhaAutenticacao, List<Funcionario> listaAuxiliar) {
 		
 		logger.info(mensagemDeLogin);
-		validaSistema.validacaoDoLoginDoSistema(loginAutenticacao, mensagemDeLogin);
+		loginAutenticacao = validaSistema.validacaoDoLoginDoSistema(loginAutenticacao, mensagemDeLogin);
 		
 		logger.info(mensagemDeSenha);
-		validaSistema.validacaoDaSenhaDoSistema(senhaAutenticacao, mensagemDeSenha);
+		senhaAutenticacao = validaSistema.validacaoDaSenhaDoSistema(senhaAutenticacao, mensagemDeSenha);
 		
 		autenticaSistema.autenticaSistemaAuxiliar(loginAutenticacao, senhaAutenticacao, listaAuxiliar);
 		
@@ -45,10 +45,10 @@ public class ValidadorDeBancoDeDados implements IValidadorDoBancoDeDados {
 	public void validaBancoEstagiario(int loginAutenticacao, int senhaAutenticacao, List<Funcionario> listaEstagiario) {
 		
 		logger.info(mensagemDeLogin);
-		validaSistema.validacaoDoLoginDoSistema(loginAutenticacao, mensagemDeLogin);
+		loginAutenticacao = validaSistema.validacaoDoLoginDoSistema(loginAutenticacao, mensagemDeLogin);
 		
 		logger.info(mensagemDeSenha);
-		validaSistema.validacaoDaSenhaDoSistema(senhaAutenticacao, mensagemDeSenha);
+		senhaAutenticacao = validaSistema.validacaoDaSenhaDoSistema(senhaAutenticacao, mensagemDeSenha);
 		
 		autenticaSistema.autenticaSistemaEstagiario(loginAutenticacao, senhaAutenticacao, listaEstagiario);
 	}

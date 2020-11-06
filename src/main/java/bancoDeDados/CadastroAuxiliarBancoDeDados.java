@@ -51,13 +51,15 @@ public class CadastroAuxiliarBancoDeDados {
 	String mensagemEstadoCivil = "Cadastre o Estado Civil do Auxiliar: ";
 	String mensagemDeLoginCadastro = "Digite seu login (6 numeros): ";
 	String mensagemDeSenhaCadastro = "Digite sua senha (6 numeros): ";
-	boolean validaErroCatch = true;
-	boolean validaErroConfirma = true;
+	
+	
 
 	public void cadastroAuxiliar(List<Funcionario> listaAuxiliar) throws Exception {
 
+		boolean validaErroCatch = true;
 		while (validaErroCatch) {
 			Auxiliar auxiliar = new Auxiliar();
+			boolean validaErroConfirma = true;
 
 			logger.info("---------- CADASTRO AUXILIAR ---------" + System.lineSeparator());
 
@@ -90,16 +92,17 @@ public class CadastroAuxiliarBancoDeDados {
 					validaCadastro.validacaoDaSenhaDoCadastroDoSistema(senhaCadastro, mensagemDeSenhaCadastro));
 
 			listaAuxiliar.add(auxiliar);
-			bancoDeDadosFuncionario.listaDeRegistroAuxiliar(listaAuxiliar);
-
-			logger.debug("Confirmar dados do Funcionario (y/n)?");
-			char confirmaDadosAuxiliar = sc.next().charAt(0);
+			bancoDeDadosFuncionario.listaDeRegistroAuxiliar(listaAuxiliar, auxiliar);
 
 			while (validaErroConfirma) {
+			logger.debug("Confirmar dados do Funcionario (y/n)?");
+			char confirmaDadosAuxiliar = sc.next().charAt(0);
+	
 				if (confirmaDadosAuxiliar == 'n') {
 					logger.info("Cadastrando Auxiliar novamente!");
 					listaAuxiliar.remove(auxiliar);
 					auxiliar.setId(statusId.removeId());
+					validaErroConfirma = false;
 					validaErroCatch = true;
 				} else if (confirmaDadosAuxiliar == 'y') {
 					arquivoAuxiliar.listaDeAuxiliaresAtivos(listaAuxiliar);
@@ -108,7 +111,7 @@ public class CadastroAuxiliarBancoDeDados {
 				} else if (confirmaDadosAuxiliar != 'y' && confirmaDadosAuxiliar != 'n') {
 					logger.debug("Por favor, insira 'y' ou 'n' para confirmar os dados do Auxiliar: "
 							+ System.lineSeparator());
-					validaErroCatch = true;
+					validaErroConfirma = true;
 				}
 			}
 		}

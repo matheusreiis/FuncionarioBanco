@@ -51,14 +51,12 @@ public class CadastroGerenteBancoDeDados {
 	String mensagemDeLoginCadastro = "Digite seu login (6 digitos): ";
 	String mensagemDeSenhaCadastro = "Digite sua senha (6 digitos): ";
 	
-
 	public void cadastroGerente(List<Funcionario> listaGerente) throws Exception {
 		
 		boolean validaErroCatch = true;
-		boolean validaErroConfirma = true;
-
 		while (validaErroCatch) {
 			Gerente gerente = new Gerente();
+			boolean validaErroConfirma = true;
 
 			logger.info("---------- CADASTRO GERENTE ---------" + System.lineSeparator());
 
@@ -91,7 +89,7 @@ public class CadastroGerenteBancoDeDados {
 					validaCadastro.validacaoDaSenhaDoCadastroDoSistema(senhaCadastro, mensagemDeSenhaCadastro));
 
 			listaGerente.add(gerente);
-			bancoDeDadosFuncionario.listaDeRegistroGerente(listaGerente);
+			bancoDeDadosFuncionario.listaDeRegistroGerente(listaGerente, gerente);
 
 			while (validaErroConfirma) {
 				logger.debug("Confirmar dados do Funcionario (y/n)?");
@@ -101,6 +99,7 @@ public class CadastroGerenteBancoDeDados {
 					logger.info("Cadastrando Gerente novamente!");
 					listaGerente.remove(gerente);
 					gerente.setId(statusId.removeId());
+					validaErroConfirma = false;
 					validaErroCatch = true;
 				} else if (confirmaDadosGerente == 'y') {
 					arquivoGerente.listaDeGerentesAtivos(listaGerente);

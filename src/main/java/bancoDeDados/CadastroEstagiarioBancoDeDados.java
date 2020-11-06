@@ -51,63 +51,67 @@ public class CadastroEstagiarioBancoDeDados {
 	String mensagemEstadoCivil = "Cadastre o Estado Civil do Estagiario: ";
 	String mensagemDeLoginCadastro = "Digite seu login (6 numeros): ";
 	String mensagemDeSenhaCadastro = "Digite sua senha (6 numeros): ";
-	boolean validaErroCatch = true;
-	boolean validaErroConfirma = true;
+	
 
 	public void cadastroEstagiario(List<Funcionario> listaEstagiario) throws Exception {
 
-		Estagiario estagiario = new Estagiario();
+		boolean validaErroCatch = true;
+		while (validaErroCatch) {
+			Estagiario estagiario = new Estagiario();
+			boolean validaErroConfirma = true;
 
-		logger.info("---------- CADASTRO ESTAGIARIO ---------" + System.lineSeparator());
+			logger.info("---------- CADASTRO ESTAGIARIO ---------" + System.lineSeparator());
 
-		estagiario.setId(statusId.gerarId());
+			estagiario.setId(statusId.gerarId());
 
-		logger.debug(mensagemNome);
-		estagiario.setNome(validaNomeESobrenome.validaNome(nome, mensagemNome));
+			logger.debug(mensagemNome);
+			estagiario.setNome(validaNomeESobrenome.validaNome(nome, mensagemNome));
 
-		logger.debug(mensagemSobrenome);
-		estagiario.setSobrenome(validaNomeESobrenome.validaSobrenome(sobrenome, mensagemSobrenome));
+			logger.debug(mensagemSobrenome);
+			estagiario.setSobrenome(validaNomeESobrenome.validaSobrenome(sobrenome, mensagemSobrenome));
 
-		logger.debug(mensagemCpf);
-		estagiario.setCpf(validaCpf.validaCpf(cpf, mensagemCpf));
+			logger.debug(mensagemCpf);
+			estagiario.setCpf(validaCpf.validaCpf(cpf, mensagemCpf));
 
-		logger.debug(mensagemSalario);
-		estagiario.setSalario(validaSalario.validaSalario(salario, mensagemSalario));
+			logger.debug(mensagemSalario);
+			estagiario.setSalario(validaSalario.validaSalario(salario, mensagemSalario));
 
-		logger.debug(mensagemIdade);
-		estagiario.setIdade(validaIdade.validaIdade(idade, mensagemIdade));
+			logger.debug(mensagemIdade);
+			estagiario.setIdade(validaIdade.validaIdade(idade, mensagemIdade));
 
-		logger.debug(mensagemEstadoCivil);
-		estagiario.setEstadoCivil(validaEstadoCivil.validaEstadoCivil(estadoCivil, mensagemEstadoCivil));
+			logger.debug(mensagemEstadoCivil);
+			estagiario.setEstadoCivil(validaEstadoCivil.validaEstadoCivil(estadoCivil, mensagemEstadoCivil));
 
-		logger.debug(mensagemDeLoginCadastro);
-		estagiario.setLoginDoCadastroDoSistema(
-				validaCadastro.validacaoDoLoginDoCadastroDoSistema(loginCadastro, mensagemDeLoginCadastro));
+			logger.debug(mensagemDeLoginCadastro);
+			estagiario.setLoginDoCadastroDoSistema(
+					validaCadastro.validacaoDoLoginDoCadastroDoSistema(loginCadastro, mensagemDeLoginCadastro));
 
-		logger.debug(mensagemDeSenhaCadastro);
-		estagiario.setSenhaDoCadastroDoSistema(
-				validaCadastro.validacaoDaSenhaDoCadastroDoSistema(senhaCadastro, mensagemDeSenhaCadastro));
+			logger.debug(mensagemDeSenhaCadastro);
+			estagiario.setSenhaDoCadastroDoSistema(
+					validaCadastro.validacaoDaSenhaDoCadastroDoSistema(senhaCadastro, mensagemDeSenhaCadastro));
 
-		listaEstagiario.add(estagiario);
-		bancoDeDadosFuncionario.listaDeRegistroEstagiario(listaEstagiario);
+			listaEstagiario.add(estagiario);
+			bancoDeDadosFuncionario.listaDeRegistroEstagiario(listaEstagiario, estagiario);
 
-		logger.debug("Confirmar dados do Funcionario (y/n)?");
-		char confirmaDadosEstagiario = sc.next().charAt(0);
-
-		while (validaErroConfirma) {
-			if (confirmaDadosEstagiario == 'n') {
-				logger.info("Cadastrando Estagiario novamente!");
-				listaEstagiario.remove(estagiario);
-				estagiario.setId(statusId.removeId());
-				validaErroCatch = true;
-			} else if (confirmaDadosEstagiario == 'y') {
-				arquivoEstagiario.listaDeEstagiariosAtivos(listaEstagiario);
-				validaErroConfirma = false;
-				validaErroCatch = false;
-			} else if (confirmaDadosEstagiario != 'y' && confirmaDadosEstagiario != 'n') {
-				logger.debug("Por favor, insira 'y' ou 'n' para confirmar os dados do Estagiario: "
-						+ System.lineSeparator());
-				validaErroCatch = true;
+			while (validaErroConfirma) {
+			logger.debug("Confirmar dados do Funcionario (y/n)?");
+			char confirmaDadosEstagiario = sc.next().charAt(0);
+			
+				if (confirmaDadosEstagiario == 'n') {
+					logger.info("Cadastrando Estagiario novamente!");
+					listaEstagiario.remove(estagiario);
+					estagiario.setId(statusId.removeId());
+					validaErroConfirma = false;
+					validaErroCatch = true;
+				} else if (confirmaDadosEstagiario == 'y') {
+					arquivoEstagiario.listaDeEstagiariosAtivos(listaEstagiario);
+					validaErroConfirma = false;
+					validaErroCatch = false;
+				} else if (confirmaDadosEstagiario != 'y' && confirmaDadosEstagiario != 'n') {
+					logger.debug("Por favor, insira 'y' ou 'n' para confirmar os dados do Estagiario: "
+							+ System.lineSeparator());
+					validaErroConfirma = true;
+				}
 			}
 		}
 		logger.info("********** ESTAGIARIO CADASTRADO COM SUCESSO! **********\n");

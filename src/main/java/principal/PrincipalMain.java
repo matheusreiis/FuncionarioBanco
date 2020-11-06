@@ -20,6 +20,9 @@ import validadores.ValidadorDeBancoDeDados;
 public class PrincipalMain {
 
 	private final static Logger logger = Logger.getLogger(PrincipalMain.class);
+	static Gerente gerente;
+	static Auxiliar auxiliar;
+	static Estagiario estagiario;
 
 	public static void main(String[] args) throws Exception {
 
@@ -33,6 +36,7 @@ public class PrincipalMain {
 		List<Funcionario> listaGerente = new ArrayList<>();
 		List<Funcionario> listaAuxiliar = new ArrayList<>();
 		List<Funcionario> listaEstagiario = new ArrayList<>();
+		
 
 		int loginAutenticacao = 0;
 		int senhaAutenticacao = 0;
@@ -54,7 +58,7 @@ public class PrincipalMain {
 						boolean validaErroIdGerente = true;
 						while (validaErroIdGerente) {
 							if (listaGerente.size() == 0) {
-								bancoDeDadosFuncionario.listaDeRegistroGerente(listaGerente);
+								bancoDeDadosFuncionario.listaDeRegistroGerente(listaGerente, gerente);
 								validaErroIdGerente = false;
 							} else {
 								logger.info(" Contas Gerente ativas:\n ");
@@ -68,8 +72,8 @@ public class PrincipalMain {
 
 								int acaoLobby2 = sc.nextInt();
 
-								for (Funcionario gerente : listaGerente) {
-									if (acaoLobby2 == gerente.getId()) {
+//								for (Funcionario gerente : listaGerente) {
+									if (acaoLobby2 == ) {
 										logger.info("---------- AUTENTICANDO SISTEMA GERENTE ----------" + "\n." + "\n."
 												+ "\n.");
 										logger.info("Bem vindo(a) novamente Sr. " + gerente.getNome() + " "
@@ -82,8 +86,9 @@ public class PrincipalMain {
 												"#### Id inexistente, por favor insira um id existente para entrar no sistema! ####"
 														+ System.lineSeparator());
 										validaErroIdGerente = true;
+										break;
 									}
-								}
+//								}
 							}
 						}
 						break;
@@ -93,7 +98,7 @@ public class PrincipalMain {
 						boolean validaErroIdAuxiliar = true;
 						while (validaErroIdAuxiliar) {
 							if (listaAuxiliar.size() == 0) {
-								bancoDeDadosFuncionario.listaDeRegistroAuxiliar(listaAuxiliar);
+								bancoDeDadosFuncionario.listaDeRegistroAuxiliar(listaAuxiliar, auxiliar);
 								validaErroIdAuxiliar = false;
 							} else {
 								logger.info(" Contas Auxiliar ativas:\n ");
@@ -120,6 +125,7 @@ public class PrincipalMain {
 												"#### Id inexistente, por favor insira um id existente para entrar no sistema! ####"
 														+ System.lineSeparator());
 										validaErroIdAuxiliar = true;
+										break;
 									}
 								}
 							}
@@ -131,7 +137,7 @@ public class PrincipalMain {
 						boolean validaErroIdEstagiario = true;
 						while (validaErroIdEstagiario) {
 							if (listaEstagiario.size() == 0) {
-								bancoDeDadosFuncionario.listaDeRegistroEstagiario(listaEstagiario);
+								bancoDeDadosFuncionario.listaDeRegistroEstagiario(listaEstagiario, estagiario);
 								validaErroIdEstagiario = false;
 							} else {
 								logger.info(" Contas Estagiario ativas:\n ");
@@ -158,6 +164,7 @@ public class PrincipalMain {
 												"#### Id inexistente, por favor insira um id existente para entrar no sistema! ####"
 														+ System.lineSeparator());
 										validaErroIdEstagiario = true;
+										break;
 									}
 								}
 							}

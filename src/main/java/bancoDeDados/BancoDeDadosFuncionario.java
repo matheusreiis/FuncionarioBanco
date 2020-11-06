@@ -17,38 +17,36 @@ public class BancoDeDadosFuncionario {
 	private Logger logger = Logger.getLogger(BancoDeDadosFuncionario.class);
 	Scanner sc = new Scanner(System.in);
 	NumberFormat formatter = new DecimalFormat("#0.00");
-
-	int i;
-
-	public void listaDeRegistroGerente(List<Funcionario> listaGerente) throws Exception {
+	
+	Gerente gerente;
+	Auxiliar auxiliar;
+	Estagiario estagiario;
+	
+	public void listaDeRegistroGerente(List<Funcionario> listaGerente, Gerente gerente) {
 
 		if (listaGerente.size() == 0) {
 			logger.info("Nao ha Gerentes cadastrados!");
 			logger.info("Retornando ao lobby." + "\n." + "\n." + "\n.");
-		} else {
-			Gerente gerente = (Gerente) listaGerente.get(i++);
-
-			logger.info(System.lineSeparator() + "--------- DADOS DO GERENTE ---------" + System.lineSeparator());
-			logger.info("ID do Gerente: " + gerente.getId());
-			logger.info("Nome do Gerente: " + gerente.getNome() + " " + gerente.getSobrenome());
-			logger.info("cpf do Gerente: " + gerente.getCpf());
-			logger.info("Salario do Gerente: R$" + formatter.format(gerente.getSalario()));
-			logger.info("Idade do Gerente: " + gerente.getIdade());
-			logger.info("Estado Civil do Gerente: " + gerente.getEstadoCivil());
-			logger.info("Login do Gerente: " + gerente.getLoginDoCadastroDoSistema());
-			logger.info("Senha do Gerente: **************" + System.lineSeparator());
+		} else {		
+				logger.info("--------- DADOS DO GERENTE ---------" + System.lineSeparator());
+				logger.info("ID do Gerente: " + gerente.getId());
+				logger.info("Nome do Gerente: " + gerente.getNome() + " " + gerente.getSobrenome());
+				logger.info("cpf do Gerente: " + gerente.getCpf());
+				logger.info("Salario do Gerente: R$" + formatter.format(gerente.getSalario()));
+				logger.info("Idade do Gerente: " + gerente.getIdade());
+				logger.info("Estado Civil do Gerente: " + gerente.getEstadoCivil());
+				logger.info("Login do Gerente: " + gerente.getLoginDoCadastroDoSistema());
+				logger.info("Senha do Gerente: **************" + System.lineSeparator());
 		}
 	}
 
-	public void listaDeRegistroAuxiliar(List<Funcionario> listaAuxiliar) {
+	public void listaDeRegistroAuxiliar(List<Funcionario> listaAuxiliar, Auxiliar auxiliar) {
 
 		if (listaAuxiliar.size() == 0) {
 			logger.info("Nao ha Auxiliares cadastrados!");
 			logger.info("Retornando ao lobby." + "\n." + "\n." + "\n.");
 		} else {
-			Auxiliar auxiliar = (Auxiliar) listaAuxiliar.get(i++);
-
-			logger.info(System.lineSeparator() + "--------- DADOS DO AUXILIAR ---------" + System.lineSeparator());
+			logger.info("--------- DADOS DO AUXILIAR ---------" + System.lineSeparator());
 			logger.info("ID do Auxiliar: " + auxiliar.getId());
 			logger.info("Nome do Auxiliar: " + auxiliar.getNome() + " " + auxiliar.getSobrenome());
 			logger.info("cpf do Auxiliar: " + auxiliar.getCpf());
@@ -60,15 +58,13 @@ public class BancoDeDadosFuncionario {
 		}
 	}
 
-	public void listaDeRegistroEstagiario(List<Funcionario> listaEstagiario) {
+	public void listaDeRegistroEstagiario(List<Funcionario> listaEstagiario, Estagiario estagiario) {
 
 		if (listaEstagiario.size() == 0) {
 			logger.info("Nao ha Estagiarios cadastrados!");
 			logger.info("Retornando ao lobby." + "\n." + "\n." + "\n.");
 		} else {
-			Estagiario estagiario = (Estagiario) listaEstagiario.get(i++);
-
-			logger.info(System.lineSeparator() + "--------- DADOS DO ESTAGIARIO ---------" + System.lineSeparator());
+			logger.info("--------- DADOS DO ESTAGIARIO ---------" + System.lineSeparator());
 			logger.info("ID do Estagiario: " + estagiario.getId());
 			logger.info("Nome do Estagiario: " + estagiario.getNome() + " " + estagiario.getSobrenome());
 			logger.info("cpf do Estagiario: " + estagiario.getCpf());
