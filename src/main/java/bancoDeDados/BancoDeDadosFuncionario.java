@@ -17,26 +17,26 @@ public class BancoDeDadosFuncionario {
 	private Logger logger = Logger.getLogger(BancoDeDadosFuncionario.class);
 	Scanner sc = new Scanner(System.in);
 	NumberFormat formatter = new DecimalFormat("#0.00");
-	
+
 	Gerente gerente;
 	Auxiliar auxiliar;
 	Estagiario estagiario;
-	
+
 	public void listaDeRegistroGerente(List<Funcionario> listaGerente, Gerente gerente) {
 
 		if (listaGerente.size() == 0) {
 			logger.info("Nao ha Gerentes cadastrados!");
 			logger.info("Retornando ao lobby." + "\n." + "\n." + "\n.");
-		} else {		
-				logger.info("--------- DADOS DO GERENTE ---------" + System.lineSeparator());
-				logger.info("ID do Gerente: " + gerente.getId());
-				logger.info("Nome do Gerente: " + gerente.getNome() + " " + gerente.getSobrenome());
-				logger.info("cpf do Gerente: " + gerente.getCpf());
-				logger.info("Salario do Gerente: R$" + formatter.format(gerente.getSalario()));
-				logger.info("Idade do Gerente: " + gerente.getIdade());
-				logger.info("Estado Civil do Gerente: " + gerente.getEstadoCivil());
-				logger.info("Login do Gerente: " + gerente.getLoginDoCadastroDoSistema());
-				logger.info("Senha do Gerente: **************" + System.lineSeparator());
+		} else {
+			logger.info("--------- DADOS DO GERENTE ---------" + System.lineSeparator());
+			logger.info("ID do Gerente: " + gerente.getId());
+			logger.info("Nome do Gerente: " + gerente.getNome() + " " + gerente.getSobrenome());
+			logger.info("cpf do Gerente: " + gerente.getCpf());
+			logger.info("Salario do Gerente: R$" + formatter.format(gerente.getSalario()));
+			logger.info("Idade do Gerente: " + gerente.getIdade());
+			logger.info("Estado Civil do Gerente: " + gerente.getEstadoCivil());
+			logger.info("Login do Gerente: " + gerente.getLoginDoCadastroDoSistema());
+			logger.info("Senha do Gerente: **************" + System.lineSeparator());
 		}
 	}
 

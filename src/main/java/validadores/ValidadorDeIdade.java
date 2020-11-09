@@ -16,13 +16,14 @@ public class ValidadorDeIdade implements IValidadorDeIdade {
 		while (validaErroCatch) {
 			try {
 				idade = sc.nextInt();
-				if (idade < 18 || idade > 70) {
+				while (idade < 18 || idade > 70) {
 					logger.error("##### IDADE INVALIDA ##### Por favor insira uma idade entre 18 e 70 anos!"
 							+ System.lineSeparator());
 					logger.info(mensagemIdade);
 					idade = sc.nextInt();
 				}
 				validaErroCatch = false;
+				
 			} catch (Exception e) {
 				logger.error("##### IDADE INVALIDA ##### Por favor insira somente numeros!" + System.lineSeparator());
 				sc.nextLine();

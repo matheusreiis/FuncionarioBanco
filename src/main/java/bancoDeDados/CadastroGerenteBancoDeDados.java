@@ -1,6 +1,8 @@
 package bancoDeDados;
 
-import java.util.List; 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.util.List;
 import java.util.Scanner;
 
 import org.apache.log4j.Logger;
@@ -50,6 +52,7 @@ public class CadastroGerenteBancoDeDados {
 	String mensagemEstadoCivil = "Cadastre o Estado Civil do Gerente: ";
 	String mensagemDeLoginCadastro = "Digite seu login (6 digitos): ";
 	String mensagemDeSenhaCadastro = "Digite sua senha (6 digitos): ";
+	String sql = "INSERT INTO cadastro(id, nome) VALUES(?, ?)";
 	
 	public void cadastroGerente(List<Funcionario> listaGerente) throws Exception {
 		
@@ -102,7 +105,21 @@ public class CadastroGerenteBancoDeDados {
 					validaErroConfirma = false;
 					validaErroCatch = true;
 				} else if (confirmaDadosGerente == 'y') {
-					arquivoGerente.listaDeGerentesAtivos(listaGerente);
+//					arquivoGerente.listaDeGerentesAtivos(listaGerente, gerente);
+					Connection connection = new ConexaoBancoDeDados().conexaoJDBC();
+					try {
+						PreparedStatement stmt = connection.prepareStatement(sql);
+
+						stmt.setLong(1, gerente.getId());
+						stmt.setString(2, gerente.getNome());
+
+						stmt.execute();
+						stmt.close();
+					} catch (Exception e) {
+						throw new RuntimeException(e);
+					}
+					logger.info("Conexao Aberta!");
+					connection.close();
 					validaErroConfirma = false;
 					validaErroCatch = false;
 				} else if (confirmaDadosGerente != 'y' && confirmaDadosGerente != 'n') {
