@@ -1,36 +1,29 @@
 package bancoDeDados;
-
-import java.io.FileInputStream;
+ 
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.Properties;
 
 import org.apache.log4j.Logger;
+
 
 public class ConexaoBancoDeDados {
 
 	private static final Logger logger = Logger.getLogger(ConexaoBancoDeDados.class);
-
-	public static Properties getProp() throws IOException {
-		Properties props = new Properties();
-		FileInputStream file = new FileInputStream(
-				"C:\\Users\\DataCore\\eclipse-workspace\\TesteJDBC\\src\\main\\resources\\config.properties");
-		props.load(file);
-		return props;
-	}
+	String dbNome = "jdbc:mysql://localhost:3306/BancoDeDadosFuncionarios?useTimezone=true&serverTimezone=UTC";
+	String root = "root";
+	String senha = "123456789";
 
 	public Connection conexaoJDBC() throws IOException {
 
-//		Properties prop = getProp();
-
 		logger.info("---------- CONEXAO JDBC ----------");
 		try {
-			return DriverManager.getConnection("jdbc:mysql://localhost:3306/world?useTimezone=true&serverTimezone=UTC",
-					"root", "123456789");
+			return DriverManager.getConnection(dbNome, root, senha);
 		} catch (SQLException e) {
+			logger.fatal("Erro ao tentar se conectar ao Banco de Dados!");
 			throw new RuntimeException(e);
-		}	
+		}
+		
 	}
 }

@@ -1,8 +1,11 @@
 package bancoDeDados;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.util.List;
+import java.util.Properties;
 import java.util.Scanner;
 
 import org.apache.log4j.Logger;
@@ -52,9 +55,18 @@ public class CadastroGerenteBancoDeDados {
 	String mensagemEstadoCivil = "Cadastre o Estado Civil do Gerente: ";
 	String mensagemDeLoginCadastro = "Digite seu login (6 digitos): ";
 	String mensagemDeSenhaCadastro = "Digite sua senha (6 digitos): ";
-	String sql = "INSERT INTO cadastro(id, nome) VALUES(?, ?)";
+	
+	public static Properties getProp() throws IOException {
+		Properties props = new Properties();
+		FileInputStream file = new FileInputStream(
+				"C:\\Users\\DataCore\\eclipse-workspace\\FuncionarioBanco\\src\\main\\resources\\dados.properties");
+		props.load(file);
+		return props;
+	}
 	
 	public void cadastroGerente(List<Funcionario> listaGerente) throws Exception {
+		
+		Properties props = getProp();
 		
 		boolean validaErroCatch = true;
 		while (validaErroCatch) {
@@ -108,11 +120,20 @@ public class CadastroGerenteBancoDeDados {
 //					arquivoGerente.listaDeGerentesAtivos(listaGerente, gerente);
 					Connection connection = new ConexaoBancoDeDados().conexaoJDBC();
 					try {
-						PreparedStatement stmt = connection.prepareStatement(sql);
-
-						stmt.setLong(1, gerente.getId());
-						stmt.setString(2, gerente.getNome());
-
+						PreparedStatement stmt = connection.prepareStatement(props.getProperty("path.bancoDeDados.inserirDadosListaGerente"));
+						
+						stmt.execute(props.getProperty("path.bancoDeDados.tabelaGerente"));
+//						stmt.execute(props.getProperty("path.bancoDeDados.inserirColunasListaGerente"));
+						
+						stmt.setInt(1, gerente.getId());
+						stmt.setString(2, gerente.getNome() + " " + gerente.getSobrenome());
+						stmt.setLong(3, gerente.getCpf());
+						stmt.setDouble(4, gerente.getSalario());
+						stmt.setInt(5, gerente.getIdade());
+						stmt.setString(6, gerente.getEstadoCivil());
+						stmt.setInt(7, gerente.getLoginDoCadastroDoSistema());
+						stmt.setInt(8, gerente.getSenhaDoCadastroDoSistema());
+						
 						stmt.execute();
 						stmt.close();
 					} catch (Exception e) {
