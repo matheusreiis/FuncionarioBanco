@@ -1,6 +1,6 @@
 package bancoDeDados;
 
-import java.util.List;
+import java.util.List; 
 import java.util.Scanner;
 
 import org.apache.log4j.Logger;
@@ -8,7 +8,6 @@ import org.apache.log4j.Logger;
 import arquivos.ArquivoDeEstagiario;
 import entities.Estagiario;
 import entities.Funcionario;
-import util.GeradorDeId;
 import validadores.ValidadorDeCadastroDoSistema;
 import validadores.ValidadorDeCpf;
 import validadores.ValidadorDeEstadoCivil;
@@ -22,7 +21,7 @@ public class CadastroEstagiarioBancoDeDados {
 	private static final Logger logger = Logger.getLogger(CadastroEstagiarioBancoDeDados.class);
 
 	Scanner sc = new Scanner(System.in);
-	BancoDeDadosFuncionario bancoDeDadosFuncionario = new BancoDeDadosFuncionario();
+	BancoDeDadosEstagiario bancoDeDadosEstagiario = new BancoDeDadosEstagiario();
 	ValidadorDeCpf validaCpf = new ValidadorDeCpf();
 	ValidadorDeEstadoCivil validaEstadoCivil = new ValidadorDeEstadoCivil();
 	ValidadorDeIdade validaIdade = new ValidadorDeIdade();
@@ -30,7 +29,6 @@ public class CadastroEstagiarioBancoDeDados {
 	ValidadorDeCadastroDoSistema validaCadastro = new ValidadorDeCadastroDoSistema();
 	ValidadorDeId validaId = new ValidadorDeId();
 	ValidadorDeNomeESobrenome validaNomeESobrenome = new ValidadorDeNomeESobrenome();
-	GeradorDeId statusId = new GeradorDeId();
 	ArquivoDeEstagiario arquivoEstagiario = new ArquivoDeEstagiario();
 
 	int id;
@@ -52,7 +50,6 @@ public class CadastroEstagiarioBancoDeDados {
 	String mensagemDeLoginCadastro = "Digite seu login (6 numeros): ";
 	String mensagemDeSenhaCadastro = "Digite sua senha (6 numeros): ";
 	
-
 	public void cadastroEstagiario(List<Funcionario> listaEstagiario) throws Exception {
 
 		boolean validaErroCatch = true;
@@ -62,7 +59,7 @@ public class CadastroEstagiarioBancoDeDados {
 
 			logger.info("---------- CADASTRO ESTAGIARIO ---------" + System.lineSeparator());
 
-			estagiario.setId(statusId.gerarId());
+//			logger.info("Novo id do usuario: " + props.getProperty("CHAMAR ID"));
 
 			logger.debug(mensagemNome);
 			estagiario.setNome(validaNomeESobrenome.validaNome(nome, mensagemNome));
@@ -91,7 +88,7 @@ public class CadastroEstagiarioBancoDeDados {
 					validaCadastro.validacaoDaSenhaDoCadastroDoSistema(senhaCadastro, mensagemDeSenhaCadastro));
 
 			listaEstagiario.add(estagiario);
-			bancoDeDadosFuncionario.listaDeRegistroEstagiario(listaEstagiario, estagiario);
+			bancoDeDadosEstagiario.listaDeRegistroEstagiario(listaEstagiario, estagiario);
 
 			while (validaErroConfirma) {
 			logger.debug("Confirmar dados do Funcionario (y/n)?");
@@ -100,11 +97,11 @@ public class CadastroEstagiarioBancoDeDados {
 				if (confirmaDadosEstagiario == 'n') {
 					logger.info("Cadastrando Estagiario novamente!");
 					listaEstagiario.remove(estagiario);
-					estagiario.setId(statusId.removeId());
 					validaErroConfirma = false;
 					validaErroCatch = true;
 				} else if (confirmaDadosEstagiario == 'y') {
-					arquivoEstagiario.listaDeEstagiariosAtivos(listaEstagiario);
+//					arquivoEstagiario.listaDeEstagiariosAtivos(listaEstagiario);
+					bancoDeDadosEstagiario.inserirDadosBancoEstagiario(listaEstagiario, estagiario);
 					validaErroConfirma = false;
 					validaErroCatch = false;
 				} else if (confirmaDadosEstagiario != 'y' && confirmaDadosEstagiario != 'n') {
@@ -114,6 +111,6 @@ public class CadastroEstagiarioBancoDeDados {
 				}
 			}
 		}
-		logger.info("********** ESTAGIARIO CADASTRADO COM SUCESSO! **********\n");
+		logger.info("********** Estagiario Cadastrado com sucesso no sistema! **********\n");
 	}
 }

@@ -1,11 +1,6 @@
 package bancoDeDados;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.util.List;
-import java.util.Properties;
 import java.util.Scanner;
 
 import org.apache.log4j.Logger;
@@ -13,7 +8,6 @@ import org.apache.log4j.Logger;
 import arquivos.ArquivoDeGerente;
 import entities.Funcionario;
 import entities.Gerente;
-import util.GeradorDeId;
 import validadores.ValidadorDeCadastroDoSistema;
 import validadores.ValidadorDeCpf;
 import validadores.ValidadorDeEstadoCivil;
@@ -27,7 +21,7 @@ public class CadastroGerenteBancoDeDados {
 	private static final Logger logger = Logger.getLogger(CadastroGerenteBancoDeDados.class);
 
 	Scanner sc = new Scanner(System.in);
-	BancoDeDadosFuncionario bancoDeDadosFuncionario = new BancoDeDadosFuncionario();
+	BancoDeDadosGerente bancoDeDadosGerente = new BancoDeDadosGerente();
 	ValidadorDeCpf validaCpf = new ValidadorDeCpf();
 	ValidadorDeEstadoCivil validaEstadoCivil = new ValidadorDeEstadoCivil();
 	ValidadorDeIdade validaIdade = new ValidadorDeIdade();
@@ -35,7 +29,6 @@ public class CadastroGerenteBancoDeDados {
 	ValidadorDeCadastroDoSistema validaCadastro = new ValidadorDeCadastroDoSistema();
 	ValidadorDeId validaId = new ValidadorDeId();
 	ValidadorDeNomeESobrenome validaNomeESobrenome = new ValidadorDeNomeESobrenome();
-	GeradorDeId statusId = new GeradorDeId();
 	ArquivoDeGerente arquivoGerente = new ArquivoDeGerente();
 
 	int id;
@@ -55,18 +48,8 @@ public class CadastroGerenteBancoDeDados {
 	String mensagemEstadoCivil = "Cadastre o Estado Civil do Gerente: ";
 	String mensagemDeLoginCadastro = "Digite seu login (6 digitos): ";
 	String mensagemDeSenhaCadastro = "Digite sua senha (6 digitos): ";
-	
-	public static Properties getProp() throws IOException {
-		Properties props = new Properties();
-		FileInputStream file = new FileInputStream(
-				"C:\\Users\\DataCore\\eclipse-workspace\\FuncionarioBanco\\src\\main\\resources\\dados.properties");
-		props.load(file);
-		return props;
-	}
-	
+
 	public void cadastroGerente(List<Funcionario> listaGerente) throws Exception {
-		
-		Properties props = getProp();
 		
 		boolean validaErroCatch = true;
 		while (validaErroCatch) {
@@ -74,9 +57,7 @@ public class CadastroGerenteBancoDeDados {
 			boolean validaErroConfirma = true;
 
 			logger.info("---------- CADASTRO GERENTE ---------" + System.lineSeparator());
-
-			gerente.setId(statusId.gerarId());
-
+			
 			logger.debug(mensagemNome);
 			gerente.setNome(validaNomeESobrenome.validaNome(nome, mensagemNome));
 
@@ -104,7 +85,7 @@ public class CadastroGerenteBancoDeDados {
 					validaCadastro.validacaoDaSenhaDoCadastroDoSistema(senhaCadastro, mensagemDeSenhaCadastro));
 
 			listaGerente.add(gerente);
-			bancoDeDadosFuncionario.listaDeRegistroGerente(listaGerente, gerente);
+			bancoDeDadosGerente.listaDeRegistroGerente(listaGerente, gerente);
 
 			while (validaErroConfirma) {
 				logger.debug("Confirmar dados do Funcionario (y/n)?");
@@ -113,34 +94,11 @@ public class CadastroGerenteBancoDeDados {
 				if (confirmaDadosGerente == 'n') {
 					logger.info("Cadastrando Gerente novamente!");
 					listaGerente.remove(gerente);
-					gerente.setId(statusId.removeId());
 					validaErroConfirma = false;
 					validaErroCatch = true;
 				} else if (confirmaDadosGerente == 'y') {
 //					arquivoGerente.listaDeGerentesAtivos(listaGerente, gerente);
-					Connection connection = new ConexaoBancoDeDados().conexaoJDBC();
-					try {
-						PreparedStatement stmt = connection.prepareStatement(props.getProperty("path.bancoDeDados.inserirDadosListaGerente"));
-						
-						stmt.execute(props.getProperty("path.bancoDeDados.tabelaGerente"));
-//						stmt.execute(props.getProperty("path.bancoDeDados.inserirColunasListaGerente"));
-						
-						stmt.setInt(1, gerente.getId());
-						stmt.setString(2, gerente.getNome() + " " + gerente.getSobrenome());
-						stmt.setLong(3, gerente.getCpf());
-						stmt.setDouble(4, gerente.getSalario());
-						stmt.setInt(5, gerente.getIdade());
-						stmt.setString(6, gerente.getEstadoCivil());
-						stmt.setInt(7, gerente.getLoginDoCadastroDoSistema());
-						stmt.setInt(8, gerente.getSenhaDoCadastroDoSistema());
-						
-						stmt.execute();
-						stmt.close();
-					} catch (Exception e) {
-						throw new RuntimeException(e);
-					}
-					logger.info("Conexao Aberta!");
-					connection.close();
+					bancoDeDadosGerente.inserirDadosBancoGerente(listaGerente, gerente);
 					validaErroConfirma = false;
 					validaErroCatch = false;
 				} else if (confirmaDadosGerente != 'y' && confirmaDadosGerente != 'n') {
@@ -150,6 +108,6 @@ public class CadastroGerenteBancoDeDados {
 				}
 			}
 		}
-		logger.info("********** GERENTE CADASTRADO COM SUCESSO! **********\n");
+		logger.info("********** Gerente Cadastrado com sucesso no sistema! **********\n");
 	}
 }

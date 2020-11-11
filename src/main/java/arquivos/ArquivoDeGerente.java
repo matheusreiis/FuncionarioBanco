@@ -1,7 +1,7 @@
 package arquivos;
 
 
-import java.io.File;
+import java.io.File; 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -9,13 +9,11 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.Properties;
 
-import bancoDeDados.BancoDeDadosFuncionario;
 import entities.Funcionario;
 import entities.Gerente;
 
 public class ArquivoDeGerente {
 
-	BancoDeDadosFuncionario bancoDeDadosFuncionario = new BancoDeDadosFuncionario();
 
 	public static Properties getProp() throws IOException {
 		Properties props = new Properties();

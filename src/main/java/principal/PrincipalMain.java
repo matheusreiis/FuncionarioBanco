@@ -6,7 +6,9 @@ import java.util.Scanner;
 
 import org.apache.log4j.Logger;
 
-import bancoDeDados.BancoDeDadosFuncionario;
+import bancoDeDados.BancoDeDadosAuxiliar;
+import bancoDeDados.BancoDeDadosEstagiario;
+import bancoDeDados.BancoDeDadosGerente;
 import bancoDeDados.CadastroAuxiliarBancoDeDados;
 import bancoDeDados.CadastroEstagiarioBancoDeDados;
 import bancoDeDados.CadastroGerenteBancoDeDados;
@@ -28,7 +30,9 @@ public class PrincipalMain {
 
 		Scanner sc = new Scanner(System.in);
 		CalculadoraDaBonificacaoServico calculadoraDaBonificacao = new CalculadoraDaBonificacaoServico();
-		BancoDeDadosFuncionario bancoDeDadosFuncionario = new BancoDeDadosFuncionario();
+		BancoDeDadosGerente bancoDeDadosGerente = new BancoDeDadosGerente();
+		BancoDeDadosAuxiliar bancoDeDadosAuxiliar = new BancoDeDadosAuxiliar();
+		BancoDeDadosEstagiario bancoDeDadosEstagiario = new BancoDeDadosEstagiario();
 		ValidadorDeBancoDeDados validaBanco = new ValidadorDeBancoDeDados();
 		CadastroGerenteBancoDeDados cadastrarGerente = new CadastroGerenteBancoDeDados();
 		CadastroAuxiliarBancoDeDados cadastrarAuxiliar = new CadastroAuxiliarBancoDeDados();
@@ -57,7 +61,7 @@ public class PrincipalMain {
 						boolean validaErroIdGerente = true;
 						while (validaErroIdGerente) {
 							if (listaGerente.size() == 0) {
-								bancoDeDadosFuncionario.listaDeRegistroGerente(listaGerente, gerente);
+								bancoDeDadosGerente.listaDeRegistroGerente(listaGerente, gerente);
 								validaErroIdGerente = false;
 							} else {
 								logger.info(" Contas Gerente ativas:\n ");
@@ -103,7 +107,7 @@ public class PrincipalMain {
 						boolean validaErroIdAuxiliar = true;
 						while (validaErroIdAuxiliar) {
 							if (listaAuxiliar.size() == 0) {
-								bancoDeDadosFuncionario.listaDeRegistroAuxiliar(listaAuxiliar, auxiliar);
+								bancoDeDadosAuxiliar.listaDeRegistroAuxiliar(listaAuxiliar, auxiliar);
 								validaErroIdAuxiliar = false;
 							} else {
 								logger.info(" Contas Auxiliar ativas:\n ");
@@ -148,7 +152,7 @@ public class PrincipalMain {
 						boolean validaErroIdEstagiario = true;
 						while (validaErroIdEstagiario) {
 							if (listaEstagiario.size() == 0) {
-								bancoDeDadosFuncionario.listaDeRegistroEstagiario(listaEstagiario, estagiario);
+								bancoDeDadosEstagiario.listaDeRegistroEstagiario(listaEstagiario, estagiario);
 								validaErroIdEstagiario = false;
 							} else {
 								logger.info(" Contas Estagiario ativas:\n ");
@@ -214,7 +218,8 @@ public class PrincipalMain {
 					}
 				}
 			} catch (Exception e) {
-				logger.error("##### Comando invalido, por favor insira apenas numeros validos ##### ");
+				logger.error("##### Erro! Reconectando ao sistema ##### " + "\n." + "\n." + "\n.");
+				logger.info("Sistema reconectado!");
 				sc.nextLine();
 				validaErroCatch = true;
 			}
