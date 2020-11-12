@@ -1,9 +1,10 @@
 package bancoDeDados;
 
-import java.io.FileInputStream;
+import java.io.FileInputStream; 
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -55,6 +56,7 @@ public class BancoDeDadosGerente {
 			PreparedStatement stmt = connection
 					.prepareStatement(props.getProperty("path.bancoDeDados.inserirDadosListaGerente"));
 
+			ResultSet rs = stmt.executeQuery(props.getProperty("path.bancoDeDados.pegarDadosListaGerente"));
 			stmt.setString(1, gerente.getNome() + " " + gerente.getSobrenome());
 			stmt.setLong(2, gerente.getCpf());
 			stmt.setDouble(3, gerente.getSalario());
@@ -64,13 +66,16 @@ public class BancoDeDadosGerente {
 			stmt.setInt(7, gerente.getSenhaDoCadastroDoSistema());
 			
 			stmt.execute();
+			
+			
 			logger.info("########## Inserindo dados ao banco de dados de funcionarios ##########" + "\n."
-					+ "\n." + "\n.");
+					+ "\n." + "\n.");	
 			logger.info("########## Gerando seu id automatico ##########" + "\n." + "\n." + "\n.");
-			logger.info("Seu novo id do Gerente: " + stmt.execute(props.getProperty("path.bancoDeDados.pegarDadosListaGerente")));
+			stmt.execute(props.getProperty("path.bancoDeDados.pegarDadosListaGerente"));
+			logger.info("Seu novo id do Gerente (use seu id para se conectar ao sistema): " + rs);
+			
 //			gerente.setId(props.getProperty("path.bancoDeDados.pegarDadosListaGerente"));
-
-			logger.info("********** Gerente cadastrado ao banco de dados! **********");
+			
 			stmt.close();
 		} catch (Exception e) {
 			logger.error(

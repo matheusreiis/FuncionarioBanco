@@ -68,7 +68,6 @@ public class BancoDeDadosAuxiliar {
 					"########## Inserindo dados ao banco de dados de funcionarios ##########" + "\n." + "\n." + "\n.");
 
 			stmt.execute();
-			logger.info("********** Auxiliar cadastrado ao banco de dados! **********");
 			stmt.close();
 		} catch (Exception e) {
 			logger.error("Erro ao tentar adicionar dados do Auxiliar no banco de dados, por favor tente novamente!");

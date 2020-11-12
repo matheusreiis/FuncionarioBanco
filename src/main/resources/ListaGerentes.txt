@@ -1,1 +1,9 @@
-1 - Matheus
+Gerente id = 0
+Nome do Gerente = Matheus Cristiano
+cpf = 12345678909
+salario = 2000.0
+idade = 20
+estadoCivil = Solteiro
+porcentagemDaBonificacao = 0.0
+loginDoCadastroDoSistema = 123456
+senhaDoCadastroDoSistema = 123456

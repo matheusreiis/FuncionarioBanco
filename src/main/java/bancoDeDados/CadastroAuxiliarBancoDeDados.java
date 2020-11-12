@@ -111,6 +111,6 @@ public class CadastroAuxiliarBancoDeDados {
 				}
 			}
 		}
-		logger.info("********** Auxiliar Cadastrado com sucesso no sistema! **********\n");
+		logger.info("********** AUXILIAR CADASTRADO COM SUCESSO! **********\n");
 	}
 }

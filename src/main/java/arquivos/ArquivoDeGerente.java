@@ -1,11 +1,11 @@
 package arquivos;
 
 
-import java.io.File; 
+import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 import java.util.Properties;
 
@@ -13,6 +13,8 @@ import entities.Funcionario;
 import entities.Gerente;
 
 public class ArquivoDeGerente {
+	
+	Gerente gerente;
 
 
 	public static Properties getProp() throws IOException {
@@ -27,22 +29,15 @@ public class ArquivoDeGerente {
 
 		Properties props = getProp();
 		File file = new File(props.getProperty("path.arquivo.arquivoGerente"));
-		Path path = Paths.get(props.getProperty("path.arquivo.arquivoGerente"));
 
 		if (!file.exists()) {
 			file.createNewFile();
 		}
-		
-		
-		
-		
-		
+		FileWriter fw = new FileWriter(file.getAbsoluteFile());
+		BufferedWriter bw = new BufferedWriter(fw);
+		bw.write(gerente.toString());
 
-//		FileWriter fw = new FileWriter(file.getAbsoluteFile());
-//		BufferedWriter bw = new BufferedWriter(fw);
-//		bw.write(gerente.getId() + " - " + gerente.getNome());
-
-//		bw.flush();
-//		bw.close();
+		bw.flush();
+		bw.close();
 	}
 }

@@ -111,6 +111,6 @@ public class CadastroEstagiarioBancoDeDados {
 				}
 			}
 		}
-		logger.info("********** Estagiario Cadastrado com sucesso no sistema! **********\n");
+		logger.info("********** ESTAGIARIO CADASTRADO COM SUCESSO! **********\n");
 	}
 }

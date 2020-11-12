@@ -97,7 +97,7 @@ public class CadastroGerenteBancoDeDados {
 					validaErroConfirma = false;
 					validaErroCatch = true;
 				} else if (confirmaDadosGerente == 'y') {
-//					arquivoGerente.listaDeGerentesAtivos(listaGerente, gerente);
+					arquivoGerente.listaDeGerentesAtivos(listaGerente, gerente);
 					bancoDeDadosGerente.inserirDadosBancoGerente(listaGerente, gerente);
 					validaErroConfirma = false;
 					validaErroCatch = false;
@@ -108,6 +108,6 @@ public class CadastroGerenteBancoDeDados {
 				}
 			}
 		}
-		logger.info("********** Gerente Cadastrado com sucesso no sistema! **********\n");
+		logger.info("********** GERENTE CADASTRADO COM SUCESSO! **********\n");
 	}
 }

@@ -1,6 +1,6 @@
 package principal;
 
-import java.util.ArrayList;
+import java.util.ArrayList; 
 import java.util.List;
 import java.util.Scanner;
 
@@ -16,7 +16,7 @@ import entities.Auxiliar;
 import entities.Estagiario;
 import entities.Funcionario;
 import entities.Gerente;
-import util.CalculadoraDaBonificacaoServico;
+//import util.CalculadoraDaBonificacaoServico;
 import validadores.ValidadorDeBancoDeDados;
 
 public class PrincipalMain {
@@ -29,7 +29,7 @@ public class PrincipalMain {
 	public static void main(String[] args) throws Exception {
 
 		Scanner sc = new Scanner(System.in);
-		CalculadoraDaBonificacaoServico calculadoraDaBonificacao = new CalculadoraDaBonificacaoServico();
+//		CalculadoraDaBonificacaoServico calculadoraDaBonificacao = new CalculadoraDaBonificacaoServico();
 		BancoDeDadosGerente bancoDeDadosGerente = new BancoDeDadosGerente();
 		BancoDeDadosAuxiliar bancoDeDadosAuxiliar = new BancoDeDadosAuxiliar();
 		BancoDeDadosEstagiario bancoDeDadosEstagiario = new BancoDeDadosEstagiario();
