@@ -1,7 +1,10 @@
 package principal;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList; 
 import java.util.List;
+import java.util.Properties;
 import java.util.Scanner;
 
 import org.apache.log4j.Logger;
@@ -25,6 +28,14 @@ public class PrincipalMain {
 	static Gerente gerente;
 	static Auxiliar auxiliar;
 	static Estagiario estagiario;
+	
+	public static Properties getProp() throws IOException {
+		Properties props = new Properties();
+		FileInputStream file = new FileInputStream(
+				"C:\\Users\\DataCore\\eclipse-workspace\\FuncionarioBanco\\src\\main\\resources\\dados.properties");
+		props.load(file);
+		return props;
+	}
 
 	public static void main(String[] args) throws Exception {
 
@@ -40,6 +51,7 @@ public class PrincipalMain {
 		List<Funcionario> listaGerente = new ArrayList<>();
 		List<Funcionario> listaAuxiliar = new ArrayList<>();
 		List<Funcionario> listaEstagiario = new ArrayList<>();
+		Properties props = getProp();
 
 		int loginAutenticacao = 0;
 		int senhaAutenticacao = 0;
@@ -60,16 +72,15 @@ public class PrincipalMain {
 
 						boolean validaErroIdGerente = true;
 						while (validaErroIdGerente) {
-							if (listaGerente.size() == 0) {
+							if (listaGerente.size() != 0) {
 								bancoDeDadosGerente.listaDeRegistroGerente(listaGerente, gerente);
 								validaErroIdGerente = false;
 							} else {
 								logger.info(" Contas Gerente ativas:\n ");
-								for (i = 0; i < listaGerente.size(); i++) {
-									Gerente gerente = (Gerente) listaGerente.get(i);
-									logger.info(
-											gerente.getId() + " - " + gerente.getNome() + " " + gerente.getSobrenome());
-								}
+//								for (i = 0; i < listaGerente.size(); i++) {
+//									Gerente gerente = (Gerente) listaGerente.get(i);
+									bancoDeDadosGerente.mostrarDadosBancoGerente(gerente);
+//								}
 								try {
 									logger.info("Solicite um sistema Gerente para entrar: ");
 

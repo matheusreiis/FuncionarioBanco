@@ -98,7 +98,9 @@ public class CadastroGerenteBancoDeDados {
 					validaErroCatch = true;
 				} else if (confirmaDadosGerente == 'y') {
 					arquivoGerente.listaDeGerentesAtivos(listaGerente, gerente);
-					bancoDeDadosGerente.inserirDadosBancoGerente(listaGerente, gerente);
+					logger.info("---------- CONECTANDO AO BANCO DE DADOS ----------");
+					bancoDeDadosGerente.inserirDadosBancoGerente(gerente);
+					bancoDeDadosGerente.pegarDadosBancoGerente(gerente);
 					validaErroConfirma = false;
 					validaErroCatch = false;
 				} else if (confirmaDadosGerente != 'y' && confirmaDadosGerente != 'n') {

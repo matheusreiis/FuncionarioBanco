@@ -1,6 +1,5 @@
 package bancoDeDados;
 
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -14,9 +13,8 @@ public class ConexaoBancoDeDados {
 	String root = "root";
 	String senha = "123456789";
 
-	public Connection conexaoJDBC() throws IOException {
+	public Connection conexaoJDBC() {
 
-		logger.info("---------- CONECTANDO AO BANCO DE DADOS ----------");
 		try {
 			return DriverManager.getConnection(dbNome, root, senha);
 		} catch (SQLException e) {

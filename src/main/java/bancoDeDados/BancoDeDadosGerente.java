@@ -1,6 +1,6 @@
 package bancoDeDados;
 
-import java.io.FileInputStream; 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,10 +17,10 @@ import entities.Funcionario;
 import entities.Gerente;
 
 public class BancoDeDadosGerente {
-	
+
 	Logger logger = Logger.getLogger(BancoDeDadosGerente.class);
 	NumberFormat formatter = new DecimalFormat("#0.00");
-	Gerente gerente;
+	ConexaoBancoDeDados conexaoBancoDeDados = new ConexaoBancoDeDados();
 	
 	public static Properties getProp() throws IOException {
 		Properties props = new Properties();
@@ -31,7 +31,7 @@ public class BancoDeDadosGerente {
 	}
 
 	public void listaDeRegistroGerente(List<Funcionario> listaGerente, Gerente gerente) throws IOException {
-		
+
 		if (listaGerente.size() == 0) {
 			logger.info("Nao ha Gerentes cadastrados!");
 			logger.info("Retornando ao lobby." + "\n." + "\n." + "\n.");
@@ -46,17 +46,16 @@ public class BancoDeDadosGerente {
 			logger.info("Senha do Gerente: **************" + System.lineSeparator());
 		}
 	}
-	
-	public void inserirDadosBancoGerente(List<Funcionario> listaGerente, Gerente gerente) throws IOException, SQLException {
-		
+
+	public void inserirDadosBancoGerente(Gerente gerente) throws IOException, SQLException {
+
 		Properties props = getProp();
-		Connection connection = new ConexaoBancoDeDados().conexaoJDBC();
-		
+		Connection connection = conexaoBancoDeDados.conexaoJDBC();
+
 		try {
 			PreparedStatement stmt = connection
 					.prepareStatement(props.getProperty("path.bancoDeDados.inserirDadosListaGerente"));
 
-			ResultSet rs = stmt.executeQuery(props.getProperty("path.bancoDeDados.pegarDadosListaGerente"));
 			stmt.setString(1, gerente.getNome() + " " + gerente.getSobrenome());
 			stmt.setLong(2, gerente.getCpf());
 			stmt.setDouble(3, gerente.getSalario());
@@ -64,28 +63,62 @@ public class BancoDeDadosGerente {
 			stmt.setString(5, gerente.getEstadoCivil());
 			stmt.setInt(6, gerente.getLoginDoCadastroDoSistema());
 			stmt.setInt(7, gerente.getSenhaDoCadastroDoSistema());
-			
 			stmt.execute();
-			
-			
-			logger.info("########## Inserindo dados ao banco de dados de funcionarios ##########" + "\n."
-					+ "\n." + "\n.");	
-			logger.info("########## Gerando seu id automatico ##########" + "\n." + "\n." + "\n.");
-			stmt.execute(props.getProperty("path.bancoDeDados.pegarDadosListaGerente"));
-			logger.info("Seu novo id do Gerente (use seu id para se conectar ao sistema): " + rs);
-			
-//			gerente.setId(props.getProperty("path.bancoDeDados.pegarDadosListaGerente"));
-			
+
+			logger.info(
+					"########## Inserindo dados ao banco de dados de funcionarios ##########" + "\n." + "\n." + "\n.");
+
 			stmt.close();
 		} catch (Exception e) {
-			logger.error(
-					"Erro ao tentar adicionar dados do Gerente no banco de dados, por favor tente novamente!");
+			logger.error("Erro ao tentar adicionar dados do Gerente no banco de dados, por favor tente novamente!");
 			throw new RuntimeException(e);
 		}
-		connection.close();
+	}
+
+	public void pegarDadosBancoGerente(Gerente gerente) throws IOException, SQLException {
+
+		Properties props = getProp();
+		Connection connection = conexaoBancoDeDados.conexaoJDBC();
+		
+		try {
+			PreparedStatement stmt2 = connection
+					.prepareStatement(props.getProperty("path.bancoDeDados.pegarDadosListaGerente"));
+
+			ResultSet rs = stmt2.executeQuery();
+
+			while (rs.next()) {
+				gerente.setId(rs.getInt("id"));
+			}
+			logger.info("########## Gerando seu id automatico ##########" + "\n." + "\n." + "\n.");
+			logger.info("Seu novo id do Gerente (use seu id para se conectar ao sistema): " + gerente.getId());
+			stmt2.close();
+		} catch (Exception e) {
+			logger.error("Erro ao tentar pegar dados do Gerente no banco de dados, por favor tente novamente!");
+			throw new RuntimeException(e);
+		}
+	}
+
+	public void excluirDadosBancoGerente() {
+
 	}
 	
-	public void excluirDadosBancoGerente() {
+	public void mostrarDadosBancoGerente(Gerente gerente) throws IOException, SQLException {
+		
+		Properties props = getProp();
+		Connection connection = conexaoBancoDeDados.conexaoJDBC();
+		
+		try {
+		PreparedStatement stmt3 = connection
+				.prepareStatement(props.getProperty("path.bancoDeDados.mostrarDadosListaGerente"));
+		
+		ResultSet rs = stmt3.executeQuery();
+		
+		logger.info(rs);
+		
+		} catch (Exception e) {
+			logger.error("Erro ao tentar mostrar dados do Gerente no banco de dados, por favor tente novamente!");
+			throw new RuntimeException(e);
+		}
 		
 	}
 }
