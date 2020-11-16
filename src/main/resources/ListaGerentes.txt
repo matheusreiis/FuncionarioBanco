@@ -1,9 +1,9 @@
 Gerente id = 0
-Nome do Gerente = Filipe Xavier
-cpf = 12321212121
-salario = 3999.0
-idade = 40
+Nome do Gerente = Matheus Cristiano
+cpf = 12345678909
+salario = 2000.0
+idade = 20
 estadoCivil = Solteiro
 porcentagemDaBonificacao = 0.0
-loginDoCadastroDoSistema = 765765
-senhaDoCadastroDoSistema = 765765
+loginDoCadastroDoSistema = 123456
+senhaDoCadastroDoSistema = 123456

@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -17,6 +18,7 @@ import entities.Funcionario;
 
 public class BancoDeDadosAuxiliar {
 
+	ConexaoBancoDeDados conexaoBancoDeDados = new ConexaoBancoDeDados();
 	Logger logger = Logger.getLogger(BancoDeDadosGerente.class);
 	NumberFormat formatter = new DecimalFormat("#0.00");
 	Auxiliar auxiliar;
@@ -74,5 +76,30 @@ public class BancoDeDadosAuxiliar {
 			throw new RuntimeException(e);
 		}
 		connection.close();
+	}
+	
+	public void excluirDadosBancoAuxiliar() {
+		
+	}
+	
+	public void mostrarDadosBancoAuxiliar() throws IOException {
+		
+		Properties props = getProp();
+		Connection connection = conexaoBancoDeDados.conexaoJDBC();
+		
+		try {
+			PreparedStatement stmt = connection
+					.prepareStatement(props.getProperty("path.bancoDeDados.pegarDadosListaAuxiliar"));
+
+			ResultSet rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				logger.info(rs.getInt("id") + " - " + rs.getString("nome"));
+			}
+			stmt.close();
+		} catch (Exception e) {
+			logger.error("Erro ao tentar pegar dados do Auxiliar no banco de dados, por favor tente novamente!");
+			throw new RuntimeException(e);
+		}
 	}
 }

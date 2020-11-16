@@ -6,5 +6,5 @@ import entities.Funcionario;
 
 public interface IValidadorDoBancoDeDados {
 
-	public void validaBancoGerente(int loginDeAutenticacao, int senhaDeAutenticacao, List<Funcionario> listaGerente);
+	public void validaBancoGerente(int loginDeAutenticacao, int senhaDeAutenticacao, int acaoLobbyGerente, List<Funcionario> listaGerente);
 }

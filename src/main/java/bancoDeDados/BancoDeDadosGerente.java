@@ -21,7 +21,7 @@ public class BancoDeDadosGerente {
 	Logger logger = Logger.getLogger(BancoDeDadosGerente.class);
 	NumberFormat formatter = new DecimalFormat("#0.00");
 	ConexaoBancoDeDados conexaoBancoDeDados = new ConexaoBancoDeDados();
-	
+
 	public static Properties getProp() throws IOException {
 		Properties props = new Properties();
 		FileInputStream file = new FileInputStream(
@@ -30,22 +30,23 @@ public class BancoDeDadosGerente {
 		return props;
 	}
 
-	public void listaDeRegistroGerente(List<Funcionario> listaGerente, Gerente gerente) throws IOException {
+	public void listaDeRegistroGerente(List<Funcionario> listaGerente, Gerente gerente)
+			throws IOException {
 
-		if (listaGerente.size() == 0) {
-			logger.info("Nao ha Gerentes cadastrados!");
-			logger.info("Retornando ao lobby." + "\n." + "\n." + "\n.");
-		} else {
-			logger.info("--------- DADOS DO GERENTE ---------" + System.lineSeparator());
-			logger.info("Nome do Gerente: " + gerente.getNome() + " " + gerente.getSobrenome());
-			logger.info("cpf do Gerente: " + gerente.getCpf());
-			logger.info("Salario do Gerente: R$" + formatter.format(gerente.getSalario()));
-			logger.info("Idade do Gerente: " + gerente.getIdade());
-			logger.info("Estado Civil do Gerente: " + gerente.getEstadoCivil());
-			logger.info("Login do Gerente: " + gerente.getLoginDoCadastroDoSistema());
-			logger.info("Senha do Gerente: **************" + System.lineSeparator());
+			if (listaGerente.size() == 0) {
+				logger.info("Nao ha Gerentes cadastrados!");
+				logger.info("Retornando ao lobby." + "\n." + "\n." + "\n.");
+			} else {
+				logger.info("--------- DADOS DO GERENTE ---------" + System.lineSeparator());
+				logger.info("Nome do Gerente: " + gerente.getNome() + " " + gerente.getSobrenome());
+				logger.info("cpf do Gerente: " + gerente.getCpf());
+				logger.info("Salario do Gerente: R$" + formatter.format(gerente.getSalario()));
+				logger.info("Idade do Gerente: " + gerente.getIdade());
+				logger.info("Estado Civil do Gerente: " + gerente.getEstadoCivil());
+				logger.info("Login do Gerente: " + gerente.getLoginDoCadastroDoSistema());
+				logger.info("Senha do Gerente: **************" + System.lineSeparator());
+			}
 		}
-	}
 
 	public void inserirDadosBancoGerente(Gerente gerente) throws IOException, SQLException {
 
@@ -79,19 +80,19 @@ public class BancoDeDadosGerente {
 
 		Properties props = getProp();
 		Connection connection = conexaoBancoDeDados.conexaoJDBC();
-		
+
 		try {
-			PreparedStatement stmt2 = connection
+			PreparedStatement stmt = connection
 					.prepareStatement(props.getProperty("path.bancoDeDados.pegarDadosListaGerente"));
 
-			ResultSet rs = stmt2.executeQuery();
+			ResultSet rs = stmt.executeQuery();
 
 			while (rs.next()) {
 				gerente.setId(rs.getInt("id"));
 			}
 			logger.info("########## Gerando seu id automatico ##########" + "\n." + "\n." + "\n.");
 			logger.info("Seu novo id do Gerente (use seu id para se conectar ao sistema): " + gerente.getId());
-			stmt2.close();
+			stmt.close();
 		} catch (Exception e) {
 			logger.error("Erro ao tentar pegar dados do Gerente no banco de dados, por favor tente novamente!");
 			throw new RuntimeException(e);
@@ -102,23 +103,24 @@ public class BancoDeDadosGerente {
 
 	}
 	
-	public void mostrarDadosBancoGerente(Gerente gerente) throws IOException, SQLException {
+	public void mostrarDadosBancoGerente(Gerente gerente) throws IOException {
 		
 		Properties props = getProp();
 		Connection connection = conexaoBancoDeDados.conexaoJDBC();
 		
 		try {
-		PreparedStatement stmt3 = connection
-				.prepareStatement(props.getProperty("path.bancoDeDados.mostrarDadosListaGerente"));
-		
-		ResultSet rs = stmt3.executeQuery();
-		
-		logger.info(rs);
-		
+			PreparedStatement stmt = connection
+					.prepareStatement(props.getProperty("path.bancoDeDados.pegarDadosListaGerente"));
+
+			ResultSet rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				logger.info(rs.getInt("id") + " - " + rs.getString("nome"));
+			}
+			stmt.close();
 		} catch (Exception e) {
-			logger.error("Erro ao tentar mostrar dados do Gerente no banco de dados, por favor tente novamente!");
+			logger.error("Erro ao tentar pegar dados do Gerente no banco de dados, por favor tente novamente!");
 			throw new RuntimeException(e);
 		}
-		
 	}
 }

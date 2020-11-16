@@ -25,7 +25,6 @@ public class ValidadorDeCpf implements IValidadorDeCpf {
 					logger.info(mensagemCpf);
 					cpf = sc.nextLong();
 					valueOf = extracted(cpf);
-					logger.info(valueOf);
 				}
 				validaErroCatch = false;
 			} catch (InputMismatchException e) {

@@ -1,9 +1,10 @@
 package bancoDeDados;
 
-import java.io.FileInputStream; 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -18,6 +19,7 @@ import entities.Funcionario;
 public class BancoDeDadosEstagiario {
 
 	Logger logger = Logger.getLogger(BancoDeDadosGerente.class);
+	ConexaoBancoDeDados conexaoBancoDeDados = new ConexaoBancoDeDados();
 	NumberFormat formatter = new DecimalFormat("#0.00");
 	Estagiario estagiario;
 
@@ -74,5 +76,30 @@ public class BancoDeDadosEstagiario {
 			throw new RuntimeException(e);
 		}
 		connection.close();
+	}
+	
+	public void excluirDadosBancoEstagiario() {
+		
+	}
+
+	public void mostrarDadosBancoEstagiario() throws IOException {
+		
+		Properties props = getProp();
+		Connection connection = conexaoBancoDeDados.conexaoJDBC();
+		
+		try {
+			PreparedStatement stmt = connection
+					.prepareStatement(props.getProperty("path.bancoDeDados.pegarDadosListaEstagiario"));
+
+			ResultSet rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				logger.info(rs.getInt("id") + " - " + rs.getString("nome"));
+			}
+			stmt.close();
+		} catch (Exception e) {
+			logger.error("Erro ao tentar pegar dados do Estagiario no banco de dados, por favor tente novamente!");
+			throw new RuntimeException(e);
+		}
 	}
 }
