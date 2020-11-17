@@ -1,6 +1,6 @@
 package principal;
 
-import java.io.FileInputStream; 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +21,6 @@ import entities.Funcionario;
 import entities.Gerente;
 import sistemas.AutenticacaoSistema;
 //import util.CalculadoraDaBonificacaoServico;
-import validadores.ValidadorDeBancoDeDados;
 
 public class PrincipalMain {
 
@@ -29,7 +28,7 @@ public class PrincipalMain {
 	static Gerente gerente;
 	static Auxiliar auxiliar;
 	static Estagiario estagiario;
-	
+
 	public static Properties getProp() throws IOException {
 		Properties props = new Properties();
 		FileInputStream file = new FileInputStream(
@@ -42,14 +41,13 @@ public class PrincipalMain {
 
 		Scanner sc = new Scanner(System.in);
 //		CalculadoraDaBonificacaoServico calculadoraDaBonificacao = new CalculadoraDaBonificacaoServico();
-		BancoDeDadosGerente bancoDeDadosGerente = new BancoDeDadosGerente();
-		BancoDeDadosAuxiliar bancoDeDadosAuxiliar = new BancoDeDadosAuxiliar();
-		BancoDeDadosEstagiario bancoDeDadosEstagiario = new BancoDeDadosEstagiario();
-		ValidadorDeBancoDeDados validaBanco = new ValidadorDeBancoDeDados();
 		CadastroGerenteBancoDeDados cadastrarGerente = new CadastroGerenteBancoDeDados();
 		CadastroAuxiliarBancoDeDados cadastrarAuxiliar = new CadastroAuxiliarBancoDeDados();
 		CadastroEstagiarioBancoDeDados cadastrarEstagiario = new CadastroEstagiarioBancoDeDados();
 		AutenticacaoSistema autenticaSistema = new AutenticacaoSistema();
+		BancoDeDadosGerente bancoDeDadosGerente = new BancoDeDadosGerente();
+		BancoDeDadosAuxiliar bancoDeDadosAuxiliar = new BancoDeDadosAuxiliar();
+		BancoDeDadosEstagiario bancoDeDadosEstagiario = new BancoDeDadosEstagiario();
 		List<Funcionario> listaGerente = new ArrayList<>();
 		List<Funcionario> listaAuxiliar = new ArrayList<>();
 		List<Funcionario> listaEstagiario = new ArrayList<>();
@@ -78,14 +76,14 @@ public class PrincipalMain {
 								validaErroIdGerente = false;
 							} else {
 								logger.info(" Contas Gerente ativas:\n ");
-									bancoDeDadosGerente.mostrarDadosBancoGerente(gerente);
-//								}
+								bancoDeDadosGerente.mostrarDadosBancoGerente(gerente);
 								try {
 									logger.info("Solicite um sistema Gerente para entrar: ");
 
 									int acaoLobbyGerente = sc.nextInt();
 
-									autenticaSistema.autenticaSistemaGerente(loginAutenticacao, senhaAutenticacao, acaoLobbyGerente, listaGerente);
+									autenticaSistema.autenticaSistemaGerente(loginAutenticacao, senhaAutenticacao,
+											acaoLobbyGerente, listaGerente);
 								} catch (Exception e) {
 									logger.error("#### Comando invalido, por favor insira apenas numeros! ####"
 											+ System.lineSeparator());
@@ -106,10 +104,10 @@ public class PrincipalMain {
 							} else {
 								logger.info(" Contas Auxiliar ativas:\n ");
 								bancoDeDadosAuxiliar.mostrarDadosBancoAuxiliar();
-								
+
 								try {
 									logger.info("Solicite um sistema Auxiliar para entrar: ");
-									
+
 									int acaoLobbyAuxiliar = sc.nextInt();
 
 									for (i = 0; i < listaAuxiliar.size(); i++) {
@@ -118,7 +116,6 @@ public class PrincipalMain {
 											logger.info("---------- AUTENTICANDO SISTEMA AUXILIAR ----------" + "\n."
 													+ "\n." + "\n.");
 											logger.info("Bem vindo(a) novamente Sr. " + auxiliar.getNome());
-											validaBanco.validaBancoAuxiliar(loginAutenticacao, senhaAutenticacao, listaAuxiliar);
 											validaErroIdAuxiliar = false;
 										} else {
 											logger.error(
@@ -146,7 +143,7 @@ public class PrincipalMain {
 								validaErroIdEstagiario = false;
 							} else {
 								logger.info(" Contas Estagiario ativas:\n ");
-									bancoDeDadosAuxiliar.mostrarDadosBancoAuxiliar();
+								bancoDeDadosAuxiliar.mostrarDadosBancoAuxiliar();
 								try {
 									logger.info("Solicite um sistema Estagiario para entrar: ");
 
@@ -158,7 +155,6 @@ public class PrincipalMain {
 											logger.info("---------- AUTENTICANDO SISTEMA ESTAGIARIO ----------" + "\n."
 													+ "\n." + "\n.");
 											logger.info("Bem vindo(a) novamente Sr. " + estagiario.getNome());
-											validaBanco.validaBancoEstagiario(loginAutenticacao, senhaAutenticacao, listaEstagiario);
 											validaErroIdEstagiario = false;
 										} else {
 											logger.error(

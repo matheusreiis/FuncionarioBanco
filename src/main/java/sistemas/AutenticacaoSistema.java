@@ -13,7 +13,7 @@ import org.apache.log4j.Logger;
 import bancoDeDados.ConexaoBancoDeDados;
 import entities.Funcionario;
 import entities.Gerente;
-import validadores.ValidadorDeBancoDeDados;
+import validadores.ValidadorDeAutenticacaoDoSistema;
 
 public class AutenticacaoSistema {
 
@@ -23,12 +23,14 @@ public class AutenticacaoSistema {
 	SistemaAuxiliar sistemaAuxiliar = new SistemaAuxiliar();
 	SistemaEstagiario sistemaEstagiario = new SistemaEstagiario();
 	ConexaoBancoDeDados conexaoBancoDeDados = new ConexaoBancoDeDados();
-	ValidadorDeBancoDeDados validaBanco = new ValidadorDeBancoDeDados();
+	ValidadorDeAutenticacaoDoSistema validaSistema = new ValidadorDeAutenticacaoDoSistema();
 	Gerente gerente;
-	boolean validaErroIdGerente = true;
+	boolean validaErro = true;
 	int id;
 	int loginDoSistema;
 	int senhaDoSistema;
+	String mensagemDeLogin = "Digite seu login: ";
+	String mensagemDeSenha = "Digite sua senha: ";
 
 	public static Properties getProp() throws IOException {
 		Properties props = new Properties();
@@ -43,35 +45,44 @@ public class AutenticacaoSistema {
 
 		Properties props = getProp();
 		Connection connection = conexaoBancoDeDados.conexaoJDBC();
-		ValidadorDeBancoDeDados validaBanco = new ValidadorDeBancoDeDados();
 
 		try {
 			PreparedStatement stmt = connection
 					.prepareStatement(props.getProperty("path.bancoDeDados.pegarDadosListaGerente"));
 
 			ResultSet rs = stmt.executeQuery();
-			while (validaErroIdGerente) {
-					rs.next(); 
-					id = rs.getInt("id");
-					rs.getString("nome");
+			while (validaErro) {
+				rs.next();
+				id = rs.getInt("id");
 
-					if (acaoLobbyGerente == id) {
-						logger.info("---------- AUTENTICANDO SISTEMA GERENTE ----------" + "\n." + "\n." + "\n.");
-						logger.info("Bem vindo(a) novamente Sr. " + rs.getString("nome"));
-						validaBanco.validaBancoGerente(loginAutenticacao, senhaAutenticacao, acaoLobbyGerente, listaGerente);
-						validaErroIdGerente = false;
-					} 
+				if (acaoLobbyGerente == id) {
+					logger.info("---------- AUTENTICANDO SISTEMA GERENTE ----------" + "\n." + "\n." + "\n.");
+					logger.info("Bem vindo(a) novamente Sr. " + rs.getString("nome"));
+
+					logger.info(mensagemDeLogin);
+					loginAutenticacao = validaSistema.validacaoDoLoginDoSistema(loginAutenticacao, mensagemDeLogin);
+
+					logger.info(mensagemDeSenha);
+					senhaAutenticacao = validaSistema.validacaoDaSenhaDoSistema(senhaAutenticacao, mensagemDeSenha);
+
+					validaErro = false;
 				}
-			loginDoSistema = rs.getInt("Login_do_Sistema");
-			senhaDoSistema = rs.getInt("Senha_do_Sistema");
-			
-			if (loginAutenticacao == loginDoSistema
-					&& senhaAutenticacao == senhaDoSistema) {
-				sistemaGerente.sistemaGerente();
-			} else {
-				logger.error("########## LOGIN INCORRETO ##########");
-				logger.error("Desconectando do sistema!" + "\n." + "\n." + "\n.");
-				logger.error("Desconectado!" + System.lineSeparator());
+			}
+			validaErro = true;
+			while (validaErro) {
+				rs.next();
+				loginDoSistema = rs.getInt("Login_do_Sistema");
+				senhaDoSistema = rs.getInt("Senha_do_Sistema");
+
+				if (loginAutenticacao == loginDoSistema && senhaAutenticacao == senhaDoSistema) {
+					sistemaGerente.sistemaGerente();
+					validaErro = false;
+				} else {
+					logger.error("########## LOGIN INCORRETO ##########");
+					logger.error("Desconectando do sistema!" + "\n." + "\n." + "\n.");
+					logger.error("Desconectado!" + System.lineSeparator());
+					break;
+				}
 			}
 			stmt.close();
 		} catch (Exception e) {

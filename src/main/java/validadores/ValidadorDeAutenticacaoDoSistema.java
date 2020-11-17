@@ -19,7 +19,8 @@ public class ValidadorDeAutenticacaoDoSistema implements IAutenticacaoDoSistema 
 				String valueOf = "";
 				valueOf = extracted(loginAutenticacao, loginAutenticacao);
 				while (valueOf.length() != 6) {
-					logger.debug("##### Por favor insira 6 numeros para validar seu login. #####" + System.lineSeparator());
+					logger.debug(
+							"##### Por favor insira 6 numeros para validar seu login. #####" + System.lineSeparator());
 					logger.info(mensagemDeLogin);
 					loginAutenticacao = sc.nextInt();
 					valueOf = extracted(loginAutenticacao, loginAutenticacao);
