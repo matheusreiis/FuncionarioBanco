@@ -58,7 +58,6 @@ public class ValidadorDeAutenticacaoDoSistema implements IAutenticacaoDoSistema 
 				validaErroCatch = true;
 			}
 		}
-
 		return senhaAutenticacao;
 	}
 

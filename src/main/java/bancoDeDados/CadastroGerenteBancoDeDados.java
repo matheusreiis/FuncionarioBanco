@@ -1,6 +1,6 @@
 package bancoDeDados;
 
-import java.util.List;
+import java.util.List; 
 import java.util.Scanner;
 
 import org.apache.log4j.Logger;
@@ -11,7 +11,6 @@ import entities.Gerente;
 import validadores.ValidadorDeCadastroDoSistema;
 import validadores.ValidadorDeCpf;
 import validadores.ValidadorDeEstadoCivil;
-import validadores.ValidadorDeId;
 import validadores.ValidadorDeIdade;
 import validadores.ValidadorDeNomeESobrenome;
 import validadores.ValidadorDeSalario;
@@ -27,7 +26,6 @@ public class CadastroGerenteBancoDeDados {
 	ValidadorDeIdade validaIdade = new ValidadorDeIdade();
 	ValidadorDeSalario validaSalario = new ValidadorDeSalario();
 	ValidadorDeCadastroDoSistema validaCadastro = new ValidadorDeCadastroDoSistema();
-	ValidadorDeId validaId = new ValidadorDeId();
 	ValidadorDeNomeESobrenome validaNomeESobrenome = new ValidadorDeNomeESobrenome();
 	ArquivoDeGerente arquivoGerente = new ArquivoDeGerente();
 

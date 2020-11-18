@@ -49,7 +49,7 @@ public class BancoDeDadosEstagiario {
 		}
 	}
 
-	public void inserirDadosBancoEstagiario(List<Funcionario> listaEstagiario, Estagiario estagiario) throws IOException, SQLException {
+	public void inserirDadosBancoEstagiario(Estagiario estagiario) throws IOException, SQLException {
 
 		Properties props = getProp();
 
@@ -77,16 +77,53 @@ public class BancoDeDadosEstagiario {
 		}
 		connection.close();
 	}
-	
-	public void excluirDadosBancoEstagiario() {
-		
+
+	public void pegarDadosBancoEstagiario(Estagiario estagiario) throws IOException, SQLException {
+
+		Properties props = getProp();
+		Connection connection = conexaoBancoDeDados.conexaoJDBC();
+
+		try {
+			PreparedStatement stmt = connection
+					.prepareStatement(props.getProperty("path.bancoDeDados.pegarDadosListaEstagiario"));
+
+			ResultSet rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				estagiario.setId(rs.getInt("id"));
+			}
+			logger.info("########## Gerando seu id automatico ##########" + "\n." + "\n." + "\n.");
+			logger.info("Seu novo id do Estagiario (use seu id para se conectar ao sistema): " + estagiario.getId());
+			stmt.close();
+		} catch (Exception e) {
+			logger.error("Erro ao tentar pegar dados do Estagiario no banco de dados, por favor tente novamente!");
+			throw new RuntimeException(e);
+		}
+	}
+
+	public void excluirDadosBancoEstagiario() throws IOException {
+
+		Properties props = getProp();
+		Connection connection = conexaoBancoDeDados.conexaoJDBC();
+
+		try {
+			PreparedStatement stmt = connection
+					.prepareStatement(props.getProperty("path.bancoDeDados.excluirDadosListaEstagiario"));
+			
+			ResultSet rs = stmt.executeQuery();
+			
+			
+
+		} catch (Exception e) {
+
+		}
 	}
 
 	public void mostrarDadosBancoEstagiario() throws IOException {
-		
+
 		Properties props = getProp();
 		Connection connection = conexaoBancoDeDados.conexaoJDBC();
-		
+
 		try {
 			PreparedStatement stmt = connection
 					.prepareStatement(props.getProperty("path.bancoDeDados.pegarDadosListaEstagiario"));
@@ -102,4 +139,5 @@ public class BancoDeDadosEstagiario {
 			throw new RuntimeException(e);
 		}
 	}
+
 }

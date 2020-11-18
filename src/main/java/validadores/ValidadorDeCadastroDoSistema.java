@@ -47,7 +47,6 @@ public class ValidadorDeCadastroDoSistema implements ICadastroDoSistema {
 				if (rs.next()) {
 					loginBanco = rs.getInt("Login_do_Sistema");
 				}
-
 				if (loginCadastro != loginBanco) {
 					String valueOf = "";
 					valueOf = extracted(loginCadastro, loginCadastro);

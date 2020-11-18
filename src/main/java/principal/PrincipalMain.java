@@ -60,20 +60,20 @@ public class PrincipalMain {
 
 		while (validaErroCatch) {
 			logger.debug(
-					"---------- Digite o Seu Cargo ----------\n \n 1 - Gerente\n 2 - Auxiliar\n 3 - Estagiario\n 4 - Cadastrar Funcionario\n 5 - Encerrar Sessao!");
+					"---------- Digite o Seu Cargo ----------\n \n 1 - Gerente\n 2 - Auxiliar\n 3 - Estagiario\n 4 - Cadastrar Funcionario\n 5 - Excluir Funcionario\n 6 - Encerrar Sessao!");
 			try {
 				int acaoLobby = sc.nextInt();
 
-				for (int i = acaoLobby; i == 1 || i == 2 || i == 3 || i == 4 || i == 5 || i > 5; i++) {
+				for (int i = acaoLobby; i == 1 || i == 2 || i == 3 || i == 4 || i == 5 || i == 6 || i > 7; i++) {
 
 					if (acaoLobby == 1) {
 						logger.info("---------- CONTA GERENTE ----------" + System.lineSeparator());
 
-						boolean validaErroIdGerente = true;
-						while (validaErroIdGerente) {
-							if (listaGerente.size() != 0) {
+						boolean validaErroGerente = true;
+						while (validaErroGerente) {
+							if (listaGerente.size() == 0) {
 								bancoDeDadosGerente.listaDeRegistroGerente(listaGerente, gerente);
-								validaErroIdGerente = false;
+								validaErroGerente = false;
 							} else {
 								logger.info(" Contas Gerente ativas:\n ");
 								bancoDeDadosGerente.mostrarDadosBancoGerente(gerente);
@@ -88,7 +88,7 @@ public class PrincipalMain {
 									logger.error("#### Comando invalido, por favor insira apenas numeros! ####"
 											+ System.lineSeparator());
 									sc.next();
-									validaErroIdGerente = true;
+									validaErroGerente = true;
 								}
 							}
 						}
@@ -96,11 +96,11 @@ public class PrincipalMain {
 					} else if (acaoLobby == 2) {
 						logger.info("---------- CONTA AUXILIAR ----------" + System.lineSeparator());
 
-						boolean validaErroIdAuxiliar = true;
-						while (validaErroIdAuxiliar) {
+						boolean validaErroAuxiliar = true;
+						while (validaErroAuxiliar) {
 							if (listaAuxiliar.size() == 0) {
 								bancoDeDadosAuxiliar.listaDeRegistroAuxiliar(listaAuxiliar, auxiliar);
-								validaErroIdAuxiliar = false;
+								validaErroAuxiliar = false;
 							} else {
 								logger.info(" Contas Auxiliar ativas:\n ");
 								bancoDeDadosAuxiliar.mostrarDadosBancoAuxiliar();
@@ -110,25 +110,13 @@ public class PrincipalMain {
 
 									int acaoLobbyAuxiliar = sc.nextInt();
 
-									for (i = 0; i < listaAuxiliar.size(); i++) {
-										Auxiliar auxiliar = (Auxiliar) listaAuxiliar.get(i);
-										if (acaoLobbyAuxiliar == auxiliar.getId()) {
-											logger.info("---------- AUTENTICANDO SISTEMA AUXILIAR ----------" + "\n."
-													+ "\n." + "\n.");
-											logger.info("Bem vindo(a) novamente Sr. " + auxiliar.getNome());
-											validaErroIdAuxiliar = false;
-										} else {
-											logger.error(
-													"#### Id inexistente, por favor insira um id existente para entrar no sistema! ####"
-															+ System.lineSeparator());
-											validaErroIdAuxiliar = true;
-										}
-									}
+									autenticaSistema.autenticaSistemaAuxiliar(loginAutenticacao, senhaAutenticacao,
+											acaoLobbyAuxiliar, listaAuxiliar);
 								} catch (Exception e) {
 									logger.error("#### Comando invalido, por favor insira apenas numeros! ####"
 											+ System.lineSeparator());
 									sc.next();
-									validaErroIdAuxiliar = true;
+									validaErroAuxiliar = true;
 								}
 							}
 						}
@@ -136,11 +124,11 @@ public class PrincipalMain {
 					} else if (acaoLobby == 3) {
 						logger.info("---------- CONTA ESTAGIARIO ----------" + System.lineSeparator());
 
-						boolean validaErroIdEstagiario = true;
-						while (validaErroIdEstagiario) {
+						boolean validaErroEstagiario = true;
+						while (validaErroEstagiario) {
 							if (listaEstagiario.size() == 0) {
 								bancoDeDadosEstagiario.listaDeRegistroEstagiario(listaEstagiario, estagiario);
-								validaErroIdEstagiario = false;
+								validaErroEstagiario = false;
 							} else {
 								logger.info(" Contas Estagiario ativas:\n ");
 								bancoDeDadosAuxiliar.mostrarDadosBancoAuxiliar();
@@ -149,25 +137,13 @@ public class PrincipalMain {
 
 									int acaoLobbyEstagiario = sc.nextInt();
 
-									for (i = 0; i < listaGerente.size(); i++) {
-										Estagiario estagiario = (Estagiario) listaEstagiario.get(i);
-										if (acaoLobbyEstagiario == estagiario.getId()) {
-											logger.info("---------- AUTENTICANDO SISTEMA ESTAGIARIO ----------" + "\n."
-													+ "\n." + "\n.");
-											logger.info("Bem vindo(a) novamente Sr. " + estagiario.getNome());
-											validaErroIdEstagiario = false;
-										} else {
-											logger.error(
-													"#### Id inexistente, por favor insira um id existente para entrar no sistema! ####"
-															+ System.lineSeparator());
-											validaErroIdEstagiario = true;
-										}
-									}
+									autenticaSistema.autenticaSistemaEstagiario(loginAutenticacao, senhaAutenticacao,
+											acaoLobbyEstagiario, listaEstagiario);
 								} catch (Exception e) {
 									logger.error("#### Comando invalido, por favor insira apenas numeros! ####"
 											+ System.lineSeparator());
 									sc.next();
-									validaErroIdEstagiario = true;
+									validaErroEstagiario = true;
 								}
 							}
 						}
@@ -189,10 +165,27 @@ public class PrincipalMain {
 						}
 						break;
 					} else if (acaoLobby == 5) {
+						
+						logger.info("---------- EXCLUSAO DE FUNCIONARIO ----------" + System.lineSeparator());
+						logger.debug("Digite o cargo do funcionario:\n 1.Gerente / 2.Auxiliar / 3.Estagiario ");
+						int cargoExclusao = sc.nextInt();
+
+						if (cargoExclusao == 1) {
+							bancoDeDadosGerente.excluirDadosBancoGerente();
+							
+						} else if (cargoExclusao == 2) {
+							bancoDeDadosAuxiliar.excluirDadosBancoAuxiliar();
+							
+						} else if (cargoExclusao == 3) {
+							bancoDeDadosEstagiario.excluirDadosBancoEstagiario();
+							
+						}
+						break;
+					} else if (acaoLobby == 6) {
 						logger.info("Encerrando Sessao!" + "\n." + "\n." + "\n.");
 						logger.info("Sessao Encerrada!");
 						System.exit(0);
-					} else if (acaoLobby > 5) {
+					} else if (acaoLobby > 6) {
 						logger.error("\n### Comando Invalido ### Por favor insira um valor valido! "
 								+ System.lineSeparator());
 						break;

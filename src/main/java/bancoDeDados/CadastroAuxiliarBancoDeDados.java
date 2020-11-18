@@ -1,6 +1,6 @@
 package bancoDeDados;
 
-import java.util.List; 
+import java.util.List;  
 import java.util.Scanner;
 
 import org.apache.log4j.Logger;
@@ -11,7 +11,6 @@ import entities.Funcionario;
 import validadores.ValidadorDeCadastroDoSistema;
 import validadores.ValidadorDeCpf;
 import validadores.ValidadorDeEstadoCivil;
-import validadores.ValidadorDeId;
 import validadores.ValidadorDeIdade;
 import validadores.ValidadorDeNomeESobrenome;
 import validadores.ValidadorDeSalario;
@@ -27,7 +26,6 @@ public class CadastroAuxiliarBancoDeDados {
 	ValidadorDeIdade validaIdade = new ValidadorDeIdade();
 	ValidadorDeSalario validaSalario = new ValidadorDeSalario();
 	ValidadorDeCadastroDoSistema validaCadastro = new ValidadorDeCadastroDoSistema();
-	ValidadorDeId validaId = new ValidadorDeId();
 	ValidadorDeNomeESobrenome validaNomeESobrenome = new ValidadorDeNomeESobrenome();
 	ArquivoDeAuxiliar arquivoAuxiliar = new ArquivoDeAuxiliar();
 
@@ -58,8 +56,6 @@ public class CadastroAuxiliarBancoDeDados {
 			boolean validaErroConfirma = true;
 
 			logger.info("---------- CADASTRO AUXILIAR ---------" + System.lineSeparator());
-
-//			logger.info("Novo id do usuario: " + props.getProperty("CHAMAR ID"));
 
 			logger.debug(mensagemNome);
 			auxiliar.setNome(validaNomeESobrenome.validaNome(nome, mensagemNome));
@@ -100,8 +96,10 @@ public class CadastroAuxiliarBancoDeDados {
 					validaErroConfirma = false;
 					validaErroCatch = true;
 				} else if (confirmaDadosAuxiliar == 'y') {
-//					arquivoAuxiliar.listaDeAuxiliaresAtivos(listaAuxiliar);
-					bancoDeDadosAuxiliar.inserirDadosBancoAuxiliar(listaAuxiliar, auxiliar);
+					arquivoAuxiliar.listaDeAuxiliaresAtivos(listaAuxiliar, auxiliar);
+					logger.info("---------- CONECTANDO AO BANCO DE DADOS ----------");
+					bancoDeDadosAuxiliar.inserirDadosBancoAuxiliar(auxiliar);
+					bancoDeDadosAuxiliar.pegarDadosBancoAuxiliar(auxiliar);
 					validaErroConfirma = false;
 					validaErroCatch = false;
 				} else if (confirmaDadosAuxiliar != 'y' && confirmaDadosAuxiliar != 'n') {

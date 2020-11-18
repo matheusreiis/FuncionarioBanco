@@ -49,7 +49,7 @@ public class BancoDeDadosAuxiliar {
 		}
 	}
 
-	public void inserirDadosBancoAuxiliar(List<Funcionario> listaAuxiliar, Auxiliar auxiliar) throws IOException, SQLException {
+	public void inserirDadosBancoAuxiliar(Auxiliar auxiliar) throws IOException, SQLException {
 
 		Properties props = getProp();
 
@@ -77,16 +77,53 @@ public class BancoDeDadosAuxiliar {
 		}
 		connection.close();
 	}
-	
-	public void excluirDadosBancoAuxiliar() {
-		
-	}
-	
-	public void mostrarDadosBancoAuxiliar() throws IOException {
-		
+
+	public void pegarDadosBancoAuxiliar(Auxiliar auxiliar) throws IOException, SQLException {
+
 		Properties props = getProp();
 		Connection connection = conexaoBancoDeDados.conexaoJDBC();
 		
+		try {
+			PreparedStatement stmt = connection
+					.prepareStatement(props.getProperty("path.bancoDeDados.pegarDadosListaGerente"));
+
+			ResultSet rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				auxiliar.setId(rs.getInt("id"));
+			}
+			logger.info("########## Gerando seu id automatico ##########" + "\n." + "\n." + "\n.");
+			logger.info("Seu novo id do Auxiliar (use seu id para se conectar ao sistema): " + auxiliar.getId());
+			stmt.close();
+		} catch (Exception e) {
+			logger.error("Erro ao tentar pegar dados do Auxiliar no banco de dados, por favor tente novamente!");
+			throw new RuntimeException(e);
+		}
+	}
+
+	public void excluirDadosBancoAuxiliar() throws IOException {
+
+		Properties props = getProp();
+		Connection connection = conexaoBancoDeDados.conexaoJDBC();
+
+		try {
+			PreparedStatement stmt = connection
+					.prepareStatement(props.getProperty("path.bancoDeDados.excluirDadosListaEstagiario"));
+			
+			ResultSet rs = stmt.executeQuery();
+			
+			
+
+		} catch (Exception e) {
+
+		}
+	}
+
+	public void mostrarDadosBancoAuxiliar() throws IOException {
+
+		Properties props = getProp();
+		Connection connection = conexaoBancoDeDados.conexaoJDBC();
+
 		try {
 			PreparedStatement stmt = connection
 					.prepareStatement(props.getProperty("path.bancoDeDados.pegarDadosListaAuxiliar"));

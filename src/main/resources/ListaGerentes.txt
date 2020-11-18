@@ -1,9 +1,9 @@
 Gerente id = 0
-Nome do Gerente = Matheus Cristiani
-cpf = 46946085841
-salario = 3888.0
-idade = 27
-estadoCivil = Solteiro
+Nome do Gerente = Jose Luiz
+cpf = 12345678909
+salario = 3838.0
+idade = 28
+estadoCivil = Casado
 porcentagemDaBonificacao = 0.0
-loginDoCadastroDoSistema = 123456
-senhaDoCadastroDoSistema = 123456
+loginDoCadastroDoSistema = 654321
+senhaDoCadastroDoSistema = 321321

@@ -11,6 +11,8 @@ import java.util.Properties;
 import org.apache.log4j.Logger;
 
 import bancoDeDados.ConexaoBancoDeDados;
+import entities.Auxiliar;
+import entities.Estagiario;
 import entities.Funcionario;
 import entities.Gerente;
 import validadores.ValidadorDeAutenticacaoDoSistema;
@@ -25,6 +27,8 @@ public class AutenticacaoSistema {
 	ConexaoBancoDeDados conexaoBancoDeDados = new ConexaoBancoDeDados();
 	ValidadorDeAutenticacaoDoSistema validaSistema = new ValidadorDeAutenticacaoDoSistema();
 	Gerente gerente;
+	Auxiliar auxiliar;
+	Estagiario estagiario;
 	boolean validaErro = true;
 	int id;
 	int loginDoSistema;
@@ -74,7 +78,7 @@ public class AutenticacaoSistema {
 				loginDoSistema = rs.getInt("Login_do_Sistema");
 				senhaDoSistema = rs.getInt("Senha_do_Sistema");
 
-				if (loginAutenticacao == loginDoSistema && senhaAutenticacao == senhaDoSistema) {
+				if (loginAutenticacao == loginDoSistema && senhaAutenticacao == senhaDoSistema && acaoLobbyGerente == id) {
 					sistemaGerente.sistemaGerente();
 					validaErro = false;
 				} else {
@@ -91,37 +95,105 @@ public class AutenticacaoSistema {
 		}
 	}
 
-	public void autenticaSistemaAuxiliar(int loginAutenticacao, int senhaAutenticacao,
-			List<Funcionario> listaAuxiliar) {
+	public void autenticaSistemaAuxiliar(int loginAutenticacao, int senhaAutenticacao, int acaoLobbyAuxiliar,
+			List<Funcionario> listaAuxiliar) throws IOException {
 
-		for (Funcionario auxiliar : listaAuxiliar) {
-			if (loginAutenticacao == auxiliar.getLoginDoCadastroDoSistema()
-					&& senhaAutenticacao == auxiliar.getLoginDoCadastroDoSistema()) {
-				sistemaAuxiliar.sistemaAuxiliar();
-				break;
-			} else {
-				logger.error("########## LOGIN INCORRETO ##########");
-				logger.error("Desconectando do sistema!" + "\n." + "\n." + "\n.");
-				logger.error("Desconectado!" + System.lineSeparator());
-				break;
+		Properties props = getProp();
+		Connection connection = conexaoBancoDeDados.conexaoJDBC();
+
+		try {
+			PreparedStatement stmt = connection
+					.prepareStatement(props.getProperty("path.bancoDeDados.pegarDadosListaAuxiliar"));
+
+			ResultSet rs = stmt.executeQuery();
+			while (validaErro) {
+				rs.next();
+				id = rs.getInt("id");
+
+				if (acaoLobbyAuxiliar == id) {
+					logger.info("---------- AUTENTICANDO SISTEMA AUXILIAR ----------" + "\n." + "\n." + "\n.");
+					logger.info("Bem vindo(a) novamente Sr. " + rs.getString("nome"));
+
+					logger.info(mensagemDeLogin);
+					loginAutenticacao = validaSistema.validacaoDoLoginDoSistema(loginAutenticacao, mensagemDeLogin);
+
+					logger.info(mensagemDeSenha);
+					senhaAutenticacao = validaSistema.validacaoDaSenhaDoSistema(senhaAutenticacao, mensagemDeSenha);
+
+					validaErro = false;
+				}
 			}
+			validaErro = true;
+			while (validaErro) {
+				rs.next();
+				loginDoSistema = rs.getInt("Login_do_Sistema");
+				senhaDoSistema = rs.getInt("Senha_do_Sistema");
+
+				if (loginAutenticacao == loginDoSistema && senhaAutenticacao == senhaDoSistema && acaoLobbyAuxiliar == id) {
+					sistemaAuxiliar.sistemaAuxiliar();
+					validaErro = false;
+				} else {
+					logger.error("########## LOGIN INCORRETO ##########");
+					logger.error("Desconectando do sistema!" + "\n." + "\n." + "\n.");
+					logger.error("Desconectado!" + System.lineSeparator());
+					break;
+				}
+			}
+			stmt.close();
+		} catch (Exception e) {
+			logger.error("#### Id inexistente, por favor insira um id existente para entrar no sistema! ####"
+					+ System.lineSeparator());
 		}
 	}
 
-	public void autenticaSistemaEstagiario(int loginAutenticacao, int senhaAutenticacao,
-			List<Funcionario> listaEstagiario) {
+	public void autenticaSistemaEstagiario(int loginAutenticacao, int senhaAutenticacao, int acaoLobbyEstagiario,
+			List<Funcionario> listaEstagiario) throws IOException {
 
-		for (Funcionario estagiario : listaEstagiario) {
-			if (loginAutenticacao == estagiario.getLoginDoCadastroDoSistema()
-					&& senhaAutenticacao == estagiario.getSenhaDoCadastroDoSistema()) {
-				sistemaEstagiario.sistemaEstagiario();
-				break;
-			} else {
-				logger.error("########## LOGIN INCORRETO ##########");
-				logger.error("Desconectando do sistema!" + "\n." + "\n." + "\n.");
-				logger.error("Desconectado!" + System.lineSeparator());
-				break;
+		Properties props = getProp();
+		Connection connection = conexaoBancoDeDados.conexaoJDBC();
+
+		try {
+			PreparedStatement stmt = connection
+					.prepareStatement(props.getProperty("path.bancoDeDados.pegarDadosListaEstagiario"));
+
+			ResultSet rs = stmt.executeQuery();
+			while (validaErro) {
+				rs.next();
+				id = rs.getInt("id");
+
+				if (acaoLobbyEstagiario == id) {
+					logger.info("---------- AUTENTICANDO SISTEMA ESTAGIARIO ----------" + "\n." + "\n." + "\n.");
+					logger.info("Bem vindo(a) novamente Sr. " + rs.getString("nome"));
+
+					logger.info(mensagemDeLogin);
+					loginAutenticacao = validaSistema.validacaoDoLoginDoSistema(loginAutenticacao, mensagemDeLogin);
+
+					logger.info(mensagemDeSenha);
+					senhaAutenticacao = validaSistema.validacaoDaSenhaDoSistema(senhaAutenticacao, mensagemDeSenha);
+
+					validaErro = false;
+				}
 			}
+			validaErro = true;
+			while (validaErro) {
+				rs.next();
+				loginDoSistema = rs.getInt("Login_do_Sistema");
+				senhaDoSistema = rs.getInt("Senha_do_Sistema");
+
+				if (loginAutenticacao == loginDoSistema && senhaAutenticacao == senhaDoSistema && acaoLobbyEstagiario == id) {
+					sistemaEstagiario.sistemaEstagiario();
+					validaErro = false;
+				} else {
+					logger.error("########## LOGIN INCORRETO ##########");
+					logger.error("Desconectando do sistema!" + "\n." + "\n." + "\n.");
+					logger.error("Desconectado!" + System.lineSeparator());
+					break;
+				}
+			}
+			stmt.close();
+		} catch (Exception e) {
+			logger.error("#### Id inexistente, por favor insira um id existente para entrar no sistema! ####"
+					+ System.lineSeparator());
 		}
 	}
 }
