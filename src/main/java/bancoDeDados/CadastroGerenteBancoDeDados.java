@@ -1,6 +1,7 @@
 package bancoDeDados;
 
-import java.util.List; 
+import java.sql.Connection;
+import java.util.List;
 import java.util.Scanner;
 
 import org.apache.log4j.Logger;
@@ -47,7 +48,7 @@ public class CadastroGerenteBancoDeDados {
 	String mensagemDeLoginCadastro = "Digite seu login (6 digitos): ";
 	String mensagemDeSenhaCadastro = "Digite sua senha (6 digitos): ";
 
-	public void cadastroGerente(List<Funcionario> listaGerente) throws Exception {
+	public void cadastroGerente(List<Funcionario> listaGerente, Connection connection) throws Exception {
 		
 		boolean validaErroCatch = true;
 		while (validaErroCatch) {
@@ -63,7 +64,7 @@ public class CadastroGerenteBancoDeDados {
 			gerente.setSobrenome(validaNomeESobrenome.validaSobrenome(sobrenome, mensagemSobrenome));
 
 			logger.debug(mensagemCpf);
-			gerente.setCpf(validaCpf.validaCpf(cpf, mensagemCpf));
+			gerente.setCpf(validaCpf.validaCpf(cpf, mensagemCpf, connection));
 
 			logger.debug(mensagemSalario);
 			gerente.setSalario(validaSalario.validaSalario(salario, mensagemSalario));
@@ -76,14 +77,14 @@ public class CadastroGerenteBancoDeDados {
 
 			logger.debug(mensagemDeLoginCadastro);
 			gerente.setLoginDoCadastroDoSistema(
-					validaCadastro.validacaoDoLoginDoCadastroDoSistema(loginCadastro, mensagemDeLoginCadastro));
+					validaCadastro.validacaoDoLoginDoCadastroDoSistema(loginCadastro, mensagemDeLoginCadastro, connection));
 
 			logger.debug(mensagemDeSenhaCadastro);
 			gerente.setSenhaDoCadastroDoSistema(
 					validaCadastro.validacaoDaSenhaDoCadastroDoSistema(senhaCadastro, mensagemDeSenhaCadastro));
 
 			listaGerente.add(gerente);
-			bancoDeDadosGerente.listaDeRegistroGerente(listaGerente, gerente);
+			bancoDeDadosGerente.listaDeRegistroGerente(gerente);
 
 			while (validaErroConfirma) {
 				logger.debug("Confirmar dados do Funcionario (y/n)?");
@@ -97,8 +98,8 @@ public class CadastroGerenteBancoDeDados {
 				} else if (confirmaDadosGerente == 'y') {
 					arquivoGerente.listaDeGerentesAtivos(listaGerente, gerente);
 					logger.info("---------- CONECTANDO AO BANCO DE DADOS ----------");
-					bancoDeDadosGerente.inserirDadosBancoGerente(gerente);
-					bancoDeDadosGerente.pegarDadosBancoGerente(gerente);
+					bancoDeDadosGerente.inserirDadosBancoGerente(gerente, connection);
+					bancoDeDadosGerente.pegarDadosBancoGerente(gerente, connection);
 					validaErroConfirma = false;
 					validaErroCatch = false;
 				} else if (confirmaDadosGerente != 'y' && confirmaDadosGerente != 'n') {

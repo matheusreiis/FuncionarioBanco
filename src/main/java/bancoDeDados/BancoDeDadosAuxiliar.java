@@ -8,13 +8,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.util.List;
 import java.util.Properties;
+import java.util.Scanner;
 
 import org.apache.log4j.Logger;
 
 import entities.Auxiliar;
-import entities.Funcionario;
 
 public class BancoDeDadosAuxiliar {
 
@@ -22,7 +21,10 @@ public class BancoDeDadosAuxiliar {
 	Logger logger = Logger.getLogger(BancoDeDadosGerente.class);
 	NumberFormat formatter = new DecimalFormat("#0.00");
 	Auxiliar auxiliar;
-
+	Scanner sc = new Scanner(System.in);
+	boolean validaErro = true;
+	int acaoExclusao;
+	
 	public static Properties getProp() throws IOException {
 		Properties props = new Properties();
 		FileInputStream file = new FileInputStream(
@@ -31,29 +33,22 @@ public class BancoDeDadosAuxiliar {
 		return props;
 	}
 
-	public void listaDeRegistroAuxiliar(List<Funcionario> listaAuxiliar, Auxiliar auxiliar) {
+	public void listaDeRegistroAuxiliar(Auxiliar auxiliar) {
 
-		if (listaAuxiliar.size() == 0) {
-			logger.info("Nao ha Auxiliares cadastrados!");
-			logger.info("Retornando ao lobby." + "\n." + "\n." + "\n.");
-		} else {
-			logger.info("--------- DADOS DO AUXILIAR ---------" + System.lineSeparator());
-			logger.info("ID do Auxiliar: " + auxiliar.getId());
-			logger.info("Nome do Auxiliar: " + auxiliar.getNome() + " " + auxiliar.getSobrenome());
-			logger.info("cpf do Auxiliar: " + auxiliar.getCpf());
-			logger.info("Salario do Auxiliar: R$" + formatter.format(auxiliar.getSalario()));
-			logger.info("Idade do Auxiliar: " + auxiliar.getIdade());
-			logger.info("Estado Civil do Auxiliar: " + auxiliar.getEstadoCivil());
-			logger.info("Login do Auxiliar: " + auxiliar.getLoginDoCadastroDoSistema());
-			logger.info("Senha do Auxiliar: **************" + System.lineSeparator());
-		}
+		logger.info("--------- DADOS DO AUXILIAR ---------" + System.lineSeparator());
+		logger.info("ID do Auxiliar: " + auxiliar.getId());
+		logger.info("Nome do Auxiliar: " + auxiliar.getNome() + " " + auxiliar.getSobrenome());
+		logger.info("cpf do Auxiliar: " + auxiliar.getCpf());
+		logger.info("Salario do Auxiliar: R$" + formatter.format(auxiliar.getSalario()));
+		logger.info("Idade do Auxiliar: " + auxiliar.getIdade());
+		logger.info("Estado Civil do Auxiliar: " + auxiliar.getEstadoCivil());
+		logger.info("Login do Auxiliar: " + auxiliar.getLoginDoCadastroDoSistema());
+		logger.info("Senha do Auxiliar: **************" + System.lineSeparator());
 	}
 
-	public void inserirDadosBancoAuxiliar(Auxiliar auxiliar) throws IOException, SQLException {
+	public void inserirDadosBancoAuxiliar(Auxiliar auxiliar, Connection connection) throws IOException, SQLException {
 
 		Properties props = getProp();
-
-		Connection connection = new ConexaoBancoDeDados().conexaoJDBC();
 
 		try {
 			PreparedStatement stmt = connection
@@ -78,14 +73,13 @@ public class BancoDeDadosAuxiliar {
 		connection.close();
 	}
 
-	public void pegarDadosBancoAuxiliar(Auxiliar auxiliar) throws IOException, SQLException {
+	public void pegarDadosBancoAuxiliar(Auxiliar auxiliar, Connection connection) throws IOException, SQLException {
 
 		Properties props = getProp();
-		Connection connection = conexaoBancoDeDados.conexaoJDBC();
-		
+
 		try {
 			PreparedStatement stmt = connection
-					.prepareStatement(props.getProperty("path.bancoDeDados.pegarDadosListaGerente"));
+					.prepareStatement(props.getProperty("path.bancoDeDados.pegarDadosListaAuxiliar"));
 
 			ResultSet rs = stmt.executeQuery();
 
@@ -101,28 +95,50 @@ public class BancoDeDadosAuxiliar {
 		}
 	}
 
-	public void excluirDadosBancoAuxiliar() throws IOException {
+	public void excluirDadosBancoAuxiliar(Connection connection) throws IOException {
 
 		Properties props = getProp();
-		Connection connection = conexaoBancoDeDados.conexaoJDBC();
 
 		try {
 			PreparedStatement stmt = connection
-					.prepareStatement(props.getProperty("path.bancoDeDados.excluirDadosListaEstagiario"));
-			
-			ResultSet rs = stmt.executeQuery();
-			
-			
+					.prepareStatement(props.getProperty("path.bancoDeDados.excluirDadosListaAuxiliar"));
 
+			PreparedStatement stmt1 = connection
+					.prepareStatement(props.getProperty("path.bancoDeDados.pegarDadosListaAuxiliar"));
+			PreparedStatement stmt2 = connection
+					.prepareStatement(props.getProperty("path.bancoDeDados.pegarDadosListaAuxiliar"));
+
+			ResultSet rs2 = stmt2.executeQuery();
+			ResultSet rs1 = stmt1.executeQuery();
+
+			while (validaErro) {
+				logger.info("Qual conta de Auxiliar deseja excluir?!");
+				while (rs1.next()) {
+					logger.info(rs1.getInt("id") + " - " + rs1.getString("nome"));
+				}
+				int acaoId = sc.nextInt();
+				while (rs2.next()) {
+					acaoExclusao = rs2.getInt("id");
+
+					if (acaoId == acaoExclusao) {
+						logger.info("********** AUXILIAR " + rs1.getInt("nome") + "EXCLUIDO COM SUCESSO! **********\n");
+						stmt.execute();
+						validaErro = false;
+					}
+				}
+			}
+			stmt.close();
+			stmt1.close();
+			stmt2.close();
 		} catch (Exception e) {
-
+			logger.error("Erro ao tentar excluir dados do Auxiliar no banco de dados, por favor tente novamente!");
+			throw new RuntimeException(e);
 		}
 	}
 
-	public void mostrarDadosBancoAuxiliar() throws IOException {
+	public void mostrarDadosBancoAuxiliar(Connection connection) throws IOException {
 
 		Properties props = getProp();
-		Connection connection = conexaoBancoDeDados.conexaoJDBC();
 
 		try {
 			PreparedStatement stmt = connection

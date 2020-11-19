@@ -28,11 +28,10 @@ public class ValidadorDeCadastroDoSistema implements ICadastroDoSistema {
 		return props;
 	}
 
-	public int validacaoDoLoginDoCadastroDoSistema(int loginCadastro, String mensagemDeLoginCadastro)
-			throws IOException {
+	public int validacaoDoLoginDoCadastroDoSistema(int loginCadastro, String mensagemDeLoginCadastro,
+			Connection connection) throws IOException {
 
 		Properties props = getProp();
-		Connection connection = conexaoBancoDeDados.conexaoJDBC();
 
 		boolean validaErroCatch = true;
 		while (validaErroCatch) {
@@ -44,7 +43,7 @@ public class ValidadorDeCadastroDoSistema implements ICadastroDoSistema {
 				loginCadastro = sc.nextInt();
 
 				ResultSet rs = stmt.executeQuery();
-				if (rs.next()) {
+				while (rs.next()) {
 					loginBanco = rs.getInt("Login_do_Sistema");
 				}
 				if (loginCadastro != loginBanco) {
@@ -106,5 +105,4 @@ public class ValidadorDeCadastroDoSistema implements ICadastroDoSistema {
 		valueOf.length();
 		return valueOf;
 	}
-
 }

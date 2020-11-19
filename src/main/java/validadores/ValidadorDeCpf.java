@@ -30,10 +30,9 @@ public class ValidadorDeCpf implements IValidadorDeCpf {
 		return props;
 	}
 
-	public long validaCpf(long cpf, String mensagemCpf) throws IOException, SQLException {
+	public long validaCpf(long cpf, String mensagemCpf, Connection connection) throws IOException, SQLException {
 
 		Properties props = getProp();
-		Connection connection = conexaoBancoDeDados.conexaoJDBC();
 
 		boolean validaErroCatch = true;
 		while (validaErroCatch) {
@@ -44,7 +43,7 @@ public class ValidadorDeCpf implements IValidadorDeCpf {
 
 				cpf = sc.nextLong();
 				ResultSet rs = stmt.executeQuery();
-				if (rs.next()) {
+				while (rs.next()) {
 					cpfBanco = rs.getLong("CPF");
 				} 
 					if (cpf != cpfBanco) {

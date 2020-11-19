@@ -2,6 +2,9 @@ package principal;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -15,6 +18,7 @@ import bancoDeDados.BancoDeDadosGerente;
 import bancoDeDados.CadastroAuxiliarBancoDeDados;
 import bancoDeDados.CadastroEstagiarioBancoDeDados;
 import bancoDeDados.CadastroGerenteBancoDeDados;
+import bancoDeDados.ConexaoBancoDeDados;
 import entities.Auxiliar;
 import entities.Estagiario;
 import entities.Funcionario;
@@ -39,7 +43,11 @@ public class PrincipalMain {
 
 	public static void main(String[] args) throws Exception {
 
+		ConexaoBancoDeDados conexaoBancoDeDados = new ConexaoBancoDeDados();
+		Connection connection = conexaoBancoDeDados.conexaoJDBC();
+
 		Scanner sc = new Scanner(System.in);
+		Properties props = getProp();
 //		CalculadoraDaBonificacaoServico calculadoraDaBonificacao = new CalculadoraDaBonificacaoServico();
 		CadastroGerenteBancoDeDados cadastrarGerente = new CadastroGerenteBancoDeDados();
 		CadastroAuxiliarBancoDeDados cadastrarAuxiliar = new CadastroAuxiliarBancoDeDados();
@@ -51,6 +59,15 @@ public class PrincipalMain {
 		List<Funcionario> listaGerente = new ArrayList<>();
 		List<Funcionario> listaAuxiliar = new ArrayList<>();
 		List<Funcionario> listaEstagiario = new ArrayList<>();
+		PreparedStatement stmtGerente = connection
+				.prepareStatement(props.getProperty("path.bancoDeDados.pegarDadosListaGerente"));
+		ResultSet rsGerente = stmtGerente.executeQuery();
+		PreparedStatement stmtAuxiliar = connection
+				.prepareStatement(props.getProperty("path.bancoDeDados.pegarDadosListaAuxiliar"));
+		ResultSet rsAuxiliar = stmtAuxiliar.executeQuery();
+		PreparedStatement stmtEstagiario = connection
+				.prepareStatement(props.getProperty("path.bancoDeDados.pegarDadosListaEstagiario"));
+		ResultSet rsEstagiario = stmtEstagiario.executeQuery();
 
 		int loginAutenticacao = 0;
 		int senhaAutenticacao = 0;
@@ -71,19 +88,20 @@ public class PrincipalMain {
 
 						boolean validaErroGerente = true;
 						while (validaErroGerente) {
-							if (listaGerente.size() == 0) {
-								bancoDeDadosGerente.listaDeRegistroGerente(listaGerente, gerente);
+							if (rsGerente.next() == false && listaGerente.size() == 0) {
+								logger.info("Nao ha Gerentes cadastrados!");
+								logger.info("Retornando ao lobby." + "\n." + "\n." + "\n.");
 								validaErroGerente = false;
 							} else {
-								logger.info(" Contas Gerente ativas:\n ");
-								bancoDeDadosGerente.mostrarDadosBancoGerente(gerente);
 								try {
+									logger.info(" Contas Gerentes ativas:\n ");
+									bancoDeDadosGerente.mostrarDadosBancoGerente(gerente, connection);
 									logger.info("Solicite um sistema Gerente para entrar: ");
 
 									int acaoLobbyGerente = sc.nextInt();
 
 									autenticaSistema.autenticaSistemaGerente(loginAutenticacao, senhaAutenticacao,
-											acaoLobbyGerente, listaGerente);
+											acaoLobbyGerente, listaGerente, connection);
 								} catch (Exception e) {
 									logger.error("#### Comando invalido, por favor insira apenas numeros! ####"
 											+ System.lineSeparator());
@@ -98,14 +116,14 @@ public class PrincipalMain {
 
 						boolean validaErroAuxiliar = true;
 						while (validaErroAuxiliar) {
-							if (listaAuxiliar.size() == 0) {
-								bancoDeDadosAuxiliar.listaDeRegistroAuxiliar(listaAuxiliar, auxiliar);
+							if (rsAuxiliar.next() == false && listaAuxiliar.size() == 0) {
+								logger.info("Nao ha Auxiliares cadastrados!");
+								logger.info("Retornando ao lobby." + "\n." + "\n." + "\n.");
 								validaErroAuxiliar = false;
 							} else {
-								logger.info(" Contas Auxiliar ativas:\n ");
-								bancoDeDadosAuxiliar.mostrarDadosBancoAuxiliar();
-
 								try {
+									logger.info(" Contas Auxiliar ativas:\n ");
+									bancoDeDadosAuxiliar.mostrarDadosBancoAuxiliar(connection);
 									logger.info("Solicite um sistema Auxiliar para entrar: ");
 
 									int acaoLobbyAuxiliar = sc.nextInt();
@@ -126,13 +144,15 @@ public class PrincipalMain {
 
 						boolean validaErroEstagiario = true;
 						while (validaErroEstagiario) {
-							if (listaEstagiario.size() == 0) {
-								bancoDeDadosEstagiario.listaDeRegistroEstagiario(listaEstagiario, estagiario);
+
+							if (rsEstagiario.next() == false && listaEstagiario.size() == 0) {
+								logger.info("Nao ha Estagiarios cadastrados!");
+								logger.info("Retornando ao lobby." + "\n." + "\n." + "\n.");
 								validaErroEstagiario = false;
 							} else {
-								logger.info(" Contas Estagiario ativas:\n ");
-								bancoDeDadosAuxiliar.mostrarDadosBancoAuxiliar();
 								try {
+									logger.info(" Contas Estagiario ativas:\n ");
+									bancoDeDadosAuxiliar.mostrarDadosBancoAuxiliar(connection);
 									logger.info("Solicite um sistema Estagiario para entrar: ");
 
 									int acaoLobbyEstagiario = sc.nextInt();
@@ -155,30 +175,30 @@ public class PrincipalMain {
 						int cargoCadastro = sc.nextInt();
 
 						if (cargoCadastro == 1) {
-							cadastrarGerente.cadastroGerente(listaGerente);
+							cadastrarGerente.cadastroGerente(listaGerente, connection);
 
 						} else if (cargoCadastro == 2) {
-							cadastrarAuxiliar.cadastroAuxiliar(listaAuxiliar);
+							cadastrarAuxiliar.cadastroAuxiliar(listaAuxiliar, connection);
 
 						} else if (cargoCadastro == 3) {
-							cadastrarEstagiario.cadastroEstagiario(listaEstagiario);
+							cadastrarEstagiario.cadastroEstagiario(listaEstagiario, connection);
 						}
 						break;
 					} else if (acaoLobby == 5) {
-						
+
 						logger.info("---------- EXCLUSAO DE FUNCIONARIO ----------" + System.lineSeparator());
 						logger.debug("Digite o cargo do funcionario:\n 1.Gerente / 2.Auxiliar / 3.Estagiario ");
 						int cargoExclusao = sc.nextInt();
 
 						if (cargoExclusao == 1) {
-							bancoDeDadosGerente.excluirDadosBancoGerente();
-							
+							bancoDeDadosGerente.excluirDadosBancoGerente(connection);
+
 						} else if (cargoExclusao == 2) {
-							bancoDeDadosAuxiliar.excluirDadosBancoAuxiliar();
-							
+							bancoDeDadosAuxiliar.excluirDadosBancoAuxiliar(connection);
+
 						} else if (cargoExclusao == 3) {
-							bancoDeDadosEstagiario.excluirDadosBancoEstagiario();
-							
+							bancoDeDadosEstagiario.excluirDadosBancoEstagiario(connection);
+
 						}
 						break;
 					} else if (acaoLobby == 6) {
@@ -199,5 +219,8 @@ public class PrincipalMain {
 			}
 		}
 		sc.close();
+		stmtGerente.close();
+		stmtAuxiliar.close();
+		stmtEstagiario.close();
 	}
 }

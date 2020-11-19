@@ -8,13 +8,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.util.List;
 import java.util.Properties;
 import java.util.Scanner;
 
 import org.apache.log4j.Logger;
 
-import entities.Funcionario;
 import entities.Gerente;
 
 public class BancoDeDadosGerente {
@@ -34,27 +32,21 @@ public class BancoDeDadosGerente {
 		return props;
 	}
 
-	public void listaDeRegistroGerente(List<Funcionario> listaGerente, Gerente gerente) throws IOException {
+	public void listaDeRegistroGerente(Gerente gerente) throws IOException {
 
-		if (listaGerente.size() == 0) {
-			logger.info("Nao ha Gerentes cadastrados!");
-			logger.info("Retornando ao lobby." + "\n." + "\n." + "\n.");
-		} else {
-			logger.info("--------- DADOS DO GERENTE ---------" + System.lineSeparator());
-			logger.info("Nome do Gerente: " + gerente.getNome() + " " + gerente.getSobrenome());
-			logger.info("cpf do Gerente: " + gerente.getCpf());
-			logger.info("Salario do Gerente: R$" + formatter.format(gerente.getSalario()));
-			logger.info("Idade do Gerente: " + gerente.getIdade());
-			logger.info("Estado Civil do Gerente: " + gerente.getEstadoCivil());
-			logger.info("Login do Gerente: " + gerente.getLoginDoCadastroDoSistema());
-			logger.info("Senha do Gerente: **************" + System.lineSeparator());
-		}
+		logger.info("--------- DADOS DO GERENTE ---------" + System.lineSeparator());
+		logger.info("Nome do Gerente: " + gerente.getNome() + " " + gerente.getSobrenome());
+		logger.info("cpf do Gerente: " + gerente.getCpf());
+		logger.info("Salario do Gerente: R$" + formatter.format(gerente.getSalario()));
+		logger.info("Idade do Gerente: " + gerente.getIdade());
+		logger.info("Estado Civil do Gerente: " + gerente.getEstadoCivil());
+		logger.info("Login do Gerente: " + gerente.getLoginDoCadastroDoSistema());
+		logger.info("Senha do Gerente: **************" + System.lineSeparator());
 	}
 
-	public void inserirDadosBancoGerente(Gerente gerente) throws IOException, SQLException {
+	public void inserirDadosBancoGerente(Gerente gerente, Connection connection) throws IOException, SQLException {
 
 		Properties props = getProp();
-		Connection connection = conexaoBancoDeDados.conexaoJDBC();
 
 		try {
 			PreparedStatement stmt = connection
@@ -79,10 +71,9 @@ public class BancoDeDadosGerente {
 		}
 	}
 
-	public void pegarDadosBancoGerente(Gerente gerente) throws IOException, SQLException {
+	public void pegarDadosBancoGerente(Gerente gerente, Connection connection) throws IOException, SQLException {
 
 		Properties props = getProp();
-		Connection connection = conexaoBancoDeDados.conexaoJDBC();
 
 		try {
 			PreparedStatement stmt = connection
@@ -102,14 +93,13 @@ public class BancoDeDadosGerente {
 		}
 	}
 
-	public void excluirDadosBancoGerente() throws IOException {
+	public void excluirDadosBancoGerente(Connection connection) throws IOException {
 
 		Properties props = getProp();
-		Connection connection = conexaoBancoDeDados.conexaoJDBC();
 
 		try {
 			PreparedStatement stmt = connection
-					.prepareStatement(props.getProperty("path.bancoDeDados.excluirDadosListaEstagiario"));
+					.prepareStatement(props.getProperty("path.bancoDeDados.excluirDadosListaGerente"));
 
 			PreparedStatement stmt1 = connection
 					.prepareStatement(props.getProperty("path.bancoDeDados.pegarDadosListaGerente"));
@@ -120,37 +110,37 @@ public class BancoDeDadosGerente {
 			ResultSet rs1 = stmt1.executeQuery();
 
 			while (validaErro) {
-
 				logger.info("Qual conta de Gerente deseja excluir?!");
-				while (rs2.next()) {
-					logger.info(rs2.getInt("id") + " - " + rs2.getString("nome"));
+				while (rs1.next()) {
+					logger.info(rs1.getInt("id") + " - " + rs1.getString("nome"));
 				}
 				int acaoId = sc.nextInt();
-				while (rs1.next()) {
-					acaoExclusao = rs1.getInt("id");
+				while (rs2.next()) {
+					acaoExclusao = rs2.getInt("id");
 
 					if (acaoId == acaoExclusao) {
+						logger.info("********** GERENTE " + rs1.getInt("nome") + "EXCLUIDO COM SUCESSO! **********\n");
 						stmt.execute();
 						validaErro = false;
 					}
 				}
 			}
 			stmt.close();
+			stmt1.close();
+			stmt2.close();
 		} catch (Exception e) {
 			logger.error("Erro ao tentar excluir dados do Gerente no banco de dados, por favor tente novamente!");
 			throw new RuntimeException(e);
 		}
 	}
 
-	public void mostrarDadosBancoGerente(Gerente gerente) throws IOException {
+	public void mostrarDadosBancoGerente(Gerente gerente, Connection connection) throws IOException {
 
 		Properties props = getProp();
-		Connection connection = conexaoBancoDeDados.conexaoJDBC();
 
 		try {
 			PreparedStatement stmt = connection
 					.prepareStatement(props.getProperty("path.bancoDeDados.pegarDadosListaGerente"));
-
 			ResultSet rs = stmt.executeQuery();
 
 			while (rs.next()) {

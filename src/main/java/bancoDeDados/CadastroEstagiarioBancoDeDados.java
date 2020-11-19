@@ -1,5 +1,6 @@
 package bancoDeDados;
 
+import java.sql.Connection;
 import java.util.List;  
 import java.util.Scanner;
 
@@ -48,7 +49,7 @@ public class CadastroEstagiarioBancoDeDados {
 	String mensagemDeLoginCadastro = "Digite seu login (6 numeros): ";
 	String mensagemDeSenhaCadastro = "Digite sua senha (6 numeros): ";
 	
-	public void cadastroEstagiario(List<Funcionario> listaEstagiario) throws Exception {
+	public void cadastroEstagiario(List<Funcionario> listaEstagiario, Connection connection) throws Exception {
 
 		boolean validaErroCatch = true;
 		while (validaErroCatch) {
@@ -64,7 +65,7 @@ public class CadastroEstagiarioBancoDeDados {
 			estagiario.setSobrenome(validaNomeESobrenome.validaSobrenome(sobrenome, mensagemSobrenome));
 
 			logger.debug(mensagemCpf);
-			estagiario.setCpf(validaCpf.validaCpf(cpf, mensagemCpf));
+			estagiario.setCpf(validaCpf.validaCpf(cpf, mensagemCpf, connection));
 
 			logger.debug(mensagemSalario);
 			estagiario.setSalario(validaSalario.validaSalario(salario, mensagemSalario));
@@ -77,14 +78,14 @@ public class CadastroEstagiarioBancoDeDados {
 
 			logger.debug(mensagemDeLoginCadastro);
 			estagiario.setLoginDoCadastroDoSistema(
-					validaCadastro.validacaoDoLoginDoCadastroDoSistema(loginCadastro, mensagemDeLoginCadastro));
+					validaCadastro.validacaoDoLoginDoCadastroDoSistema(loginCadastro, mensagemDeLoginCadastro, connection));
 
 			logger.debug(mensagemDeSenhaCadastro);
 			estagiario.setSenhaDoCadastroDoSistema(
 					validaCadastro.validacaoDaSenhaDoCadastroDoSistema(senhaCadastro, mensagemDeSenhaCadastro));
 
 			listaEstagiario.add(estagiario);
-			bancoDeDadosEstagiario.listaDeRegistroEstagiario(listaEstagiario, estagiario);
+			bancoDeDadosEstagiario.listaDeRegistroEstagiario(estagiario);
 
 			while (validaErroConfirma) {
 			logger.debug("Confirmar dados do Funcionario (y/n)?");
@@ -97,8 +98,8 @@ public class CadastroEstagiarioBancoDeDados {
 					validaErroCatch = true;
 				} else if (confirmaDadosEstagiario == 'y') {
 					arquivoEstagiario.listaDeEstagiariosAtivos(listaEstagiario);
-					bancoDeDadosEstagiario.inserirDadosBancoEstagiario(estagiario);
-					bancoDeDadosEstagiario.pegarDadosBancoEstagiario(estagiario);
+					bancoDeDadosEstagiario.inserirDadosBancoEstagiario(estagiario, connection);
+					bancoDeDadosEstagiario.pegarDadosBancoEstagiario(estagiario, connection);
 					validaErroConfirma = false;
 					validaErroCatch = false;
 				} else if (confirmaDadosEstagiario != 'y' && confirmaDadosEstagiario != 'n') {

@@ -1,5 +1,6 @@
 package bancoDeDados;
 
+import java.sql.Connection;
 import java.util.List;  
 import java.util.Scanner;
 
@@ -48,7 +49,7 @@ public class CadastroAuxiliarBancoDeDados {
 	String mensagemDeLoginCadastro = "Digite seu login (6 numeros): ";
 	String mensagemDeSenhaCadastro = "Digite sua senha (6 numeros): ";
 	
-	public void cadastroAuxiliar(List<Funcionario> listaAuxiliar) throws Exception {
+	public void cadastroAuxiliar(List<Funcionario> listaAuxiliar, Connection connection) throws Exception {
 
 		boolean validaErroCatch = true;
 		while (validaErroCatch) {
@@ -64,7 +65,7 @@ public class CadastroAuxiliarBancoDeDados {
 			auxiliar.setSobrenome(validaNomeESobrenome.validaSobrenome(sobrenome, mensagemSobrenome));
 
 			logger.debug(mensagemCpf);
-			auxiliar.setCpf(validaCpf.validaCpf(cpf, mensagemCpf));
+			auxiliar.setCpf(validaCpf.validaCpf(cpf, mensagemCpf, connection));
 
 			logger.debug(mensagemSalario);
 			auxiliar.setSalario(validaSalario.validaSalario(salario, mensagemSalario));
@@ -77,14 +78,14 @@ public class CadastroAuxiliarBancoDeDados {
 
 			logger.debug(mensagemDeLoginCadastro);
 			auxiliar.setLoginDoCadastroDoSistema(
-					validaCadastro.validacaoDoLoginDoCadastroDoSistema(loginCadastro, mensagemDeLoginCadastro));
+					validaCadastro.validacaoDoLoginDoCadastroDoSistema(loginCadastro, mensagemDeLoginCadastro, connection));
 
 			logger.debug(mensagemDeSenhaCadastro);
 			auxiliar.setSenhaDoCadastroDoSistema(
 					validaCadastro.validacaoDaSenhaDoCadastroDoSistema(senhaCadastro, mensagemDeSenhaCadastro));
 
 			listaAuxiliar.add(auxiliar);
-			bancoDeDadosAuxiliar.listaDeRegistroAuxiliar(listaAuxiliar, auxiliar);
+			bancoDeDadosAuxiliar.listaDeRegistroAuxiliar(auxiliar);
 
 			while (validaErroConfirma) {
 			logger.debug("Confirmar dados do Funcionario (y/n)?");
@@ -98,8 +99,8 @@ public class CadastroAuxiliarBancoDeDados {
 				} else if (confirmaDadosAuxiliar == 'y') {
 					arquivoAuxiliar.listaDeAuxiliaresAtivos(listaAuxiliar, auxiliar);
 					logger.info("---------- CONECTANDO AO BANCO DE DADOS ----------");
-					bancoDeDadosAuxiliar.inserirDadosBancoAuxiliar(auxiliar);
-					bancoDeDadosAuxiliar.pegarDadosBancoAuxiliar(auxiliar);
+					bancoDeDadosAuxiliar.inserirDadosBancoAuxiliar(auxiliar, connection);
+					bancoDeDadosAuxiliar.pegarDadosBancoAuxiliar(auxiliar, connection);
 					validaErroConfirma = false;
 					validaErroCatch = false;
 				} else if (confirmaDadosAuxiliar != 'y' && confirmaDadosAuxiliar != 'n') {

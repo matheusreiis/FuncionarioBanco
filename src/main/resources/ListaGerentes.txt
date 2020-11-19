@@ -1,9 +1,9 @@
 Gerente id = 0
-Nome do Gerente = Jose Luiz
-cpf = 12345678909
-salario = 3838.0
+Nome do Gerente = Manuela Rodrigues
+cpf = 98798798798
+salario = 2999.0
 idade = 28
-estadoCivil = Casado
+estadoCivil = Casada
 porcentagemDaBonificacao = 0.0
-loginDoCadastroDoSistema = 654321
-senhaDoCadastroDoSistema = 321321
+loginDoCadastroDoSistema = 123123
+senhaDoCadastroDoSistema = 123123

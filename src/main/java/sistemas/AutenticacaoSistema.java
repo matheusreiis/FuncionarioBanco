@@ -45,10 +45,9 @@ public class AutenticacaoSistema {
 	}
 
 	public void autenticaSistemaGerente(int loginAutenticacao, int senhaAutenticacao, int acaoLobbyGerente,
-			List<Funcionario> listaGerente) throws IOException {
+			List<Funcionario> listaGerente, Connection connection) throws IOException {
 
 		Properties props = getProp();
-		Connection connection = conexaoBancoDeDados.conexaoJDBC();
 
 		try {
 			PreparedStatement stmt = connection
@@ -72,7 +71,6 @@ public class AutenticacaoSistema {
 					validaErro = false;
 				}
 			}
-			validaErro = true;
 			while (validaErro) {
 				rs.next();
 				loginDoSistema = rs.getInt("Login_do_Sistema");
