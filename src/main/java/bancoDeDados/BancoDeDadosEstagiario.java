@@ -43,10 +43,10 @@ public class BancoDeDadosEstagiario {
 		logger.info("Idade do Estagiario: " + estagiario.getIdade());
 		logger.info("Estado Civil do Estagiario: " + estagiario.getEstadoCivil());
 		logger.info("Login do Estagiario: " + estagiario.getLoginDoCadastroDoSistema());
-		logger.info("Senha do Estagiario: **************" + System.lineSeparator());
 	}
 
-	public void inserirDadosBancoEstagiario(Estagiario estagiario, Connection connection) throws IOException, SQLException {
+	public void inserirDadosBancoEstagiario(Estagiario estagiario, Connection connection)
+			throws IOException, SQLException {
 
 		Properties props = getProp();
 
@@ -73,7 +73,8 @@ public class BancoDeDadosEstagiario {
 		connection.close();
 	}
 
-	public void pegarDadosBancoEstagiario(Estagiario estagiario, Connection connection) throws IOException, SQLException {
+	public void pegarDadosBancoEstagiario(Estagiario estagiario, Connection connection)
+			throws IOException, SQLException {
 
 		Properties props = getProp();
 
@@ -110,7 +111,7 @@ public class BancoDeDadosEstagiario {
 
 			ResultSet rs2 = stmt2.executeQuery();
 			ResultSet rs1 = stmt1.executeQuery();
-			
+
 			while (validaErro) {
 				logger.info("Qual conta de Estagiario deseja excluir?!");
 				while (rs1.next()) {
@@ -121,7 +122,9 @@ public class BancoDeDadosEstagiario {
 					acaoExclusao = rs2.getInt("id");
 
 					if (acaoId == acaoExclusao) {
-						logger.info("********** ESTAGIARIO " + rs1.getInt("nome") + "EXCLUIDO COM SUCESSO! **********\n");
+						stmt.setInt(1, rs2.getInt("int"));
+						logger.info("********** ESTAGIARIO " + rs1.getString("nome").toString().toUpperCase()
+								+ "EXCLUIDO(A) COM SUCESSO! **********\n");
 						stmt.execute();
 						validaErro = false;
 					}

@@ -24,7 +24,7 @@ public class BancoDeDadosAuxiliar {
 	Scanner sc = new Scanner(System.in);
 	boolean validaErro = true;
 	int acaoExclusao;
-	
+
 	public static Properties getProp() throws IOException {
 		Properties props = new Properties();
 		FileInputStream file = new FileInputStream(
@@ -43,7 +43,6 @@ public class BancoDeDadosAuxiliar {
 		logger.info("Idade do Auxiliar: " + auxiliar.getIdade());
 		logger.info("Estado Civil do Auxiliar: " + auxiliar.getEstadoCivil());
 		logger.info("Login do Auxiliar: " + auxiliar.getLoginDoCadastroDoSistema());
-		logger.info("Senha do Auxiliar: **************" + System.lineSeparator());
 	}
 
 	public void inserirDadosBancoAuxiliar(Auxiliar auxiliar, Connection connection) throws IOException, SQLException {
@@ -121,7 +120,9 @@ public class BancoDeDadosAuxiliar {
 					acaoExclusao = rs2.getInt("id");
 
 					if (acaoId == acaoExclusao) {
-						logger.info("********** AUXILIAR " + rs1.getInt("nome") + "EXCLUIDO COM SUCESSO! **********\n");
+						stmt.setInt(1, rs2.getInt("int"));
+						logger.info("********** AUXILIAR " + rs1.getString("nome").toString().toUpperCase()
+								+ "EXCLUIDO(A) COM SUCESSO! **********\n");
 						stmt.execute();
 						validaErro = false;
 					}

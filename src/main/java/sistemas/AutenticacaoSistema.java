@@ -54,6 +54,7 @@ public class AutenticacaoSistema {
 					.prepareStatement(props.getProperty("path.bancoDeDados.pegarDadosListaGerente"));
 
 			ResultSet rs = stmt.executeQuery();
+			validaErro = true;
 			while (validaErro) {
 				rs.next();
 				id = rs.getInt("id");
@@ -71,12 +72,13 @@ public class AutenticacaoSistema {
 					validaErro = false;
 				}
 			}
+			validaErro = true;
 			while (validaErro) {
-				rs.next();
 				loginDoSistema = rs.getInt("Login_do_Sistema");
 				senhaDoSistema = rs.getInt("Senha_do_Sistema");
 
-				if (loginAutenticacao == loginDoSistema && senhaAutenticacao == senhaDoSistema && acaoLobbyGerente == id) {
+				if (loginAutenticacao == loginDoSistema && senhaAutenticacao == senhaDoSistema
+						&& acaoLobbyGerente == id) {
 					sistemaGerente.sistemaGerente();
 					validaErro = false;
 				} else {
@@ -104,6 +106,7 @@ public class AutenticacaoSistema {
 					.prepareStatement(props.getProperty("path.bancoDeDados.pegarDadosListaAuxiliar"));
 
 			ResultSet rs = stmt.executeQuery();
+			validaErro = true;
 			while (validaErro) {
 				rs.next();
 				id = rs.getInt("id");
@@ -123,11 +126,11 @@ public class AutenticacaoSistema {
 			}
 			validaErro = true;
 			while (validaErro) {
-				rs.next();
 				loginDoSistema = rs.getInt("Login_do_Sistema");
 				senhaDoSistema = rs.getInt("Senha_do_Sistema");
 
-				if (loginAutenticacao == loginDoSistema && senhaAutenticacao == senhaDoSistema && acaoLobbyAuxiliar == id) {
+				if (loginAutenticacao == loginDoSistema && senhaAutenticacao == senhaDoSistema
+						&& acaoLobbyAuxiliar == id) {
 					sistemaAuxiliar.sistemaAuxiliar();
 					validaErro = false;
 				} else {
@@ -155,6 +158,7 @@ public class AutenticacaoSistema {
 					.prepareStatement(props.getProperty("path.bancoDeDados.pegarDadosListaEstagiario"));
 
 			ResultSet rs = stmt.executeQuery();
+			validaErro = true;
 			while (validaErro) {
 				rs.next();
 				id = rs.getInt("id");
@@ -174,11 +178,11 @@ public class AutenticacaoSistema {
 			}
 			validaErro = true;
 			while (validaErro) {
-				rs.next();
 				loginDoSistema = rs.getInt("Login_do_Sistema");
 				senhaDoSistema = rs.getInt("Senha_do_Sistema");
 
-				if (loginAutenticacao == loginDoSistema && senhaAutenticacao == senhaDoSistema && acaoLobbyEstagiario == id) {
+				if (loginAutenticacao == loginDoSistema && senhaAutenticacao == senhaDoSistema
+						&& acaoLobbyEstagiario == id) {
 					sistemaEstagiario.sistemaEstagiario();
 					validaErro = false;
 				} else {

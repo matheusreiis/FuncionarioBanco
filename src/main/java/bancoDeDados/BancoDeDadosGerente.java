@@ -41,7 +41,6 @@ public class BancoDeDadosGerente {
 		logger.info("Idade do Gerente: " + gerente.getIdade());
 		logger.info("Estado Civil do Gerente: " + gerente.getEstadoCivil());
 		logger.info("Login do Gerente: " + gerente.getLoginDoCadastroDoSistema());
-		logger.info("Senha do Gerente: **************" + System.lineSeparator());
 	}
 
 	public void inserirDadosBancoGerente(Gerente gerente, Connection connection) throws IOException, SQLException {
@@ -119,7 +118,9 @@ public class BancoDeDadosGerente {
 					acaoExclusao = rs2.getInt("id");
 
 					if (acaoId == acaoExclusao) {
-						logger.info("********** GERENTE " + rs1.getInt("nome") + "EXCLUIDO COM SUCESSO! **********\n");
+						stmt.setInt(1, rs2.getInt("id"));
+						logger.info("********** GERENTE " + rs2.getString("nome").toString().toUpperCase()
+								+ " EXCLUIDO(A) COM SUCESSO! **********\n");
 						stmt.execute();
 						validaErro = false;
 					}
@@ -134,7 +135,7 @@ public class BancoDeDadosGerente {
 		}
 	}
 
-	public void mostrarDadosBancoGerente(Gerente gerente, Connection connection) throws IOException {
+	public void mostrarDadosBancoGerente(Connection connection) throws IOException {
 
 		Properties props = getProp();
 

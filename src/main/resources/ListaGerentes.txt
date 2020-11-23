@@ -1,9 +1,9 @@
 Gerente id = 0
-Nome do Gerente = Manuela Rodrigues
-cpf = 98798798798
-salario = 2999.0
-idade = 28
-estadoCivil = Casada
+Nome do Gerente = Joao Batista
+cpf = 92837483728
+salario = 3777.0
+idade = 26
+estadoCivil = Solteiro
 porcentagemDaBonificacao = 0.0
-loginDoCadastroDoSistema = 123123
-senhaDoCadastroDoSistema = 123123
+loginDoCadastroDoSistema = 738473
+senhaDoCadastroDoSistema = 827372

@@ -61,13 +61,10 @@ public class PrincipalMain {
 		List<Funcionario> listaEstagiario = new ArrayList<>();
 		PreparedStatement stmtGerente = connection
 				.prepareStatement(props.getProperty("path.bancoDeDados.pegarDadosListaGerente"));
-		ResultSet rsGerente = stmtGerente.executeQuery();
 		PreparedStatement stmtAuxiliar = connection
 				.prepareStatement(props.getProperty("path.bancoDeDados.pegarDadosListaAuxiliar"));
-		ResultSet rsAuxiliar = stmtAuxiliar.executeQuery();
 		PreparedStatement stmtEstagiario = connection
 				.prepareStatement(props.getProperty("path.bancoDeDados.pegarDadosListaEstagiario"));
-		ResultSet rsEstagiario = stmtEstagiario.executeQuery();
 
 		int loginAutenticacao = 0;
 		int senhaAutenticacao = 0;
@@ -88,6 +85,7 @@ public class PrincipalMain {
 
 						boolean validaErroGerente = true;
 						while (validaErroGerente) {
+							ResultSet rsGerente = stmtGerente.executeQuery();
 							if (rsGerente.next() == false && listaGerente.size() == 0) {
 								logger.info("Nao ha Gerentes cadastrados!");
 								logger.info("Retornando ao lobby." + "\n." + "\n." + "\n.");
@@ -95,13 +93,14 @@ public class PrincipalMain {
 							} else {
 								try {
 									logger.info(" Contas Gerentes ativas:\n ");
-									bancoDeDadosGerente.mostrarDadosBancoGerente(gerente, connection);
+									bancoDeDadosGerente.mostrarDadosBancoGerente(connection);
 									logger.info("Solicite um sistema Gerente para entrar: ");
 
 									int acaoLobbyGerente = sc.nextInt();
 
 									autenticaSistema.autenticaSistemaGerente(loginAutenticacao, senhaAutenticacao,
 											acaoLobbyGerente, listaGerente, connection);
+									validaErroGerente = false;
 								} catch (Exception e) {
 									logger.error("#### Comando invalido, por favor insira apenas numeros! ####"
 											+ System.lineSeparator());
@@ -109,6 +108,7 @@ public class PrincipalMain {
 									validaErroGerente = true;
 								}
 							}
+							rsGerente.close();
 						}
 						break;
 					} else if (acaoLobby == 2) {
@@ -116,6 +116,7 @@ public class PrincipalMain {
 
 						boolean validaErroAuxiliar = true;
 						while (validaErroAuxiliar) {
+							ResultSet rsAuxiliar = stmtAuxiliar.executeQuery();
 							if (rsAuxiliar.next() == false && listaAuxiliar.size() == 0) {
 								logger.info("Nao ha Auxiliares cadastrados!");
 								logger.info("Retornando ao lobby." + "\n." + "\n." + "\n.");
@@ -130,6 +131,7 @@ public class PrincipalMain {
 
 									autenticaSistema.autenticaSistemaAuxiliar(loginAutenticacao, senhaAutenticacao,
 											acaoLobbyAuxiliar, listaAuxiliar);
+									validaErroAuxiliar = false;
 								} catch (Exception e) {
 									logger.error("#### Comando invalido, por favor insira apenas numeros! ####"
 											+ System.lineSeparator());
@@ -137,6 +139,7 @@ public class PrincipalMain {
 									validaErroAuxiliar = true;
 								}
 							}
+							rsAuxiliar.close();
 						}
 						break;
 					} else if (acaoLobby == 3) {
@@ -144,7 +147,7 @@ public class PrincipalMain {
 
 						boolean validaErroEstagiario = true;
 						while (validaErroEstagiario) {
-
+							ResultSet rsEstagiario = stmtEstagiario.executeQuery();
 							if (rsEstagiario.next() == false && listaEstagiario.size() == 0) {
 								logger.info("Nao ha Estagiarios cadastrados!");
 								logger.info("Retornando ao lobby." + "\n." + "\n." + "\n.");
@@ -159,6 +162,7 @@ public class PrincipalMain {
 
 									autenticaSistema.autenticaSistemaEstagiario(loginAutenticacao, senhaAutenticacao,
 											acaoLobbyEstagiario, listaEstagiario);
+									validaErroEstagiario = false;
 								} catch (Exception e) {
 									logger.error("#### Comando invalido, por favor insira apenas numeros! ####"
 											+ System.lineSeparator());
@@ -166,6 +170,7 @@ public class PrincipalMain {
 									validaErroEstagiario = true;
 								}
 							}
+							rsEstagiario.close();
 						}
 						break;
 					} else if (acaoLobby == 4) {
