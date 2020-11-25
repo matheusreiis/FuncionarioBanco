@@ -33,7 +33,7 @@ public class TelaExcluirEstagiario extends JPanel {
 		
 		JLabel lblNewLabel = new JLabel("New label");
 		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\DataCore\\Desktop\\Logo_DataCore_Preto.jpg"));
-		lblNewLabel.setBounds(-412, -73, 876, 482);
+		lblNewLabel.setBounds(-126, -57, 876, 482);
 		add(lblNewLabel);
 	}
 

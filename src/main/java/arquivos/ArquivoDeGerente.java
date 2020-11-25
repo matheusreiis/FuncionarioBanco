@@ -1,6 +1,5 @@
 package arquivos;
 
-
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
@@ -13,9 +12,8 @@ import entities.Funcionario;
 import entities.Gerente;
 
 public class ArquivoDeGerente {
-	
-	Gerente gerente;
 
+	Gerente gerente;
 
 	public static Properties getProp() throws IOException {
 		Properties props = new Properties();
@@ -33,11 +31,12 @@ public class ArquivoDeGerente {
 		if (!file.exists()) {
 			file.createNewFile();
 		}
-		FileWriter fw = new FileWriter(file.getAbsoluteFile());
+		FileWriter fw = (FileWriter) new FileWriter(file.getAbsoluteFile());
 		BufferedWriter bw = new BufferedWriter(fw);
-		bw.write(gerente.toString());
-
+		bw.append(gerente.toString() + System.lineSeparator());
+		bw.write(System.lineSeparator() + gerente.toString());
+		
 		bw.flush();
 		bw.close();
+		}
 	}
-}

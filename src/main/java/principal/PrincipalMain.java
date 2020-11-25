@@ -86,7 +86,7 @@ public class PrincipalMain {
 						boolean validaErroGerente = true;
 						while (validaErroGerente) {
 							ResultSet rsGerente = stmtGerente.executeQuery();
-							if (rsGerente.next() == false && listaGerente.size() == 0) {
+							if (rsGerente.next() == false && listaGerente.isEmpty()) {
 								logger.info("Nao ha Gerentes cadastrados!");
 								logger.info("Retornando ao lobby." + "\n." + "\n." + "\n.");
 								validaErroGerente = false;
@@ -117,7 +117,7 @@ public class PrincipalMain {
 						boolean validaErroAuxiliar = true;
 						while (validaErroAuxiliar) {
 							ResultSet rsAuxiliar = stmtAuxiliar.executeQuery();
-							if (rsAuxiliar.next() == false && listaAuxiliar.size() == 0) {
+							if (rsAuxiliar.next() == false && listaAuxiliar.isEmpty()) {
 								logger.info("Nao ha Auxiliares cadastrados!");
 								logger.info("Retornando ao lobby." + "\n." + "\n." + "\n.");
 								validaErroAuxiliar = false;
@@ -148,7 +148,7 @@ public class PrincipalMain {
 						boolean validaErroEstagiario = true;
 						while (validaErroEstagiario) {
 							ResultSet rsEstagiario = stmtEstagiario.executeQuery();
-							if (rsEstagiario.next() == false && listaEstagiario.size() == 0) {
+							if (rsEstagiario.next() == false && listaEstagiario.isEmpty()) {
 								logger.info("Nao ha Estagiarios cadastrados!");
 								logger.info("Retornando ao lobby." + "\n." + "\n." + "\n.");
 								validaErroEstagiario = false;

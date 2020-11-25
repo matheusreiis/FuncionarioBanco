@@ -49,14 +49,14 @@ public class CadastroGerenteBancoDeDados {
 	String mensagemDeSenhaCadastro = "Digite sua senha (6 digitos): ";
 
 	public void cadastroGerente(List<Funcionario> listaGerente, Connection connection) throws Exception {
-		
+
 		boolean validaErroCatch = true;
 		while (validaErroCatch) {
 			Gerente gerente = new Gerente();
 			boolean validaErroConfirma = true;
 
 			logger.info("---------- CADASTRO GERENTE ---------" + System.lineSeparator());
-			
+
 			logger.debug(mensagemNome);
 			gerente.setNome(validaNomeESobrenome.validaNome(nome, mensagemNome));
 
@@ -76,8 +76,8 @@ public class CadastroGerenteBancoDeDados {
 			gerente.setEstadoCivil(validaEstadoCivil.validaEstadoCivil(estadoCivil, mensagemEstadoCivil));
 
 			logger.debug(mensagemDeLoginCadastro);
-			gerente.setLoginDoCadastroDoSistema(
-					validaCadastro.validacaoDoLoginDoCadastroDoSistema(loginCadastro, mensagemDeLoginCadastro, connection));
+			gerente.setLoginDoCadastroDoSistema(validaCadastro.validacaoDoLoginDoCadastroDoSistema(loginCadastro,
+					mensagemDeLoginCadastro, connection));
 
 			logger.debug(mensagemDeSenhaCadastro);
 			gerente.setSenhaDoCadastroDoSistema(
@@ -96,8 +96,8 @@ public class CadastroGerenteBancoDeDados {
 					validaErroConfirma = false;
 					validaErroCatch = true;
 				} else if (confirmaDadosGerente == 'y') {
-					arquivoGerente.listaDeGerentesAtivos(listaGerente, gerente);
 					logger.info("---------- CONECTANDO AO BANCO DE DADOS ----------");
+					arquivoGerente.listaDeGerentesAtivos(listaGerente, gerente);
 					bancoDeDadosGerente.inserirDadosBancoGerente(gerente, connection);
 					bancoDeDadosGerente.pegarDadosBancoGerente(gerente, connection);
 					validaErroConfirma = false;

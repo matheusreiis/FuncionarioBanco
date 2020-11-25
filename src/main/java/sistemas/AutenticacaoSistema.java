@@ -1,6 +1,6 @@
 package sistemas;
 
-import java.io.FileInputStream;
+import java.io.FileInputStream; 
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -31,6 +31,7 @@ public class AutenticacaoSistema {
 	Estagiario estagiario;
 	boolean validaErro = true;
 	int id;
+	String nome;
 	int loginDoSistema;
 	int senhaDoSistema;
 	String mensagemDeLogin = "Digite seu login: ";
@@ -45,7 +46,8 @@ public class AutenticacaoSistema {
 	}
 
 	public void autenticaSistemaGerente(int loginAutenticacao, int senhaAutenticacao, int acaoLobbyGerente,
-			List<Funcionario> listaGerente, Connection connection) throws IOException {
+			List<Funcionario> listaGerente, Connection connection)
+			throws IOException {
 
 		Properties props = getProp();
 
@@ -58,10 +60,11 @@ public class AutenticacaoSistema {
 			while (validaErro) {
 				rs.next();
 				id = rs.getInt("id");
+				nome = rs.getString("nome");
 
 				if (acaoLobbyGerente == id) {
 					logger.info("---------- AUTENTICANDO SISTEMA GERENTE ----------" + "\n." + "\n." + "\n.");
-					logger.info("Bem vindo(a) novamente Sr. " + rs.getString("nome"));
+					logger.info("Bem vindo(a) novamente Sr. " + nome);
 
 					logger.info(mensagemDeLogin);
 					loginAutenticacao = validaSistema.validacaoDoLoginDoSistema(loginAutenticacao, mensagemDeLogin);
@@ -110,10 +113,11 @@ public class AutenticacaoSistema {
 			while (validaErro) {
 				rs.next();
 				id = rs.getInt("id");
+				nome = rs.getString("nome");
 
 				if (acaoLobbyAuxiliar == id) {
 					logger.info("---------- AUTENTICANDO SISTEMA AUXILIAR ----------" + "\n." + "\n." + "\n.");
-					logger.info("Bem vindo(a) novamente Sr. " + rs.getString("nome"));
+					logger.info("Bem vindo(a) novamente Sr. " + nome);
 
 					logger.info(mensagemDeLogin);
 					loginAutenticacao = validaSistema.validacaoDoLoginDoSistema(loginAutenticacao, mensagemDeLogin);
@@ -162,10 +166,11 @@ public class AutenticacaoSistema {
 			while (validaErro) {
 				rs.next();
 				id = rs.getInt("id");
+				nome = rs.getString("nome");
 
 				if (acaoLobbyEstagiario == id) {
 					logger.info("---------- AUTENTICANDO SISTEMA ESTAGIARIO ----------" + "\n." + "\n." + "\n.");
-					logger.info("Bem vindo(a) novamente Sr. " + rs.getString("nome"));
+					logger.info("Bem vindo(a) novamente Sr. " + nome);
 
 					logger.info(mensagemDeLogin);
 					loginAutenticacao = validaSistema.validacaoDoLoginDoSistema(loginAutenticacao, mensagemDeLogin);

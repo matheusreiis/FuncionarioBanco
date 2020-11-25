@@ -1,9 +1,19 @@
 Gerente id = 0
-Nome do Gerente = Joao Batista
-cpf = 92837483728
-salario = 3777.0
-idade = 26
-estadoCivil = Solteiro
+Nome do Gerente = Karina Rodrigues
+cpf = 12345678907
+salario = 8393.0
+idade = 28
+estadoCivil = Casada
 porcentagemDaBonificacao = 0.0
-loginDoCadastroDoSistema = 738473
-senhaDoCadastroDoSistema = 827372
+loginDoCadastroDoSistema = 123454
+senhaDoCadastroDoSistema = 123123
+
+Gerente id = 0
+Nome do Gerente = Karina Rodrigues
+cpf = 12345678907
+salario = 8393.0
+idade = 28
+estadoCivil = Casada
+porcentagemDaBonificacao = 0.0
+loginDoCadastroDoSistema = 123454
+senhaDoCadastroDoSistema = 123123

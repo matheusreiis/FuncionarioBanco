@@ -13,7 +13,11 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EtchedBorder;
 
+import interfaceGraficaFrame.TelaDeLoginAuxiliarJFrame;
+import interfaceGraficaFrame.TelaDeLoginEstagiarioJFrame;
 import interfaceGraficaFrame.TelaDeLoginGerenteJFrame;
+import interfaceGraficaFrame.TelaEscolheFuncionarioCadastroJFrame;
+import interfaceGraficaFrame.TelaEscolheFuncionarioExclusaoJFrame;
 
 public class TelaLobby extends JPanel {
 	
@@ -46,24 +50,48 @@ public class TelaLobby extends JPanel {
 		JButton botaoAuxiliarLobby = new JButton("SISTEMA AUXILIAR");
 		botaoAuxiliarLobby.setBackground(Color.WHITE);
 		botaoAuxiliarLobby.setFont(new Font("Calibri", Font.ITALIC, 15));
+		botaoAuxiliarLobby.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TelaDeLoginAuxiliarJFrame loginAuxiliar = new TelaDeLoginAuxiliarJFrame();
+				loginAuxiliar.setVisible(true);
+			}
+		});
 		botaoAuxiliarLobby.setBounds(43, 203, 170, 25);
 		add(botaoAuxiliarLobby);
 		
 		JButton botaoEstagiarioLobby = new JButton("SISTEMA ESTAGIARIO");
 		botaoEstagiarioLobby.setBackground(Color.WHITE);
 		botaoEstagiarioLobby.setFont(new Font("Calibri", Font.ITALIC, 15));
+		botaoEstagiarioLobby.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TelaDeLoginEstagiarioJFrame loginEstagiario = new TelaDeLoginEstagiarioJFrame();
+				loginEstagiario.setVisible(true);
+			}
+		});
 		botaoEstagiarioLobby.setBounds(43, 248, 170, 25);
 		add(botaoEstagiarioLobby);
 		
 		JButton botaoCadastroLobby = new JButton("CADASTRAR FUNCIONARIO");
 		botaoCadastroLobby.setBackground(Color.WHITE);
 		botaoCadastroLobby.setFont(new Font("Calibri", Font.ITALIC, 12));
+		botaoCadastroLobby.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TelaEscolheFuncionarioCadastroJFrame escolheFuncionarioCadastro = new TelaEscolheFuncionarioCadastroJFrame();
+				escolheFuncionarioCadastro.setVisible(true);
+			}
+		});
 		botaoCadastroLobby.setBounds(225, 157, 170, 25);
 		add(botaoCadastroLobby);
 		
 		JButton botaoExclusaoLobby = new JButton("EXCLUIR FUNCIONARIO");
 		botaoExclusaoLobby.setBackground(Color.WHITE);
 		botaoExclusaoLobby.setFont(new Font("Calibri", Font.ITALIC, 14));
+		botaoExclusaoLobby.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TelaEscolheFuncionarioExclusaoJFrame escolheFuncionarioExclusao = new TelaEscolheFuncionarioExclusaoJFrame();
+				escolheFuncionarioExclusao.setVisible(true);
+			}
+		});
 		botaoExclusaoLobby.setBounds(225, 203, 170, 25);
 		add(botaoExclusaoLobby);
 		
@@ -71,6 +99,7 @@ public class TelaLobby extends JPanel {
 		btnEncerrarSistema.setBackground(Color.WHITE);
 		btnEncerrarSistema.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
 			}
 		});
 		btnEncerrarSistema.setFont(new Font("Calibri", Font.ITALIC, 15));

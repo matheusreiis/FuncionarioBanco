@@ -15,6 +15,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTable;
 
 public class TelaExcluirGerente extends JPanel {
+	private JTable table;
 
 	public TelaExcluirGerente() {
 
@@ -34,10 +35,15 @@ public class TelaExcluirGerente extends JPanel {
 		scrollBar.setBounds(429, 0, 21, 300);
 		add(scrollBar);
 		
+		table = new JTable();
+		table.setBounds(47, 101, 317, 186);
+		add(table);
+		
 		JLabel lblNewLabel = new JLabel("New label");
 		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\DataCore\\Desktop\\Logo_DataCore_Preto.jpg"));
-		lblNewLabel.setBounds(-412, -73, 876, 482);
+		lblNewLabel.setBounds(-126, -57, 876, 482);
 		add(lblNewLabel);
+		
 		
 		
 	}

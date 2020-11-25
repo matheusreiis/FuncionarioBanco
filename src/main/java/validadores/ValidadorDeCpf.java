@@ -43,27 +43,26 @@ public class ValidadorDeCpf implements IValidadorDeCpf {
 
 				cpf = sc.nextLong();
 				ResultSet rs = stmt.executeQuery();
-				while (rs.next()) {
-					cpfBanco = rs.getLong("CPF");
-				} 
-					if (cpf != cpfBanco) {
-						String valueOf = "";
-						valueOf = extracted(cpf);
-						while (valueOf.length() != 11) {
-							logger.debug("##### Por favor insira 11 digitos para validar seu cpf #####"
-									+ System.lineSeparator());
-							logger.info(mensagemCpf);
-							valueOf = extracted(cpf);
-							validaErroCatch = true;
-							break;
-						}
-					} else {
-						logger.error("##### CPF JÁ EXISTENTE ##### Por favor utilize outro CPF para cadastro! "
+				rs.next();
+				cpfBanco = rs.getLong("CPF");
+				if (cpf != cpfBanco) {
+					String valueOf = "";
+					valueOf = extracted(cpf);
+					while (valueOf.length() != 11) {
+						logger.debug("##### Por favor insira 11 digitos para validar seu cpf #####"
 								+ System.lineSeparator());
-						sc.nextLine();
 						logger.info(mensagemCpf);
+						valueOf = extracted(cpf);
 						validaErroCatch = true;
+						break;
 					}
+				} else {
+					logger.error("##### CPF JÁ EXISTENTE ##### Por favor utilize outro CPF para cadastro! "
+							+ System.lineSeparator());
+					sc.nextLine();
+					logger.info(mensagemCpf);
+					validaErroCatch = true;
+				}
 				stmt.close();
 			} catch (InputMismatchException e) {
 				logger.error("##### CPF INVALIDO ##### " + System.lineSeparator());
