@@ -5,16 +5,17 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 import javax.swing.JTabbedPane;
+import javax.swing.border.EmptyBorder;
+
+import interfaceGrafica.TelaExcluirAuxiliar;
 
 public class TelaExcluirAuxiliarJFrame extends JFrame {
 
+	private static final long serialVersionUID = 1L;
+	TelaExcluirAuxiliar excluirAuxiliar = new TelaExcluirAuxiliar();
 	private JPanel contentPane;
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -28,10 +29,7 @@ public class TelaExcluirAuxiliarJFrame extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
-	public TelaExcluirAuxiliarJFrame() {
+	public TelaExcluirAuxiliarJFrame() throws Exception {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 480, 396);
 		contentPane = new JPanel();
@@ -41,6 +39,8 @@ public class TelaExcluirAuxiliarJFrame extends JFrame {
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		contentPane.add(tabbedPane, BorderLayout.CENTER);
+		
+		tabbedPane.addTab("Excluir Auxiliar", excluirAuxiliar);
 	}
 
 }

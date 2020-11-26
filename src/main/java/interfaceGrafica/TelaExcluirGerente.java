@@ -3,21 +3,28 @@ package interfaceGrafica;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.SystemColor;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollBar;
+import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.border.EtchedBorder;
-import javax.swing.JScrollBar;
-import javax.swing.JList;
-import javax.swing.JTextArea;
-import javax.swing.JTable;
+
+import interfaceGraficaFrame.TelaEscolheFuncionarioExclusaoJFrame;
 
 public class TelaExcluirGerente extends JPanel {
+	
+	private static final long serialVersionUID = 1L;
 	private JTable table;
 
-	public TelaExcluirGerente() {
+	public TelaExcluirGerente() throws Exception {
+		
+		TelaEscolheFuncionarioExclusaoJFrame escolheFuncionarioExclusao = new TelaEscolheFuncionarioExclusaoJFrame();
 
 		setBackground(Color.WHITE);
 		setForeground(Color.WHITE);
@@ -38,6 +45,27 @@ public class TelaExcluirGerente extends JPanel {
 		table = new JTable();
 		table.setBounds(47, 101, 317, 186);
 		add(table);
+		
+		JButton botaoVoltar = new JButton("Voltar");
+		botaoVoltar.setFont(new Font("Calibri", Font.PLAIN, 10));
+		botaoVoltar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				escolheFuncionarioExclusao.setVisible(true);
+			}
+		});
+		botaoVoltar.setBounds(12, 13, 58, 19);
+		add(botaoVoltar);
+		
+		JButton btnEncerrarSistema = new JButton("ENCERRAR SISTEMA");
+		btnEncerrarSistema.setBackground(Color.WHITE);
+		btnEncerrarSistema.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
+		btnEncerrarSistema.setFont(new Font("Calibri", Font.ITALIC, 10));
+		btnEncerrarSistema.setBounds(322, 13, 116, 16);
+		add(btnEncerrarSistema);
 		
 		JLabel lblNewLabel = new JLabel("New label");
 		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\DataCore\\Desktop\\Logo_DataCore_Preto.jpg"));

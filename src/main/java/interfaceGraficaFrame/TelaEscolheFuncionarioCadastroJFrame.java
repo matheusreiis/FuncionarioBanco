@@ -12,6 +12,8 @@ import interfaceGrafica.TelaEscolheFuncionarioCadastro;
 
 public class TelaEscolheFuncionarioCadastroJFrame extends JFrame {
 	
+	private static final long serialVersionUID = 1L;
+
 	TelaEscolheFuncionarioCadastro escolheFuncionarioCadastro = new TelaEscolheFuncionarioCadastro();
 
 	private JPanel contentPane;
@@ -29,7 +31,7 @@ public class TelaEscolheFuncionarioCadastroJFrame extends JFrame {
 		});
 	}
 
-	public TelaEscolheFuncionarioCadastroJFrame() {
+	public TelaEscolheFuncionarioCadastroJFrame() throws Exception {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 480, 396);
 		contentPane = new JPanel();

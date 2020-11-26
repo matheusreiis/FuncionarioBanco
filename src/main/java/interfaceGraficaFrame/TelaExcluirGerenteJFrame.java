@@ -12,8 +12,8 @@ import interfaceGrafica.TelaExcluirGerente;
 
 public class TelaExcluirGerenteJFrame extends JFrame {
 	
+	private static final long serialVersionUID = 1L;
 	TelaExcluirGerente excluirGerente = new TelaExcluirGerente();
-
 	private JPanel contentPane;
 
 	public static void main(String[] args) {
@@ -29,7 +29,7 @@ public class TelaExcluirGerenteJFrame extends JFrame {
 		});
 	}
 
-	public TelaExcluirGerenteJFrame() {
+	public TelaExcluirGerenteJFrame() throws Exception {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 480, 396);
 		contentPane = new JPanel();

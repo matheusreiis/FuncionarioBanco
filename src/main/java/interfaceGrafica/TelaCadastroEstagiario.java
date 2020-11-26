@@ -3,6 +3,8 @@ package interfaceGrafica;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.SystemColor;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -12,7 +14,11 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EtchedBorder;
 
+import interfaceGraficaFrame.TelaEscolheFuncionarioCadastroJFrame;
+
 public class TelaCadastroEstagiario extends JPanel {
+	
+	private static final long serialVersionUID = 1L;
 	private JTextField textFieldNome;
 	private JTextField textFieldCPF;
 	private JTextField textFieldSalario;
@@ -22,7 +28,9 @@ public class TelaCadastroEstagiario extends JPanel {
 	private JTextField textFieldSenhaGerente;
 	private JTextField textFieldSobrenome;
 	
-	public TelaCadastroEstagiario() {
+	TelaEscolheFuncionarioCadastroJFrame escolheFuncionarioCadastro = new TelaEscolheFuncionarioCadastroJFrame();
+	
+	public TelaCadastroEstagiario() throws Exception {
 
 		setBackground(Color.WHITE);
 		setForeground(Color.WHITE);
@@ -144,6 +152,27 @@ public class TelaCadastroEstagiario extends JPanel {
 		btnConfirmaCadastrarEstagiario.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		btnConfirmaCadastrarEstagiario.setBounds(258, 132, 168, 25);
 		add(btnConfirmaCadastrarEstagiario);
+		
+		JButton botaoVoltar = new JButton("Voltar");
+		botaoVoltar.setFont(new Font("Calibri", Font.PLAIN, 10));
+		botaoVoltar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				escolheFuncionarioCadastro.setVisible(true);
+			}
+		});
+		botaoVoltar.setBounds(12, 13, 58, 19);
+		add(botaoVoltar);
+		
+		JButton btnEncerrarSistema = new JButton("ENCERRAR SISTEMA");
+		btnEncerrarSistema.setBackground(Color.WHITE);
+		btnEncerrarSistema.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
+		btnEncerrarSistema.setFont(new Font("Calibri", Font.ITALIC, 10));
+		btnEncerrarSistema.setBounds(322, 13, 116, 16);
+		add(btnEncerrarSistema);
 		
 		JLabel lblNewLabel = new JLabel("New label");
 		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\DataCore\\Desktop\\Logo_DataCore_Preto.jpg"));

@@ -12,6 +12,8 @@ import interfaceGrafica.TelaCadastroEstagiario;
 
 public class TelaCadastroEstagiarioJFrame extends JFrame {
 	
+	private static final long serialVersionUID = 1L;
+
 	TelaCadastroEstagiario cadastroEstagiario = new TelaCadastroEstagiario();
 
 	private JPanel contentPane;
@@ -29,7 +31,7 @@ public class TelaCadastroEstagiarioJFrame extends JFrame {
 		});
 	}
 
-	public TelaCadastroEstagiarioJFrame() {
+	public TelaCadastroEstagiarioJFrame() throws Exception {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 480, 396);
 		contentPane = new JPanel();

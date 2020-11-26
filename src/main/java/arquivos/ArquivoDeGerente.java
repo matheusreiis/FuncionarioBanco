@@ -13,8 +13,6 @@ import entities.Gerente;
 
 public class ArquivoDeGerente {
 
-	Gerente gerente;
-
 	public static Properties getProp() throws IOException {
 		Properties props = new Properties();
 		FileInputStream file = new FileInputStream(
@@ -30,7 +28,7 @@ public class ArquivoDeGerente {
 
 		if (!file.exists()) {
 			file.createNewFile();
-		}
+		} 
 		FileWriter fw = (FileWriter) new FileWriter(file.getAbsoluteFile());
 		BufferedWriter bw = new BufferedWriter(fw);
 		bw.append(gerente.toString() + System.lineSeparator());
@@ -39,4 +37,4 @@ public class ArquivoDeGerente {
 		bw.flush();
 		bw.close();
 		}
-	}
+}

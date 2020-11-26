@@ -12,6 +12,8 @@ import interfaceGrafica.TelaEscolheFuncionarioExclusao;
 
 public class TelaEscolheFuncionarioExclusaoJFrame extends JFrame {
 	
+	private static final long serialVersionUID = 1L;
+
 	TelaEscolheFuncionarioExclusao escolheFuncionarioExclusao = new TelaEscolheFuncionarioExclusao();
 
 	private JPanel contentPane;
@@ -29,7 +31,7 @@ public class TelaEscolheFuncionarioExclusaoJFrame extends JFrame {
 		});
 	}
 
-	public TelaEscolheFuncionarioExclusaoJFrame() {
+	public TelaEscolheFuncionarioExclusaoJFrame() throws Exception {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 480, 396);
 		contentPane = new JPanel();

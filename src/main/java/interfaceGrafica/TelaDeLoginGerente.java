@@ -3,6 +3,8 @@ package interfaceGrafica;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.SystemColor;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -13,9 +15,10 @@ import javax.swing.JButton;
 import javax.swing.border.EtchedBorder;
 
 public class TelaDeLoginGerente extends JPanel {
+	
+	private static final long serialVersionUID = 1L;
 	private JTextField escreverLogin;
 	private JTextField escreverSenha;
-	private JLabel imagemFundo;
 
 	public TelaDeLoginGerente() {
 		setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
@@ -55,6 +58,22 @@ public class TelaDeLoginGerente extends JPanel {
 		botaoEntrar.setForeground(Color.BLACK);
 		botaoEntrar.setBounds(142, 246, 97, 25);
 		add(botaoEntrar);
+		
+		JButton botaoVoltar = new JButton("Voltar");
+		botaoVoltar.setFont(new Font("Calibri", Font.PLAIN, 10));
+		botaoVoltar.setBounds(12, 13, 58, 19);
+		add(botaoVoltar);
+		
+		JButton btnEncerrarSistema = new JButton("ENCERRAR SISTEMA");
+		btnEncerrarSistema.setBackground(Color.WHITE);
+		btnEncerrarSistema.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
+		btnEncerrarSistema.setFont(new Font("Calibri", Font.ITALIC, 10));
+		btnEncerrarSistema.setBounds(322, 13, 116, 16);
+		add(btnEncerrarSistema);
 		
 		JLabel imagemFundo;
 		imagemFundo = new JLabel("New label");

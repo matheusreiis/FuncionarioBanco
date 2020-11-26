@@ -12,6 +12,7 @@ import interfaceGrafica.TelaCadastroGerente;
 
 public class TelaCadastroGerenteJFrame extends JFrame {
 	
+	private static final long serialVersionUID = 1L;
 	TelaCadastroGerente cadastroGerente = new TelaCadastroGerente();
 	private JPanel contentPane;
 
@@ -28,7 +29,7 @@ public class TelaCadastroGerenteJFrame extends JFrame {
 		});
 	}
 
-	public TelaCadastroGerenteJFrame() {
+	public TelaCadastroGerenteJFrame() throws Exception {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 480, 396);
 		contentPane = new JPanel();

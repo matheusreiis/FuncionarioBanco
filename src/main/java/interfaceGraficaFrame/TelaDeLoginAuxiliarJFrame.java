@@ -13,6 +13,8 @@ import interfaceGrafica.TelaDeLoginAuxiliar;
 
 public class TelaDeLoginAuxiliarJFrame extends JFrame {
 	
+	private static final long serialVersionUID = 1L;
+
 	TelaDeLoginAuxiliar loginAuxiliar = new TelaDeLoginAuxiliar();
 
 	private JPanel contentPane;

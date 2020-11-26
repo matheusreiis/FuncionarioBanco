@@ -12,8 +12,8 @@ import interfaceGrafica.TelaCadastroAuxiliar;
 
 public class TelaCadastroAuxiliarJFrame extends JFrame {
 	
+	private static final long serialVersionUID = 1L;
 	TelaCadastroAuxiliar cadastroAuxiliar = new TelaCadastroAuxiliar();
-
 	private JPanel contentPane;
 
 	public static void main(String[] args) {
@@ -29,7 +29,7 @@ public class TelaCadastroAuxiliarJFrame extends JFrame {
 		});
 	}
 
-	public TelaCadastroAuxiliarJFrame() {
+	public TelaCadastroAuxiliarJFrame() throws Exception {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 480, 396);
 		contentPane = new JPanel();

@@ -3,17 +3,30 @@ package interfaceGrafica;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.SystemColor;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EtchedBorder;
-import javax.swing.JButton;
+
+import interfaceGraficaFrame.TelaCadastroAuxiliarJFrame;
+import interfaceGraficaFrame.TelaCadastroEstagiarioJFrame;
+import interfaceGraficaFrame.TelaCadastroGerenteJFrame;
+import interfaceGraficaFrame.TelaLobbyJFrame;
 
 public class TelaEscolheFuncionarioCadastro extends JPanel {
 
-	public TelaEscolheFuncionarioCadastro() {
+	private static final long serialVersionUID = 1L;
+
+	public TelaEscolheFuncionarioCadastro() throws IOException {
+		setLayout(null);
+		
+		TelaLobbyJFrame lobby = new TelaLobbyJFrame();
 
 		setBackground(Color.WHITE);
 		setForeground(Color.WHITE);
@@ -28,18 +41,72 @@ public class TelaEscolheFuncionarioCadastro extends JPanel {
 		add(tituloEscolherFuncionarioCadastro);
 		
 		
-		JButton btnNewButton = new JButton("1 - GERENTE");
-		btnNewButton.setBounds(32, 172, 120, 25);
-		add(btnNewButton);
+		JButton botao1Gerente = new JButton("1 - GERENTE");
+		botao1Gerente.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TelaCadastroGerenteJFrame cadastroGerente = null;
+				try {
+					cadastroGerente = new TelaCadastroGerenteJFrame();
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+				cadastroGerente.setVisible(true);
+			}
+		});
+		botao1Gerente.setBounds(32, 172, 120, 25);
+		add(botao1Gerente);
 		
 		
-		JButton btnNewButton_1 = new JButton("2 - AUXILIAR");
-		btnNewButton_1.setBounds(164, 172, 120, 25);
-		add(btnNewButton_1);
+		JButton botao2Auxiliar = new JButton("2 - AUXILIAR");
+		botao2Auxiliar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TelaCadastroAuxiliarJFrame cadastroAuxiliar = null;
+				try {
+					cadastroAuxiliar = new TelaCadastroAuxiliarJFrame();
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+				cadastroAuxiliar.setVisible(true);
+			}
+		});
+		botao2Auxiliar.setBounds(164, 172, 120, 25);
+		add(botao2Auxiliar);
 		
-		JButton btnNewButton_2 = new JButton("3 - ESTAGIARIO");
-		btnNewButton_2.setBounds(296, 172, 125, 25);
-		add(btnNewButton_2);
+		JButton botao3Estagiario = new JButton("3 - ESTAGIARIO");
+		botao3Estagiario.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TelaCadastroEstagiarioJFrame cadastroEstagiario = null;
+				try {
+					cadastroEstagiario = new TelaCadastroEstagiarioJFrame();
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+				cadastroEstagiario.setVisible(true);
+			}
+		});
+		botao3Estagiario.setBounds(296, 172, 125, 25);
+		add(botao3Estagiario);
+		
+		JButton botaoVoltar = new JButton("Voltar");
+		botaoVoltar.setFont(new Font("Calibri", Font.PLAIN, 10));
+		botaoVoltar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				lobby.setVisible(true);
+			}
+		});
+		botaoVoltar.setBounds(12, 13, 58, 19);
+		add(botaoVoltar);
+		
+		JButton btnEncerrarSistema = new JButton("ENCERRAR SISTEMA");
+		btnEncerrarSistema.setBackground(Color.WHITE);
+		btnEncerrarSistema.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
+		btnEncerrarSistema.setFont(new Font("Calibri", Font.ITALIC, 10));
+		btnEncerrarSistema.setBounds(322, 13, 116, 16);
+		add(btnEncerrarSistema);
 		
 		JLabel imagemFundo = new JLabel("New label");
 		imagemFundo.setIcon(new ImageIcon("C:\\Users\\DataCore\\Desktop\\Logo_DataCore_Preto.jpg"));

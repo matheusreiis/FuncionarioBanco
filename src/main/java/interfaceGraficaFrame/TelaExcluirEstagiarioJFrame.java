@@ -5,16 +5,17 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 import javax.swing.JTabbedPane;
+import javax.swing.border.EmptyBorder;
+
+import interfaceGrafica.TelaExcluirEstagiario;
 
 public class TelaExcluirEstagiarioJFrame extends JFrame {
 
+	private static final long serialVersionUID = 1L;
+	TelaExcluirEstagiario excluirEstagiario = new TelaExcluirEstagiario();
 	private JPanel contentPane;
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -28,10 +29,7 @@ public class TelaExcluirEstagiarioJFrame extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
-	public TelaExcluirEstagiarioJFrame() {
+	public TelaExcluirEstagiarioJFrame() throws Exception {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 480, 396);
 		contentPane = new JPanel();
@@ -41,6 +39,8 @@ public class TelaExcluirEstagiarioJFrame extends JFrame {
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		contentPane.add(tabbedPane, BorderLayout.CENTER);
+		
+		tabbedPane.addTab("Excluir Estagiario", excluirEstagiario);
 	}
 
 }

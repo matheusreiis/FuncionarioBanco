@@ -4,27 +4,25 @@ import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTabbedPane;
 import javax.swing.border.EmptyBorder;
 
-import interfaceGrafica.TelaDeLoginEstagiario;
+import interfaceGrafica.TelaEscolheIdEstagiario;
+import javax.swing.JTabbedPane;
 
-public class TelaDeLoginEstagiarioJFrame extends JFrame {
+public class TelaEscolheIdEstagiarioJFrame extends JFrame {
 	
 	private static final long serialVersionUID = 1L;
 
-	TelaDeLoginEstagiario loginEstagiario = new TelaDeLoginEstagiario();
+	TelaEscolheIdEstagiario escolheIdEstagiario = new TelaEscolheIdEstagiario();
 
 	private JPanel contentPane;
-	private final JLabel label = new JLabel("New label");
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					TelaDeLoginEstagiarioJFrame frame = new TelaDeLoginEstagiarioJFrame();
+					TelaEscolheIdEstagiarioJFrame frame = new TelaEscolheIdEstagiarioJFrame();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -33,7 +31,7 @@ public class TelaDeLoginEstagiarioJFrame extends JFrame {
 		});
 	}
 
-	public TelaDeLoginEstagiarioJFrame() {
+	public TelaEscolheIdEstagiarioJFrame() throws Exception {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 480, 396);
 		contentPane = new JPanel();
@@ -44,14 +42,6 @@ public class TelaDeLoginEstagiarioJFrame extends JFrame {
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		contentPane.add(tabbedPane, BorderLayout.CENTER);
 		
-		tabbedPane.addTab("Login Estagiario", loginEstagiario);
-		label.setBounds(189, 114, 56, 16);
-		
-		loginEstagiario.add(label);
-
-		contentPane.add(tabbedPane, BorderLayout.CENTER);
-
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		tabbedPane.addTab("Sistema Estagiario", escolheIdEstagiario);
 	}
-
 }
