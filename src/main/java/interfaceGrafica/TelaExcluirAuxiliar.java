@@ -61,10 +61,10 @@ public class TelaExcluirAuxiliar extends JPanel {
 		btnEncerrarSistema.setBounds(322, 13, 116, 16);
 		add(btnEncerrarSistema);
 		
-		JLabel lblNewLabel = new JLabel("New label");
-		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\DataCore\\Desktop\\Logo_DataCore_Preto.jpg"));
-		lblNewLabel.setBounds(-126, -57, 876, 482);
-		add(lblNewLabel);
+		JLabel imagemFundo = new JLabel("New label");
+		imagemFundo.setIcon(new ImageIcon("C:\\Users\\DataCore\\Desktop\\Matheus\\Logo_DataCore_Preto.jpg"));
+		imagemFundo.setBounds(-126, -57, 876, 482);
+		add(imagemFundo);
 		
 	}
 

@@ -20,7 +20,7 @@ public class TelaLobbyJFrame extends JFrame {
 
 	private JPanel contentPane;
 	private final JLabel label = new JLabel("New label");
-	
+
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -35,7 +35,7 @@ public class TelaLobbyJFrame extends JFrame {
 	}
 
 	public TelaLobbyJFrame() throws IOException {
-		
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 480, 396);
 		contentPane = new JPanel();
@@ -48,7 +48,7 @@ public class TelaLobbyJFrame extends JFrame {
 
 		tabbedPane.addTab("Lobby", telaLobby);
 		label.setBounds(189, 114, 56, 16);
-		
+
 		telaLobby.add(label);
 
 		contentPane.add(tabbedPane, BorderLayout.CENTER);

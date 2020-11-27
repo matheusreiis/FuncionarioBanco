@@ -12,10 +12,12 @@ import org.apache.log4j.Logger;
 
 import bancoDeDados.ConexaoBancoDeDados;
 import interfaces.ICadastroDoSistema;
+import util.CriptografiaDeSenha;
 
 public class ValidadorDeCadastroDoSistema implements ICadastroDoSistema {
 
 	ConexaoBancoDeDados conexaoBancoDeDados = new ConexaoBancoDeDados();
+	CriptografiaDeSenha criptografarSenha = new CriptografiaDeSenha();
 	private static final Logger logger = Logger.getLogger(ValidadorDeCadastroDoSistema.class);
 	Scanner sc = new Scanner(System.in);
 	int loginBanco;

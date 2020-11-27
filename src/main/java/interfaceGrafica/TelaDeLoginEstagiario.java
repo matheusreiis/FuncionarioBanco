@@ -77,11 +77,10 @@ public class TelaDeLoginEstagiario extends JPanel {
 		btnEncerrarSistema.setBounds(322, 13, 116, 16);
 		add(btnEncerrarSistema);
 		
-		JLabel imagemFundo;
-		imagemFundo = new JLabel("New label");
-		imagemFundo.setIcon(new ImageIcon("C:\\Users\\DataCore\\Desktop\\Logo_DataCore_Preto.jpg"));
+		JLabel imagemFundo = new JLabel("New label");
+		imagemFundo.setIcon(new ImageIcon("C:\\Users\\DataCore\\Desktop\\Matheus\\Logo_DataCore_Preto.jpg"));
 		imagemFundo.setBounds(-126, -57, 876, 482);
-		add(imagemFundo);		
+		add(imagemFundo);	
 	}
 
 }

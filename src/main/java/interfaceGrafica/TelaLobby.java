@@ -9,7 +9,6 @@ import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EtchedBorder;
@@ -19,7 +18,6 @@ import interfaceGraficaFrame.TelaEscolheFuncionarioExclusaoJFrame;
 import interfaceGraficaFrame.TelaEscolheIdAuxiliarJFrame;
 import interfaceGraficaFrame.TelaEscolheIdEstagiarioJFrame;
 import interfaceGraficaFrame.TelaEscolheIdGerenteJFrame;
-import javax.swing.JToolBar;
 
 public class TelaLobby extends JPanel {
 	
@@ -137,7 +135,7 @@ public class TelaLobby extends JPanel {
 		
 		
 		JLabel imagemFundo = new JLabel("New label");
-		imagemFundo.setIcon(new ImageIcon("C:\\Users\\DataCore\\Desktop\\Logo_DataCore_Preto.jpg"));
+		imagemFundo.setIcon(new ImageIcon("C:\\Users\\DataCore\\Desktop\\Matheus\\Logo_DataCore_Preto.jpg"));
 		imagemFundo.setBounds(-126, -57, 876, 482);
 		add(imagemFundo);
 		

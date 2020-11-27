@@ -51,7 +51,7 @@ public class TelaEscolheIdEstagiario extends JPanel {
 		add(btnEncerrarSistema);
 
 		JLabel imagemFundo = new JLabel("New label");
-		imagemFundo.setIcon(new ImageIcon("C:\\Users\\DataCore\\Desktop\\Logo_DataCore_Preto.jpg"));
+		imagemFundo.setIcon(new ImageIcon("C:\\Users\\DataCore\\Desktop\\Matheus\\Logo_DataCore_Preto.jpg"));
 		imagemFundo.setBounds(-126, -57, 876, 482);
 		add(imagemFundo);
 	}
