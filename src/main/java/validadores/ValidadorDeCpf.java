@@ -12,12 +12,10 @@ import java.util.Scanner;
 
 import org.apache.log4j.Logger;
 
-import bancoDeDados.ConexaoBancoDeDados;
 import interfaces.IValidadorDeCpf;
 
 public class ValidadorDeCpf implements IValidadorDeCpf {
 
-	ConexaoBancoDeDados conexaoBancoDeDados = new ConexaoBancoDeDados();
 	private static final Logger logger = Logger.getLogger(ValidadorDeCpf.class);
 	Scanner sc = new Scanner(System.in);
 	Long cpfBanco = (long) 0;
@@ -43,8 +41,9 @@ public class ValidadorDeCpf implements IValidadorDeCpf {
 
 				cpf = sc.nextLong();
 				ResultSet rs = stmt.executeQuery();
-				rs.next();
-				cpfBanco = rs.getLong("CPF");
+				while (rs.next()) {
+					cpfBanco = rs.getLong("CPF");
+				}
 				if (cpf != cpfBanco) {
 					String valueOf = "";
 					valueOf = extracted(cpf);
